@@ -147,6 +147,7 @@ public class Connexion implements Runnable {
         //   connexion.setLocationRelativeTo(null);
         
         jPanel.setBackground(LIGHT_BLUE);
+        image.setBackground(WHITE);
        
     }
 
