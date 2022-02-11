@@ -11,11 +11,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +26,9 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  * @author lenal
  */
 public class Connexion implements Runnable {
+    
+    //Listerner 
+    protected VerifierConnexion verification; 
 
     private static final Color LIGHT_BLUE = new Color(100, 180, 200);
     private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 200);
@@ -154,6 +153,10 @@ public class Connexion implements Runnable {
         jPanel2.setBackground(LIGHT_BLUE2);
                 jPanel.setOpaque(false);
 
+                
+                // Mise en place des Listeners
+                verification = new VerifierConnexion(this); 
+                Valider.addActionListener(verification);
     }
 
 }
