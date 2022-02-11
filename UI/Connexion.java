@@ -11,11 +11,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,10 +48,6 @@ public class Connexion implements Runnable {
         // Création de tous les éléments apparaissant dans la fenêtre 
         //Image
         ImageIcon icone = new ImageIcon("src/Annexes/Hubspital_logo.png");
-        Image img = icone.getImage(); // Convertissemnt pour pouvoir redimensionner
-        Image newimg = img.getScaledInstance(344, 460, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
-
-        icone = new ImageIcon(newimg); // On reconvertit
         JLabel image = new JLabel(icone);
         image.setOpaque(true);
         image.setBackground(WHITE);

@@ -53,10 +53,10 @@ public class Connexion implements Runnable {
         // Création de tous les éléments apparaissant dans la fenêtre 
         //Image
         ImageIcon icone = new ImageIcon("src/Annexes/Hubspital_logo.png");
-        Image img = icone.getImage(); // Convertissemnt pour pouvoir redimensionner
-        Image newimg = img.getScaledInstance(344, 460, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
-
-        icone = new ImageIcon(newimg); // On reconvertit
+//        Image img = icone.getImage(); // Convertissemnt pour pouvoir redimensionner
+//        Image newimg = img.getScaledInstance(344, 460, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+//
+//        icone = new ImageIcon(newimg); // On reconvertit
         JLabel image = new JLabel(icone);
         image.setOpaque(true);
         image.setBackground(WHITE);
