@@ -5,7 +5,7 @@
  */
 package NF;
 
-import java.util.Date;
+
 import java.time.LocalDate;
 
 /**
@@ -54,7 +54,7 @@ public class Patient extends Personne {
 
     public String toString() {
         return getNom().toUpperCase() + " " + getPrenom().substring(0, 1).toUpperCase() + getPrenom().substring(1).toLowerCase() + " " + 
-                dateNaissance.getDate()+"/"+(dateNaissance.getMonth()-1)+"/"+dateNaissance.getYear();
+                dateNaissance.getJour()+"/"+(dateNaissance.getMois())+"/"+dateNaissance.getAnnee();
     }
 
     public boolean equals(Object o) {
@@ -80,6 +80,11 @@ public class Patient extends Personne {
 
     public Date getDate() {
         return dateNaissance;
+    }
+    
+    public String stringDate(){
+    
+        return(""+ dateNaissance.getJour()+"/"+dateNaissance.getMois()+"/"+dateNaissance.getAnnee());
     }
 
     public String getIPP() {

@@ -7,7 +7,7 @@ package NF;
 
 import NF.Patient.Sexe;
 import java.util.Calendar;
-import java.util.Date;
+
 
 /**
  *
@@ -20,7 +20,7 @@ public class test {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Date date = new Date (1998,12,25);
+        Date date = new Date (20,10,1999);
        Calendar rightNow = Calendar.getInstance();
        Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
        System.out.println(patient.getIPP());

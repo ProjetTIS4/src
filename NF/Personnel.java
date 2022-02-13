@@ -40,6 +40,7 @@ public class Personnel extends Personne {
         this.service = service;
         this.mdp = mdp; // A envoyer dans la BDD
         this.login = login; // A envoyer dans la BDD
+        this.poste=poste;
 
     }
 
