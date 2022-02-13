@@ -111,13 +111,32 @@ public class AccueilPH implements Runnable {
         deconnexion.setBorderPainted(false);
         deconnexion.setToolTipText("Cliquez ici pour vous déconnecter");
 
-        JButton ajoutActe = new JButton("+");
-        ajoutActe.setToolTipText("Cliquez ici pour ajouter un acte");
+        //  JButton ajoutActe = new JButton("+");
+        // ajoutActe.setToolTipText("Cliquez ici pour ajouter un acte");
+        JPanel prez = new JPanel(new GridLayout(2, 1));
         JLabel presentation = new JLabel();
-        presentation.setText("Bienvenue " + p.getNom().toUpperCase() + " " + p.getPrenom() + "\n " + p.getPoste() + " - " + p.getNomService());
+        JLabel presentation2 = new JLabel();
+
+        if (p.getPoste() == Poste.PHService) {
+
+            presentation.setText("Bienvenue Dr. " + p.getNom().toUpperCase() + " " + p.getPrenom());
+            presentation2.setText("" + p.getNomService());
+
+        } else {
+            presentation.setText("Bienvenue " + p.getNom().toUpperCase() + " " + p.getPrenom());
+            presentation2.setText("" + p.getPoste() + " - " + p.getNomService());
+        }
         presentation.setHorizontalAlignment(SwingConstants.CENTER);
         presentation.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
         presentation.setBackground(LIGHT_BLUE);
+
+        presentation2.setHorizontalAlignment(SwingConstants.CENTER);
+        presentation2.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
+        presentation2.setBackground(LIGHT_BLUE);
+
+        prez.add(presentation);
+        prez.add(presentation2);
+        prez.setBackground(LIGHT_BLUE);
 
         ////////////////////////////Panel Gauche ////////////////////////////
         ///////////////// Panel tri /////////////////
@@ -133,13 +152,18 @@ public class AccueilPH implements Runnable {
         JButton voirTout = new JButton("voirTout");
         JComboBox tri = new JComboBox(choixTri);
 
-        JPanel panTriFin = new JPanel(new BorderLayout());
+        GridLayout grid = new GridLayout(3, 1);
+        grid.setHgap(00);
+        JPanel panTriFin = new JPanel(grid);
+
         JPanel panTri = new JPanel(new FlowLayout());
         JPanel panTri2 = new JPanel(new FlowLayout());
+        JPanel panTri3 = new JPanel(new FlowLayout());
         JLabel preference = new JLabel("Préférence de tri : ");
         preference.setFont(new Font("Arial Nova", Font.PLAIN, 15));
-        panTriFin.add(panTri, BorderLayout.NORTH);
+        panTriFin.add(panTri);
         panTriFin.add(panTri2);
+        panTriFin.add(panTri3);
         choixTri.add("Du plus récent au plus ancien");
         choixTri.add("Du plus ancien au plus récent");
 
@@ -149,6 +173,7 @@ public class AccueilPH implements Runnable {
         panTri.add(info);
         panTri.setBackground(LIGHT_BLUE);
         panTri2.setBackground(LIGHT_BLUE);
+        panTri3.setBackground(LIGHT_BLUE);
 
         JLabel dateInf = new JLabel("Afficher les fiches entre le ");
         JLabel dateInf2 = new JLabel(" et le ");
@@ -169,8 +194,8 @@ public class AccueilPH implements Runnable {
         panTri2.add(dateHautJour);
         panTri2.add(dateHautMois);
         panTri2.add(dateHautAnnee);
-        panTri2.add(ok);
-        panTri2.add(voirTout);
+        panTri3.add(ok);
+        panTri3.add(voirTout);
 
         ///////////////// Panel Historique /////////////////
         JPanel panHistorique = new JPanel(new BorderLayout());
@@ -343,57 +368,52 @@ public class AccueilPH implements Runnable {
         TitledBorder titleDetail = BorderFactory.createTitledBorder("Détails de ce DM");
         panelDetail.setBorder(titleDetail);
         panelDetail.setBackground(LIGHT_BLUE);
-        
-        JPanel panelFiche = new JPanel(new FlowLayout());
 
-//        JPanel panelDetail = new JPanel(new GridBagLayout());
-        // Nom
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
+        JPanel panelFiche = new JPanel(new GridLayout(2, 2));
 
-        gbc.insets = new Insets(0, 0, 0, 0);
-        gbc.anchor = GridBagConstraints.CENTER;
-        // gbc.weighty = 1;
-        //gbc.anchor = GridBagConstraints.CENTER;
-
+        // Observations
         JTextArea observations2 = new JTextArea(fiche.getObservations());
         observations2.setLineWrap(true);
+        observations2.setEditable(false);
+        JScrollPane obs = new JScrollPane();
+        obs.setViewportView(observations2);
         JPanel ficheObservations = new JPanel(new BorderLayout());
         TitledBorder titleObs = BorderFactory.createTitledBorder("Observations");
         ficheObservations.setBorder(titleObs);
-        ficheObservations.add(observations2);
+        ficheObservations.add(obs);
 
-        panelFiche.add(ficheObservations );
+        panelFiche.add(ficheObservations);
         ficheObservations.setBackground(LIGHT_BLUE);
 
-// Prénom
-        //gbc.insets = new Insets(0, 20, 0, 0);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-
-        JLabel prescription2 = new JLabel(fiche.getPrescriptions());
+// Prescription
+        JTextArea prescription2 = new JTextArea(fiche.getPrescriptions());
+        prescription2.setLineWrap(true);
+        prescription2.setEditable(false);
+        JScrollPane pres = new JScrollPane();
+        pres.setViewportView(prescription2);
         JPanel fichePrescription = new JPanel(new BorderLayout());
         TitledBorder titlePresc = BorderFactory.createTitledBorder("Prescriptions");
         fichePrescription.setBorder(titlePresc);
-        fichePrescription.add(prescription2);
+        fichePrescription.add(pres);
 
-        panelFiche.add(fichePrescription  );
+        panelFiche.add(fichePrescription);
         fichePrescription.setBackground(LIGHT_BLUE);
-//Sexe
-        gbc.gridy = 3;
 
-        JLabel operation = new JLabel("Opération : ");
-        sexe.setFont(new Font("Cambria", Font.PLAIN, 18));
-        JLabel operationInfo = new JLabel(fiche.getOperations());
-        JPanel ficheOperation = new JPanel();
-        ficheOperation.add(operation);
-        ficheOperation.add(operationInfo);
+//Opération
+        JTextArea operationInfo = new JTextArea(fiche.getOperations());
+        operationInfo.setLineWrap(true);
+        operationInfo.setEditable(false);
+        JScrollPane op = new JScrollPane();
+        op.setViewportView(operationInfo);
+        JPanel ficheOperation = new JPanel(new BorderLayout());
+        TitledBorder titleOp = BorderFactory.createTitledBorder("Opérations");
+        ficheOperation.setBorder(titleOp);
+        ficheOperation.add(op);
 
-        //  panelFiche.add(ficheOperation, gbc);
+        panelFiche.add(ficheOperation);
         ficheOperation.setBackground(LIGHT_BLUE);
 
-//Date de naissance
+//Résultats
         // gbc.gridx = 1;
         gbc.gridy = 1;
 
@@ -403,8 +423,8 @@ public class AccueilPH implements Runnable {
         ficheResultat.setBorder(titleRes);
         ficheResultat.add(resultatInfo);
 
-        panelFiche.add(ficheResultat );
-         ficheResultat.setBackground(LIGHT_BLUE);
+        panelFiche.add(ficheResultat);
+        ficheResultat.setBackground(LIGHT_BLUE);
 
         //Création du Panel DM
         JSplitPane DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelDetail);
@@ -423,10 +443,11 @@ public class AccueilPH implements Runnable {
 
         ///////////////// Organisation des panels /////////////////
         panelHaut.add(deconnexion, BorderLayout.WEST);
-        panelHaut.add(presentation, BorderLayout.CENTER);
-        panelHaut.add(ajoutActe, BorderLayout.EAST);
+        // panelHaut.add(presentation, BorderLayout.NORTH);
+        panelHaut.add(prez, BorderLayout.CENTER);
+        //  panelHaut.add(ajoutActe, BorderLayout.EAST);
 
-        panelGauche.add(panTriFin, BorderLayout.NORTH);
+        //panelGauche.add(panTriFin, BorderLayout.NORTH);
         panelGauche.add(panHistorique);
 
         panelFin.add(panelHaut, BorderLayout.NORTH);
@@ -479,6 +500,8 @@ public class AccueilPH implements Runnable {
                     System.out.println(s);
 
                     panelDetail.add(panelFiche);
+                    accueil.validate();
+                    accueil.repaint();
                 }
             }
         });
