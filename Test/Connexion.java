@@ -26,9 +26,9 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
  * @author lenal
  */
 public class Connexion implements Runnable {
-    
+
     //Listerner 
-    protected VerifierConnexion verification; 
+    protected VerifierConnexion verification;
 
     private static final Color LIGHT_BLUE = new Color(100, 180, 200);
     private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 200);
@@ -39,7 +39,8 @@ public class Connexion implements Runnable {
     protected JPasswordField jPasswordField1 = new JPasswordField(); // Le champ de texte pour remplir son mdp. Cela cache les caractères écrits
 
     // Creation message d'erreur 
-    protected JLabel erreur = new JLabel("Le nom d'utilisateur ou le mot de passe est incorrect ");
+    protected JLabel erreur = new JLabel("");
+    
 
     protected JButton Valider; //bouton se connecter
 
@@ -73,7 +74,7 @@ public class Connexion implements Runnable {
         JLabel mdp = new JLabel("Mot de passe : "); // Le texte "Mot de passe :"
         mdp.setFont(new Font("Bookman Old Style", Font.PLAIN, 18));
 
-        erreur.setForeground(Color.RED);
+        erreur.setForeground(Color.red);
 
         Valider = new JButton("Se connecter"); // Le bouton "Se connecter"
         //   Valider.setBackground(new Color(100, 180, 180));  //Pour changer la couleur du bouton 
@@ -89,14 +90,19 @@ public class Connexion implements Runnable {
         /*3- Ajout de ces composants en spécifiant les contraintes de type GridBagConstraints. */
         GridBagConstraints gbc = new GridBagConstraints();
 
-       gbc.gridx = 1;
+        gbc.gridx = 1;
         gbc.gridy = 0;
-       gbc.insets = new Insets(50, 0, 5, 0);
+        gbc.insets = new Insets(0, 0, 5, 0);
         gbc.weighty = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel.add(connexionTexte, gbc);
+
+        gbc.insets = new Insets(100, 0, 5, 0);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel.add(erreur, gbc);
+        //erreur.setVisible(false);
         
-        
+
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets = new Insets(15, 23, 0, 15);
@@ -133,30 +139,29 @@ public class Connexion implements Runnable {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gbc.insets = new Insets(15, 23, 0, 15);
+        gbc.insets = new Insets(0, 23, 0, 15);
 //        gbc.weighty = 1.1;
         gbc.anchor = GridBagConstraints.PAGE_START;
-                              
+
         jPanel3.add(jPanel, gbc);
-        
+
         gbc.gridx = 1;
         gbc.gridy = 2;
-        gbc.insets = new Insets(15, 23, 0, 15);
+        gbc.insets = new Insets(15, 23, 15, 15);
 //        gbc.weighty = 1.1;
         gbc.anchor = GridBagConstraints.PAGE_START;
-                
-        jPanel3.add(jPanel2,gbc);
+
+        jPanel3.add(jPanel2, gbc);
 
         connexion.add(jPanel3, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
 
         jPanel3.setBackground(LIGHT_BLUE2);
         jPanel2.setBackground(LIGHT_BLUE2);
-                jPanel.setOpaque(false);
+        jPanel.setOpaque(false);
 
-                
-                // Mise en place des Listeners
-                verification = new VerifierConnexion(this); 
-                Valider.addActionListener(verification);
+        // Mise en place des Listeners
+        verification = new VerifierConnexion(this);
+        Valider.addActionListener(verification);
     }
 
 }
