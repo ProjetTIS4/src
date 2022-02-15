@@ -6,8 +6,9 @@
 package NF;
 
 import NF.Patient.Sexe;
+import NF.Personnel.Poste;
 import java.util.Calendar;
-import java.util.Date;
+ 
 
 /**
  *
@@ -27,6 +28,10 @@ public class test {
        System.out.println(patient.getEntreeServie());
    System.out.println(rightNow.getTime());
        System.out.println(patient.toString());
+       
+       Personnel p=new Personnel("ttt","fff","cardiologie",Poste.PHService,"lll","yyy");
+       System.out.println(p.getNomService());
+       
    //     LocalDate current_date = LocalDate.now();
   //          System.out.println("Current date: "+current_date);
 

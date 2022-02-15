@@ -12,6 +12,7 @@ import java.time.LocalDate;
  * @author manon
  */
 public class Date {
+
     private int jour;
     private int mois;
     private int annee;
@@ -19,13 +20,20 @@ public class Date {
     private int minutes;
     private LocalDate dateDuJour;
 
-
     public Date(int jour, int mois, int annee, int heure, int minutes) {
         this.jour = jour;
         this.mois = mois;
         this.annee = annee;
         this.heure = heure;
         this.minutes = minutes;
+    }
+
+    public Date(int jour, int mois, int annee) {
+        this.jour = jour;
+        this.mois = mois;
+        this.annee = annee;
+        this.heure = 0;
+        this.minutes = 0;
     }
 
     public String toString() {
@@ -61,17 +69,17 @@ public class Date {
         }
     }
 
-    public String anneeToString(){
+    public String anneeToString() {
         String annee = "" + dateDuJour.getYear();
         annee = "" + annee.charAt(2) + annee.charAt(3);
         return annee;
     }
-    
-    public String moisToString(){
-        String txt=Integer.toString(this.getMois());
+
+    public String moisToString() {
+        String txt = Integer.toString(this.getMois());
         return txt;
     }
-    
+
     // precondition : 'o' est une instance de 'Date' :
     public int compareTo(Object o) {
         Date d = (Date) o;

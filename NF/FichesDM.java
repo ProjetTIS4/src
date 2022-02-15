@@ -68,5 +68,40 @@ public class FichesDM {
     public Date getDate() {
         return date;
     }
+ public void setPHResponsable(Personnel PH) {
+       this.PHResponsable=PH;
+    }
 
+    public void setPatient(Patient p) {
+        this.patient=p;
+    }
+
+    public void setObservations(String obs) {
+       this.observations=obs;
+    }
+
+ 
+    public void setPrescriptions(String pres) {
+        this.prescriptions=pres;
+    }
+
+    public void setOperations(String op) {
+        this.operations=op;
+    }
+
+    public void setResultats(String res) {
+        this.resultats=res;
+    }
+
+    public void isLettreDeSortie(Boolean b) {
+        this.lettreDeSortie=b;
+    }
+
+    public void setCorrespondance(String cor) {
+       this.correspondance=cor;
+    }
+
+    public void setDate(Date d) {
+       this.date=d;
+    }
 }

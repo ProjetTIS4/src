@@ -9,40 +9,23 @@ package NF;
  *
  * @author lenal
  */
-public class Service{
-
- public enum NomService {
-        ANESTHESIOLOGIE,
-        CARDIOLOGIE,
-        DERMATOLOGIE,
-        GERONTOLOGIE,
-        GYNECOLOGIE,
-        HEMATOLOGIE,
-        NEUROLOGIE,
-        PEDIATRIE,
-        RADIOLOGIE,
-        UROLOGIE,
-        ONCOLOGIE,
-        MEDECINE,
-        CHIRURGIE,
-        URGENCES,
-        PNEUMOLOGIE,
-        OBSTETRIE,
-        LaboratoireAnalyse,
-        GASTROENTEROLOGIE;
-
-    }
-
-public nomService getNomService(String service){
-        String txt=service;
-        Service servicef=null;
-        for(Service s : Service.values()){
-            if (s.name().equals(txt)){
-                servicef=s;
-            }
-        }        
-        return servicef;
-    }
-
-
+public enum NomService {
+    ANESTHESIOLOGIE,
+    CARDIOLOGIE,
+    CHIRURGIE,
+    DERMATOLOGIE,
+    GASTROENTEROLOGIE,
+    GERONTOLOGIE,
+    GYNECOLOGIE,
+    HEMATOLOGIE,
+    LaboratoireAnalyse,
+    MEDECINE,
+    NEUROLOGIE,
+    OBSTETRIE,
+    ONCOLOGIE,
+    PEDIATRIE,
+    PNEUMOLOGIE,
+    RADIOLOGIE,
+    UROLOGIE,
+    URGENCES;
 }
