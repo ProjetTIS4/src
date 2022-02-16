@@ -9,6 +9,8 @@ package NF;
  *
  * @author lenal
  */
+public class Service{
+
  public enum NomService {
         ANESTHESIOLOGIE,
         CARDIOLOGIE,
@@ -30,3 +32,17 @@ package NF;
         GASTROENTEROLOGIE;
 
     }
+
+public nomService getNomService(String service){
+        String txt=service;
+        Service servicef=null;
+        for(Service s : Service.values()){
+            if (s.name().equals(txt)){
+                servicef=s;
+            }
+        }        
+        return servicef;
+    }
+
+
+}

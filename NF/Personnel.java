@@ -5,7 +5,6 @@
  */
 package NF;
 
-import NF.NomService;
 
 /**
  *
@@ -87,6 +86,17 @@ public class Personnel extends Personne {
         } else {
             return false;
         }
+    }
+    
+    public Poste setPoste(String poste){
+        String txt=poste;
+        Poste postef=null;
+        for(Poste p : Poste.values()){
+            if (p.name().equals(txt)){
+                postef=p;
+            }
+        }        
+        return postef;
     }
 
 }
