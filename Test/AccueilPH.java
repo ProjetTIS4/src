@@ -12,7 +12,7 @@ package Test;
 import NF.DM;
 import NF.Date;
 import NF.FichesDM;
-import NF.NomService;
+import NF.Service.NomService;
 import NF.Patient;
 import NF.Patient.Sexe;
 import java.awt.BorderLayout;
@@ -67,7 +67,7 @@ public class AccueilPH implements Runnable {
     protected JFrame accueil;
 
 // Variable pour la couleur des fenêtres
-    private static final Color LIGHT_BLUE = new Color(100, 180, 200);
+    private static final Color LIGHT_BLUE = new Color(100, 180, 200,150);
 
     //Autres variables
     protected Personnel p;
@@ -504,11 +504,173 @@ public class AccueilPH implements Runnable {
 
             //  DM.add(panelDMHaut);
             ////////////////s/ Panel DMA /////////////////
-            JPanel DMA = new JPanel(new BorderLayout());
-            TitledBorder title2;
-            title2 = BorderFactory.createTitledBorder("Informations générales");
+             //Création du Panel du haut de la partie DMA
+            JPanel panelDMAHaut = new JPanel((new GridLayout(1, 2)));
+            panelDMAHaut.setBackground(LIGHT_BLUE);
+
+            //Création du Panel contenant les informations du Patient
+            JPanel panelInfoPatient2 = new JPanel();
+            TitledBorder titleInfo2 = BorderFactory.createTitledBorder("informations du patient");
+            panelInfoPatient2.setBorder(titleInfo2);
+            panelInfoPatient2.setBackground(LIGHT_BLUE);
+
+            JPanel panelTest2 = new JPanel(new GridBagLayout());
+
+            //Image
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.insets = new Insets(00, 0, 0, 0);
+            gbc.anchor = GridBagConstraints.CENTER;
+
+            iconeH = new ImageIcon("src/Annexes/homme.png");
+
+            Image img2DMA = iconeH.getImage(); // Convertissemnt pour pouvoir redimensionner
+            Image newimg2DMA = img2DMA.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+            iconeH = new ImageIcon(newimg2DMA); // On reconvertit
+            JLabel image2DMA = new JLabel(iconeH);
+
+            iconeF = new ImageIcon("src/Annexes/femme.png");
+            Image imgFDMA = iconeF.getImage(); // Convertissemnt pour pouvoir redimensionner
+            Image newimgFDMA = imgFDMA.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image     
+            iconeF = new ImageIcon(newimgFDMA); // On reconvertit
+
+            panelTest2.add(image2DMA, gbc);
+
+// Nom
+            //gbc.gridx = 1;
+            gbc.gridy = 1;
+            gbc.ipadx = 0;
+            gbc.insets = new Insets(20, 20, 0, 0);
+            gbc.anchor = GridBagConstraints.WEST;
+            // gbc.weighty = 1;
+            //gbc.anchor = GridBagConstraints.CENTER;
+
+            JLabel nomDMA = new JLabel("Nom : ");
+            nomDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
+            JLabel nom2DMA = new JLabel(patient.getNom());
+            JPanel patientNomDMA = new JPanel();
+            patientNomDMA.setLayout(new BoxLayout(patientNomDMA, BoxLayout.X_AXIS));
+            patientNomDMA.add(nomDMA);
+            patientNomDMA.add(nom2DMA);
+
+            panelTest2.add(patientNomDMA, gbc);
+            patientNomDMA.setBackground(LIGHT_BLUE);
+
+// Prénom
+            gbc.insets = new Insets(0, 20, 0, 0);
+            gbc.gridy = 2;
+
+            JLabel prenomDMA = new JLabel("Prénom :");
+            prenom.setFont(new Font("Cambria", Font.PLAIN, 18));
+            JLabel prenom2DMA = new JLabel(patient.getPrenom());
+            JPanel pPrenomDMA = new JPanel();
+            pPrenomDMA.setLayout(new BoxLayout(pPrenomDMA, BoxLayout.X_AXIS));
+            pPrenomDMA.add(prenomDMA);
+            pPrenomDMA.add(prenom2DMA);
+
+            panelTest2.add(pPrenomDMA, gbc);
+            pPrenomDMA.setBackground(LIGHT_BLUE);
+//Sexe
+            gbc.gridy = 3;
+
+            JLabel sexeDMA = new JLabel("Sexe : ");
+            sexe.setFont(new Font("Cambria", Font.PLAIN, 18));
+            JLabel sexeInfoDMA = new JLabel("" + patient.getSexe());
+            JPanel patientSexeDMA = new JPanel();
+            patientSexeDMA.setLayout(new BoxLayout(patientSexeDMA, BoxLayout.X_AXIS));
+            patientSexeDMA.add(sexeDMA);
+            patientSexeDMA.add(sexeInfoDMA);
+
+            panelTest2.add(patientSexeDMA, gbc);
+            patientSexeDMA.setBackground(LIGHT_BLUE);
+
+//Date de naissance
+            gbc.gridy = 4;
+
+            JLabel dateDMA = new JLabel("Date de naissance :");
+            date.setFont(new Font("Cambria", Font.PLAIN, 18));
+            JLabel dateInfoDMA = new JLabel(patient.stringDate());
+            JPanel patientDateDMA = new JPanel();
+            patientDateDMA.setLayout(new BoxLayout(patientDateDMA, BoxLayout.X_AXIS));
+            patientDateDMA.add(dateDMA);
+            patientDateDMA.add(dateInfoDMA);
+
+            panelTest2.add(patientDateDMA, gbc);
+            patientDateDMA.setBackground(LIGHT_BLUE);
+
+            //Adresse
+            gbc.gridy = 5;
+
+            JLabel adresseDMA = new JLabel("Adresse :");
+            adresse.setFont(new Font("Cambria", Font.PLAIN, 18));
+            JLabel adresseInfoDMA = new JLabel(patient.getAdresse());
+//            adresseInfo.setPreferredSize(new Dimension(130, 80));
+//            adresseInfo.setLineWrap(true);
+//            adresseInfo.setEditable(false);
+            adresseInfo.setBackground(LIGHT_BLUE);
+            JPanel patientAdresseDMA = new JPanel();
+            patientAdresseDMA.setLayout(new BoxLayout(patientAdresseDMA, BoxLayout.X_AXIS));
+            patientAdresseDMA.add(adresse);
+            patientAdresseDMA.add(adresseInfo);
+
+            panelTest2.add(patientAdresseDMA, gbc);
+            patientAdresseDMA.setBackground(LIGHT_BLUE);
+
+            panelInfoPatient2.add(panelTest2);
+            panelTest2.setBackground(LIGHT_BLUE);
+
+            //Création du Panel contenant la liste des DMAs du patient 
+            JPanel panelListe2 = new JPanel(new BorderLayout());
+            TitledBorder titleListe2 = BorderFactory.createTitledBorder("Liste des DMAs");
+            panelListe2.setBorder(titleListe2);
+            panelListe2.setBackground(LIGHT_BLUE);
+
+            JTable tableauDMA = new JTable(new ModelTableauDM());
+            JScrollPane tDMA = new JScrollPane(tableauDMA);
+            tDMA.setOpaque(true);
+            tableauDMA.setBackground(LIGHT_BLUE);
+            tDMA.setBackground(LIGHT_BLUE);
+            panelListe2.add(tDMA);
+
+            // Ajout des deux précédents panels au premier
+            panelDMAHaut.add(panelInfoPatient2);
+            panelDMAHaut.add(panelListe2);
+            panelDMAHaut.setPreferredSize(new Dimension(200, 300));
+
+            //Création du Panel avec les détails du DMA sur lequel on a cliqué
+            JPanel panelDetail2 = new JPanel(new BorderLayout());
+            TitledBorder titleDetail2 = BorderFactory.createTitledBorder("Détails de ce DMA");
+            panelDetail2.setBorder(titleDetail2);
+            panelDetail2.setBackground(LIGHT_BLUE);
+
+            JPanel panelFicheDMA = new JPanel(new GridLayout(2, 2));
+
+            //Nature des Résultats
+            // gbc.gridx = 1;
+            gbc.gridy = 1;
+
+//            JTextArea resultatInfoDMA = new JTextArea(ficheDMA.getPrestations());
+//            resultatInfoDMA.setLineWrap(true);
+//            resultatInfoDMA.setEditable(false);
+//            JScrollPane resultDMA = new JScrollPane();
+//            resultDMA.setViewportView(resultatInfoDMA);
+//            JPanel ficheResultatDMA = new JPanel(new BorderLayout());
+//            TitledBorder titleResDMA = BorderFactory.createTitledBorder("Nature des résultats");
+//            ficheResultatDMA.setBorder(titleResDMA);
+//            ficheResultatDMA.add(resultDMA);
+
+//            panelFicheDMA.add(ficheResultatDMA);
+//            ficheResultatDMA.setBackground(LIGHT_BLUE);
+
+            //Création du Panel DM
+            JSplitPane DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetail2);
+            //  DM.setResizeWeight(0.2);
+            TitledBorder title2 = BorderFactory.createTitledBorder("informations générales");
             DMA.setBorder(title2);
             DMA.setBackground(LIGHT_BLUE);
+
+            //  DM.add(panelDMHaut);
+
 
             ///////////////// Organisation des panels /////////////////
             panelHaut.add(deconnexion, BorderLayout.WEST);
@@ -574,9 +736,31 @@ public class AccueilPH implements Runnable {
 
                         }
 
+                        
+////Pour le DMA////
+                        nom2DMA.setText(patient.getNom());
+                        prenom2DMA.setText(patient.getPrenom());
+                        sexeInfoDMA.setText("" + patient.getSexe());
+                        dateInfoDMA.setText(patient.stringDate());
+                        adresseInfoDMA.setText(patient.getAdresse());
+
+                        if (patient.getSexe() == Sexe.HOMME) {
+                            image2DMA.setIcon(iconeH);
+                        } else {
+
+                            image2DMA.setIcon(iconeF);
+
+                        }
+
+
+                        
+                        
                         accueil.validate();
                         accueil.repaint();
 
+                        
+                      
+                        
                         try {
                             String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s;
                             Statement stm = con.createStatement();

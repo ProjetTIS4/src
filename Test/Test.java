@@ -19,6 +19,7 @@ public class Test {
     public static void main(String[] args) {
       SwingUtilities.invokeLater( new Connexion());
       //SwingUtilities.invokeLater( new AccueilPH());
+   // SwingUtilities.invokeLater( new AjouterActe());
       
 
 

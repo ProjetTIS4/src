@@ -5,13 +5,17 @@
  */
 package Test;
 
+import Test.RoundedCornerBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,16 +35,17 @@ public class Connexion implements Runnable {
     protected VerifierConnexion verification;
 
     private static final Color LIGHT_BLUE = new Color(100, 180, 200);
-    private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 200);
+    private static final Color CREAM = new Color(251, 245, 237);
+    private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 150);
     private static final Color WHITE = new Color(255, 255, 255);
+    private static final Color GRIS = new Color(225, 248, 255);
     JFrame connexion = new JFrame("Connexion");//Création de la fenêtre de connexion
 
-    protected JTextField textUtilisateur = new JTextField();  // Le champ de texte pour remplir le nom d'utilisateur
-    protected JPasswordField jPasswordField1 = new JPasswordField(); // Le champ de texte pour remplir son mdp. Cela cache les caractères écrits
+    protected JTextField textUtilisateur ; // Le champ de texte pour remplir le nom d'utilisateur
+    protected JPasswordField jPasswordField1 ; // Le champ de texte pour remplir son mdp. Cela cache les caractères écrits
 
     // Creation message d'erreur 
     protected JLabel erreur = new JLabel("");
-    
 
     protected JButton Valider; //bouton se connecter
 
@@ -77,7 +82,48 @@ public class Connexion implements Runnable {
         erreur.setForeground(Color.red);
 
         Valider = new JButton("Se connecter"); // Le bouton "Se connecter"
-        //   Valider.setBackground(new Color(100, 180, 180));  //Pour changer la couleur du bouton 
+        
+        textUtilisateur= new JTextField(){
+        @Override
+        protected void paintComponent(Graphics g) {
+            if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setPaint(getBackground());
+                g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
+                        0, 0, getWidth() - 1, getHeight() - 1));
+                g2.dispose();
+            }
+            super.paintComponent(g);
+        }
+
+        @Override
+        public void updateUI() {
+            super.updateUI();
+            setOpaque(false);
+            setBorder(new RoundedCornerBorder());
+        }
+    };
+        
+        jPasswordField1 = new JPasswordField(){
+        @Override
+        protected void paintComponent(Graphics g) {
+            if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setPaint(getBackground());
+                g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
+                        0, 0, getWidth() - 1, getHeight() - 1));
+                g2.dispose();
+            }
+            super.paintComponent(g);
+        }
+
+        @Override
+        public void updateUI() {
+            super.updateUI();
+            setOpaque(false);
+            setBorder(new RoundedCornerBorder());
+        }
+    };
 
         textUtilisateur.setMaximumSize(new Dimension(500, textUtilisateur.getMinimumSize().height)); //On choisit la taille de la barre de texte utilisateur
         jPasswordField1.setMaximumSize(new Dimension(500, jPasswordField1.getMinimumSize().height)); //On choisit la taille de la barre de texte mot de passe
@@ -100,38 +146,25 @@ public class Connexion implements Runnable {
         gbc.insets = new Insets(100, 0, 5, 0);
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel.add(erreur, gbc);
-        //erreur.setVisible(false);
-        
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets = new Insets(15, 23, 0, 15);
-//        gbc.weighty = 1.1;
         gbc.anchor = GridBagConstraints.PAGE_START;
         jPanel2.add(utilisateur, gbc);
 
-//        gbc.gridx = 1;
-//        gbc.gridy = 2;
         gbc.insets = new Insets(45, 15, 0, 15);
         gbc.ipadx = 150;
         jPanel2.add(textUtilisateur, gbc);
 
-//        gbc.gridx = 1;
-//        gbc.gridy = 3;
-        // gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.insets = new Insets(75, 15, 0, 15);
         gbc.ipadx = 0;
         jPanel2.add(mdp, gbc);
 
-//        gbc.gridx = 1;
-//        gbc.gridy = 4;
         gbc.insets = new Insets(105, 15, 0, 15);
         gbc.ipadx = 150;
-//        gbc.anchor = GridBagConstraints.CENTER;
         jPanel2.add(jPasswordField1, gbc);
 
-//        gbc.gridx = 1;
-//        gbc.gridy = 1;
         gbc.insets = new Insets(160, 15, 40, 15);
         gbc.ipadx = 0;
         gbc.anchor = GridBagConstraints.PAGE_START;
@@ -140,7 +173,6 @@ public class Connexion implements Runnable {
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 23, 0, 15);
-//        gbc.weighty = 1.1;
         gbc.anchor = GridBagConstraints.PAGE_START;
 
         jPanel3.add(jPanel, gbc);
@@ -148,16 +180,17 @@ public class Connexion implements Runnable {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.insets = new Insets(15, 23, 15, 15);
-//        gbc.weighty = 1.1;
         gbc.anchor = GridBagConstraints.PAGE_START;
 
         jPanel3.add(jPanel2, gbc);
 
         connexion.add(jPanel3, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
 
-        jPanel3.setBackground(LIGHT_BLUE2);
+        jPanel3.setBackground(GRIS);
         jPanel2.setBackground(LIGHT_BLUE2);
+        // jPanel3.setBackground(LIGHT_BLUE2);
         jPanel.setOpaque(false);
+    
 
         // Mise en place des Listeners
         verification = new VerifierConnexion(this);
@@ -165,3 +198,4 @@ public class Connexion implements Runnable {
     }
 
 }
+

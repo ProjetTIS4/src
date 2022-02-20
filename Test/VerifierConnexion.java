@@ -5,7 +5,7 @@
  */
 package Test;
 
-import NF.NomService;
+import NF.Service.NomService;
 import NF.Personnel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -91,7 +91,7 @@ public class VerifierConnexion implements ActionListener {
                 if (utilisateur.equals(data[j][2])) {
                     if (mdp.equals(data[j][3])) { //On vérifie que le mot de passe est correct
                         c.connexion.setVisible(false);
-                        p= new Personnel(data[j][0], data[j][1], data[j][4], Personnel.Poste.PHService, data[j][2], data[j][3]);
+                        p= new Personnel(data[j][0], data[j][1], data[j][4], data[j][5], data[j][2], data[j][3]);
                         SwingUtilities.invokeLater(new AccueilPH(p));
 
                     } else {

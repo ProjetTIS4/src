@@ -15,6 +15,27 @@ public class Service {
     private String localisation;
     private String email;
     private NomService nom;
+    
+    public enum NomService {
+    ANESTHESIOLOGIE,
+    CARDIOLOGIE,
+    CHIRURGIE,
+    DERMATOLOGIE,
+    GASTROENTEROLOGIE,
+    GERONTOLOGIE,
+    GYNECOLOGIE,
+    HEMATOLOGIE,
+    LaboratoireAnalyse,
+    MEDECINE,
+    NEUROLOGIE,
+    OBSTETRIE,
+    ONCOLOGIE,
+    PEDIATRIE,
+    PNEUMOLOGIE,
+    RADIOLOGIE,
+    UROLOGIE,
+    URGENCES;
+}
 
     public Service(String tel, String localisation, String mail, NomService nom) {
         this.tel = tel;

@@ -5,7 +5,7 @@
  */
 package NF;
 
-import NF.NomService;
+import NF.Service.NomService;
 
 /**
  *
@@ -37,12 +37,12 @@ public class Personnel extends Personne {
     
 
 
-    public Personnel(String nom, String prenom, String service, Poste poste, String login, String mdp) {
+    public Personnel(String nom, String prenom, String service, String poste, String login, String mdp) {
         super(nom, prenom);
         setNomServiceString(service);
         this.mdp = mdp; // A envoyer dans la BDD
         this.login = login; // A envoyer dans la BDD
-        this.poste=poste;
+        setPoste(poste);
 
     }
 
@@ -100,10 +100,10 @@ public class Personnel extends Personne {
     }
     
     public void setPoste(String poste){
-        String txt=poste.toUpperCase();
+      //  String txt=poste.toUpperCase();
  
         for(Poste p : Poste.values()){
-            if (p.name().equals(txt)){
+            if (p.name().equals(poste)){
                 this.poste=p;
             }
         }        
