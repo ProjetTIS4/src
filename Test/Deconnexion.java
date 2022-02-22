@@ -25,7 +25,7 @@ public class Deconnexion implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         a.accueil.setVisible(false);
-        SwingUtilities.invokeLater(new Connexion());
+        SwingUtilities.invokeLater(new ConnexionCtrl());
 
     }
     

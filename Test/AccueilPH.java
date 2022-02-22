@@ -40,6 +40,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -52,6 +53,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -67,7 +69,7 @@ public class AccueilPH implements Runnable {
     protected JFrame accueil;
 
 // Variable pour la couleur des fenêtres
-    private static final Color LIGHT_BLUE = new Color(100, 180, 200,150);
+    private static final Color LIGHT_BLUE = new Color(100, 180, 200);
 
     //Autres variables
     protected Personnel p;
@@ -89,6 +91,7 @@ public class AccueilPH implements Runnable {
     @Override
     public void run() {
         ipp = "";
+//        initLookAndFeel();
 
         try {
             String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
@@ -150,6 +153,11 @@ public class AccueilPH implements Runnable {
 
             accueil.setBounds(0, 20, 1200, 900);
             accueil.setVisible(true);
+            Dimension tailleMoniteur = Toolkit.getDefaultToolkit().getScreenSize();
+            int longueur = tailleMoniteur.width * 2 / 3;
+            int hauteur = tailleMoniteur.height * 2 / 3;
+//régler la taille de JFrame à 2/3 la taille de l'écran
+            accueil.setSize(longueur, hauteur);
 
             JPanel panelFin = new JPanel(new BorderLayout());
 
@@ -416,7 +424,7 @@ public class AccueilPH implements Runnable {
             panelListe.setBorder(titleListe);
             panelListe.setBackground(LIGHT_BLUE);
 
-            JTable tableauDM = new JTable(new ModelTableauDM());
+            JTable tableauDM = new JTable();
             JScrollPane tDM = new JScrollPane(tableauDM);
             tDM.setOpaque(true);
             tableauDM.setBackground(LIGHT_BLUE);
@@ -483,7 +491,7 @@ public class AccueilPH implements Runnable {
             gbc.gridy = 1;
 
             JTextArea resultatInfo = new JTextArea(fiche.getResultats());
-               resultatInfo.setLineWrap(true);
+            resultatInfo.setLineWrap(true);
             resultatInfo.setEditable(false);
             JScrollPane result = new JScrollPane();
             result.setViewportView(resultatInfo);
@@ -504,7 +512,7 @@ public class AccueilPH implements Runnable {
 
             //  DM.add(panelDMHaut);
             ////////////////s/ Panel DMA /////////////////
-             //Création du Panel du haut de la partie DMA
+            //Création du Panel du haut de la partie DMA
             JPanel panelDMAHaut = new JPanel((new GridLayout(1, 2)));
             panelDMAHaut.setBackground(LIGHT_BLUE);
 
@@ -625,7 +633,7 @@ public class AccueilPH implements Runnable {
             panelListe2.setBorder(titleListe2);
             panelListe2.setBackground(LIGHT_BLUE);
 
-            JTable tableauDMA = new JTable(new ModelTableauDM());
+            JTable tableauDMA = new JTable();
             JScrollPane tDMA = new JScrollPane(tableauDMA);
             tDMA.setOpaque(true);
             tableauDMA.setBackground(LIGHT_BLUE);
@@ -658,10 +666,8 @@ public class AccueilPH implements Runnable {
 //            TitledBorder titleResDMA = BorderFactory.createTitledBorder("Nature des résultats");
 //            ficheResultatDMA.setBorder(titleResDMA);
 //            ficheResultatDMA.add(resultDMA);
-
 //            panelFicheDMA.add(ficheResultatDMA);
 //            ficheResultatDMA.setBackground(LIGHT_BLUE);
-
             //Création du Panel DM
             JSplitPane DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetail2);
             //  DM.setResizeWeight(0.2);
@@ -670,8 +676,6 @@ public class AccueilPH implements Runnable {
             DMA.setBackground(LIGHT_BLUE);
 
             //  DM.add(panelDMHaut);
-
-
             ///////////////// Organisation des panels /////////////////
             panelHaut.add(deconnexion, BorderLayout.WEST);
             // panelHaut.add(presentation, BorderLayout.NORTH);
@@ -698,7 +702,7 @@ public class AccueilPH implements Runnable {
                         int ligne = tableau.getSelectedRow();
                         Object cellule = tableau.getValueAt(ligne, 0);
                         String s = "" + cellule;
-                       
+
                         int k = 0;
                         while (data[k][0].equals(s) == false && k < data.length - 1) {
 
@@ -716,7 +720,7 @@ public class AccueilPH implements Runnable {
                             patient.setMedGen(data[k][8]);
 
                         }
-                       
+
                         panelMessage.setVisible(false);
                         tp.add("DM", DM);
                         tp.add("DMA", DMA);
@@ -736,7 +740,6 @@ public class AccueilPH implements Runnable {
 
                         }
 
-                        
 ////Pour le DMA////
                         nom2DMA.setText(patient.getNom());
                         prenom2DMA.setText(patient.getPrenom());
@@ -752,15 +755,9 @@ public class AccueilPH implements Runnable {
 
                         }
 
-
-                        
-                        
                         accueil.validate();
                         accueil.repaint();
 
-                        
-                      
-                        
                         try {
                             String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s;
                             Statement stm = con.createStatement();
@@ -800,10 +797,10 @@ public class AccueilPH implements Runnable {
 
                                 i++;
                             }
-                             
+
                             ipp = s;
                             tableauDM.setModel(new DefaultTableModel(dataDM, columns));
-                              observations2.setText("");
+                            observations2.setText("");
                             prescription2.setText("");
                             operationInfo.setText("");
                             resultatInfo.setText("");
@@ -824,7 +821,7 @@ public class AccueilPH implements Runnable {
                         int ligne = tableauDM.getSelectedRow();
                         Object cellule = tableauDM.getValueAt(ligne, 0);
                         String s = "" + cellule;
-                       
+
                         try {
                             String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
                             Statement stm = con.createStatement();
@@ -857,21 +854,19 @@ public class AccueilPH implements Runnable {
 
                                 i++;
                             }
-                            
+
                             fiche.setObservations(dataDMF[0][0]);
                             fiche.setPrescriptions(dataDMF[0][1]);
                             fiche.setOperations(dataDMF[0][2]);
                             fiche.setResultats(dataDMF[0][3]);
-                            
+
                             observations2.setText(fiche.getObservations());
                             prescription2.setText(fiche.getPrescriptions());
                             operationInfo.setText(fiche.getOperations());
                             resultatInfo.setText(fiche.getResultats());
-                            
-                           
-                           
+
                             panelDetail.add(panelFiche);
-                             panelFiche.setVisible(true);
+                            panelFiche.setVisible(true);
                             accueil.validate();
                             accueil.repaint();
 
@@ -887,4 +882,19 @@ public class AccueilPH implements Runnable {
             ex.printStackTrace();
         }
     }
+
+//        private static void initLookAndFeel() {
+//
+//        try {
+//            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (Exception e) {
+//            // If Nimbus is not available, you can set the GUI to another look and feel.
+//        }
+//
+//    }
 }
