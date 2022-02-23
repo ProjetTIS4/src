@@ -19,7 +19,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
@@ -155,6 +154,8 @@ public class AccueilCtrl implements Runnable {
                     SwingUtilities.invokeLater(new ConnexionCtrl());
                 }
             });
+            
+           
 
             a.getTableau().addMouseListener(new MouseAdapter() {
 
@@ -254,12 +255,12 @@ public class AccueilCtrl implements Runnable {
                                 String num = res.getString("numFiche");
 
                                 dataDM[i][0] = num;
-                                if (resul != null) {
+                                if (resul != "") {
                                     dataDM[i][1] = "true";
                                 } else {
                                     dataDM[i][1] = "VIDE";
                                 }
-                                if (lettre != null) {
+                                if (lettre != "") {
                                     dataDM[i][2] = "true";
                                 } else {
                                     dataDM[i][2] = "VIDE";
@@ -283,6 +284,15 @@ public class AccueilCtrl implements Runnable {
                 }
             }
             );
+            
+             a.getAjoutActe().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    
+                    SwingUtilities.invokeLater(new ActeCtrl(ipp,a));
+                }
+            });
 
             a.getTableauDM().addMouseListener(new MouseAdapter() {
 

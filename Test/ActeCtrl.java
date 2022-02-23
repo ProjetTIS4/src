@@ -5,14 +5,18 @@
  */
 package Test;
 
-
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.UIManager;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,9 +25,14 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 public class ActeCtrl implements Runnable {
 
     ActeGUI a;
+    String ipp;
+    AccueilGUI ac;
 
-    public ActeCtrl() {
+    public ActeCtrl(String ipp, AccueilGUI ac) {
         a = new ActeGUI();
+        this.ipp = ipp;
+        this.ac=ac;
+
     }
 
     @Override
@@ -40,10 +49,9 @@ public class ActeCtrl implements Runnable {
         }
 
         //////////////////////// Fenêtre ////////////////////////
-        a.getAjouterActe().setDefaultCloseOperation(EXIT_ON_CLOSE);
-       // a.getAjouterActe().setBounds(450, 190, 700, 460);
+        // a.getAjouterActe().setBounds(450, 190, 700, 460);
         a.getAjouterActe().setVisible(true);
-       a.getAjouterActe().setSize(480, 600);
+        a.getAjouterActe().setSize(500, 700);
 
         //////////////////////// Panel Date ////////////////////////
         a.getJour().addMouseListener(new MouseAdapter() {
@@ -137,7 +145,94 @@ public class ActeCtrl implements Runnable {
             }
         });
 
-        //////////////////////// Observations  ////////////////////////
+        //////////////////////// Bouton valider  ////////////////////////
+        a.getValider().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                try {
+
+                    String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                    String user = "DEV";
+                    String password = "SIH-mmlh2022";
+
+                    Connection con = DriverManager.getConnection(url, user, password);
+
+                    String requete = "INSERT INTO fichesDM (IPPatient,numFiche,observations,prescriptions,operations,resultats,correspondance,lettreDeSortie) VALUES ('" + ipp
+                            + "','"+a.getJour().getText()+a.getMois().getText()+"2','"
+                            + a.getObservations2().getText()
+                            + "','"
+                            + a.getPrestations2().getText()
+                            + "','"
+                            + a.getOperations2().getText()
+                            + "','"
+                            + a.getResultat2().getText()
+                            + "','','')";
+
+                    System.out.println(requete);
+                    Statement stm = con.createStatement();
+                    stm.executeUpdate(requete);
+                    
+                    a.getAjouterActe().dispose();
+                
+                  
+                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
+                            ResultSet res = stm.executeQuery(query);
+
+                            int taille = 0;
+
+                            if (res.next()) {
+                                taille = res.getInt("COUNT(*)");
+                            }
+
+                            String dataDM[][] = new String[taille][8];
+                            String columns[] = {"Date", "CR", "lettre sortie"};
+//            res2.close();
+
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp;
+                            res = stm.executeQuery(query);
+                            int i = 0;
+                            while (res.next()) {
+
+                                String resul = res.getString("resultats");
+
+                                String lettre = res.getString("lettreDeSortie");
+                                String num = res.getString("numFiche");
+
+                                dataDM[i][0] = num;
+                                if (resul != null) {
+                                    dataDM[i][1] = "true";
+                                } else {
+                                    dataDM[i][1] = "VIDE";
+                                }
+                                if (lettre != null) {
+                                    dataDM[i][2] = "true";
+                                } else {
+                                    dataDM[i][2] = "VIDE";
+                                }
+
+                                i++;
+                            }
+
+                           
+                            ac.getTableauDM().setModel(new DefaultTableModel(dataDM, columns));
+                            ac.getAccueil().validate();
+                          ac.getAccueil().repaint();
+                    
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+//finally {
+//                    try {
+//                        con.close();
+//                        stm.close();
+//                    } catch (Exception e) {
+//                    }
+//
+                //             }
+            }
+        });
+
     }
 
 }

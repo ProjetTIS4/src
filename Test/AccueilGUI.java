@@ -40,134 +40,145 @@ public class AccueilGUI {
 
 //// Panel
     private JFrame accueil;
-   private JPanel panelFin;
-   private JPanel panelDroit;
-   private JPanel panelGauche;
-   private JPanel panelHaut;
-   private JSplitPane splitPan;
-   private JPanel prez;
-   private JPanel panHistorique;
-   private JScrollPane t;
-   private JPanel panelMessage;
-   private JTabbedPane tp;
-   private JPanel panelDMHaut;
-   private JPanel panelInfoPatient;
-   private JPanel panelTest;
-   private JPanel patientNom;
-   private JPanel pPrenom;
-   private JPanel patientSexe;
-   private JPanel patientDate;
-   private JPanel patientAdresse;
-   private JPanel panelListe;
-   private JScrollPane tDM;
-   private JPanel panelDetail;
-   private JPanel panelFiche;
-   private JScrollPane obs;
-   private JPanel ficheObservations;
-   private JScrollPane pres;
-   private JPanel fichePrescription;
-  private  JScrollPane op;
-  private  JPanel ficheOperation;
-  private  JScrollPane result;
-   private JPanel ficheResultat;
-   private JSplitPane DM;
-   private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
-   private JPanel panelInfoPatient2; //Création du Panel contenant les informations du Patient
-   private JPanel panelTest2;
-   private JPanel patientNomDMA;
-   private JPanel pPrenomDMA;
-   private JPanel patientSexeDMA;
-   private JPanel patientDateDMA;
-   private JPanel patientAdresseDMA;
-   private JPanel panelListe2;
-   private JScrollPane tDMA;
-   private JPanel panelDetail2;
-  private  JPanel panelFicheDMA;
-  private  JSplitPane DMA;
+    private JPanel panelFin; // Panel que l'on ajoutera dans la fenêtre, dans lequel on va mettre les panels de droite, gauche( grâce au splitPane) et haut
+    private JPanel panelDroit;
+    private JPanel panelGauche;
+    private JPanel panelHaut;
+    private JSplitPane splitPan; //Panel central qui split le panel de droite et celui de gauche
 
-   private GridBagConstraints gbc;
+    private JPanel prez; // Panel avec le message de bienvenue
+
+    private JPanel panPatients; // Panel avec la liste des patients
+    private JScrollPane t;
+    private JPanel panelMessage; // Panel de droite qui invite à cliquer sur un patient dans la liste
+    private JTabbedPane tp; // Panel qui sépare le DM et le DMA en onglet 
+    //
+//Côté DM
+    private JPanel panelDMHaut;
+    private JPanel panelInfoPatient;
+    private JPanel panelTest;
+    private JPanel patientNom;
+    private JPanel pPrenom;
+    private JPanel patientSexe;
+    private JPanel patientDate;
+    private JPanel patientAdresse;
+    private JPanel panelListe;
+    private JPanel panelPlus;
+    private JScrollPane tDM;
+    private JPanel panelDetail;
+    private JPanel panelFiche;
+    private JScrollPane obs;
+    private JPanel ficheObservations;
+    private JScrollPane pres;
+    private JPanel fichePrescription;
+    private JScrollPane op;
+    private JPanel ficheOperation;
+    private JScrollPane result;
+    private JPanel ficheResultat;
+    private JSplitPane DM;
+    //
+//Côté DMA   
+    private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
+    private JPanel panelInfoPatient2; //Création du Panel contenant les informations du Patient
+    private JPanel panelTest2;
+    private JPanel patientNomDMA;
+    private JPanel pPrenomDMA;
+    private JPanel patientSexeDMA;
+    private JPanel patientDateDMA;
+    private JPanel patientAdresseDMA;
+    private JPanel panelListe2;
+    private JScrollPane tDMA;
+    private JPanel panelDetail2;
+    private JPanel panelFicheDMA;
+    private JSplitPane DMA;
+
+    private GridBagConstraints gbc;
 
 //// Haut
- private   ImageIcon image;
-  private  Image img;
-  private  Image newimg;
- private   JButton deconnexion;
- private   JLabel presentation;
- private   JLabel presentation2;
+    private ImageIcon image;
+    private Image img;
+    private Image newimg;
+    private JButton deconnexion;
+    private JLabel presentation;
+    private JLabel presentation2;
 
 //// Gauche 
-  private  TitledBorder titre3;
+    private TitledBorder titre3;
     private JTable tableau;
 
 //// Droite DM
     private ImageIcon iconeF;
     private ImageIcon iconeH;
 
-   private JLabel messageArrive;
-   private TitledBorder titleInfo;
+    private JLabel messageArrive;
+    private TitledBorder titleInfo;
 
     // Informations du patient 
-   private Image img2;
-  private  Image newimg2;
-  private  JLabel image2;
-  private  Image imgF;
-  private  Image newimgF;
- private   JLabel nom;
- private   JLabel nom2;
- private   JLabel prenom;
- private   JLabel prenom2;
- private   JLabel sexe;
- private   JLabel sexeInfo;
- private   JLabel date;
- private   JLabel dateInfo;
-  private  JLabel adresse;
-  private  JLabel adresseInfo;
+    private Image img2;
+    private Image newimg2;
+    private JLabel image2;
+    private Image imgF;
+    private Image newimgF;
+    private JLabel nom;
+    private JLabel nom2;
+    private JLabel prenom;
+    private JLabel prenom2;
+    private JLabel sexe;
+    private JLabel sexeInfo;
+    private JLabel date;
+    private JLabel dateInfo;
+    private JLabel adresse;
+    private JLabel adresseInfo;
 
     // Tableau des DMs
-   private TitledBorder titleListe;
- private   JTable tableauDM;
+    private TitledBorder titleListe;
+    private JTable tableauDM;
+    private JButton ajoutActe;
+    private ImageIcon plus;
+    private Image plusIm;
+    private Image plusImFin;
 
     //Détails des DMs
-   private TitledBorder titleDetail;
-  private  JTextArea observations2;
-  private  TitledBorder titleObs;
- private   JTextArea prescription2;
- private   TitledBorder titlePresc;
- private   JTextArea operationInfo;
- private   TitledBorder titleOp;
- private   JTextArea resultatInfo;
- private   TitledBorder titleRes;
+    private TitledBorder titleDetail;
+    private JTextArea observations2;
+    private TitledBorder titleObs;
+    private JTextArea prescription2;
+    private TitledBorder titlePresc;
+    private JTextArea operationInfo;
+    private TitledBorder titleOp;
+    private JTextArea resultatInfo;
+    private TitledBorder titleRes;
 
-   private TitledBorder title;
+    private TitledBorder title;
 
 //// Droite DMA
-  private  TitledBorder titleInfo2;
- private   Image img2DMA;
- private   Image newimg2DMA;
- private   JLabel image2DMA;
- private   Image imgFDMA;
- private   Image newimgFDMA;
+    private TitledBorder titleInfo2;
+    private Image img2DMA;
+    private Image newimg2DMA;
+    private JLabel image2DMA;
+    private Image imgFDMA;
+    private Image newimgFDMA;
 
     //Informations du patient
-  private  JLabel nomDMA;
-  private  JLabel nom2DMA;
-  private  JLabel prenomDMA;
-  private  JLabel prenom2DMA;
-  private  JLabel sexeDMA;
-  private  JLabel sexeInfoDMA;
-  private  JLabel dateDMA;
-  private  JLabel dateInfoDMA;
-  private  JLabel adresseDMA;
-  private  JLabel adresseInfoDMA;
+    private JLabel nomDMA;
+    private JLabel nom2DMA;
+    private JLabel prenomDMA;
+    private JLabel prenom2DMA;
+    private JLabel sexeDMA;
+    private JLabel sexeInfoDMA;
+    private JLabel dateDMA;
+    private JLabel dateInfoDMA;
+    private JLabel adresseDMA;
+    private JLabel adresseInfoDMA;
 
     // Tableau des DMAs
-  private  TitledBorder titleListe2;
-  private  JTable tableauDMA;
+    private TitledBorder titleListe2;
+    private JTable tableauDMA;
 
     //Détails des DMAs
-  private  TitledBorder titleDetail2;
+    private TitledBorder titleDetail2;
 
-  private  TitledBorder title2;
+    private TitledBorder title2;
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
@@ -180,17 +191,26 @@ public class AccueilGUI {
         prez = new JPanel(new GridLayout(2, 1));
         tp = new JTabbedPane();
         panelTest = new JPanel(new GridBagLayout());
-        panHistorique = new JPanel(new BorderLayout());
+        panPatients = new JPanel(new BorderLayout());
         panelMessage = new JPanel(new GridBagLayout());
+
+////Côté DM
         panelDMHaut = new JPanel((new GridLayout(1, 2)));
+
+        ///
         panelInfoPatient = new JPanel(); //Création du Panel contenant les informations du Patient
+        //
         patientNom = new JPanel();
         pPrenom = new JPanel();
         patientSexe = new JPanel();
         patientDate = new JPanel();
         patientAdresse = new JPanel();
+        ///
         panelListe = new JPanel(new BorderLayout());
+        panelPlus = new JPanel(new BorderLayout());
+        ///
         panelDetail = new JPanel(new BorderLayout());
+        //
         panelFiche = new JPanel(new GridLayout(2, 2));
         obs = new JScrollPane();
         ficheObservations = new JPanel(new BorderLayout());
@@ -200,7 +220,10 @@ public class AccueilGUI {
         ficheOperation = new JPanel(new BorderLayout());
         result = new JScrollPane();
         ficheResultat = new JPanel(new BorderLayout());
+        //
         DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelDetail);   //Création du Panel DM
+        //
+        ////Côté DMA
         panelDMAHaut = new JPanel((new GridLayout(1, 2)));  //Création du Panel du haut de la partie DMA
         panelInfoPatient2 = new JPanel(); //Création du Panel contenant les informations du Patient
         panelTest2 = new JPanel(new GridBagLayout());
@@ -215,8 +238,8 @@ public class AccueilGUI {
         panelFicheDMA = new JPanel(new GridLayout(2, 2));
         DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetail2);
 
-        splitPan.setResizeWeight(0.2); 
-        
+        splitPan.setResizeWeight(0.2);
+
         gbc = new GridBagConstraints();
 
 // Panel Haut //
@@ -237,10 +260,14 @@ public class AccueilGUI {
         presentation2.setHorizontalAlignment(SwingConstants.CENTER);
         presentation2.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 
+
+
+        
+
 ////////////////////////////Panel Gauche ////////////////////////////
         ///////////////// Panel Historique /////////////////
-        titre3 = BorderFactory.createTitledBorder("Historique des visites");
-        panHistorique.setBorder(titre3);
+        titre3 = BorderFactory.createTitledBorder("Liste des patients");
+        panPatients.setBorder(titre3);
         tableau = new JTable();
         t = new JScrollPane(tableau);
         t.setOpaque(true);
@@ -298,15 +325,25 @@ public class AccueilGUI {
         patientAdresse.setLayout(new BoxLayout(patientAdresse, BoxLayout.X_AXIS));
 
 //Création du Panel contenant la liste des DMs du patient 
-        titleListe = BorderFactory.createTitledBorder("Liste des DMs");
+        titleListe = BorderFactory.createTitledBorder("Liste des actes");
         panelListe.setBorder(titleListe);
 
         tableauDM = new JTable();
         tDM = new JScrollPane(tableauDM);
         tDM.setOpaque(true);
+        
+                plus = new ImageIcon("src/Annexes/plus.png");
+        plusIm = plus.getImage(); // Convertissemnt pour pouvoir redimensionner
+        plusImFin = plusIm.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        plus = new ImageIcon(plusImFin); // On reconvertit
+        
+        ajoutActe = new JButton(plus);
+        ajoutActe.setContentAreaFilled(false);
+        ajoutActe.setBorderPainted(true);
+        ajoutActe.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
 
 //Création du Panel avec les détails du DM sur lequel on a cliqué
-        titleDetail = BorderFactory.createTitledBorder("Détails de ce DM");
+        titleDetail = BorderFactory.createTitledBorder("Détails de cet acte");
         panelDetail.setBorder(titleDetail);
 
 // Observations
@@ -415,14 +452,13 @@ public class AccueilGUI {
 //            panelFicheDMA.add(ficheResultatDMA);
 //            ficheResultatDMA.setBackground(LIGHT_BLUE);
 //Création du Panel DMA
-        
         title2 = BorderFactory.createTitledBorder("informations générales");
         DMA.setBorder(title2);
 
 ///////////////////// On ajoute les éléments les uns dans les autres ///////////////////// 
         prez.add(presentation);
         prez.add(presentation2);
-        panHistorique.add(t, BorderLayout.CENTER);
+        panPatients.add(t, BorderLayout.CENTER);
 
         panelMessage.add(messageArrive);
         panelDroit.add(panelMessage, BorderLayout.CENTER);
@@ -472,6 +508,9 @@ public class AccueilGUI {
 
         panelInfoPatient.add(panelTest);
         panelListe.add(tDM);
+
+        panelPlus.add(ajoutActe, BorderLayout.EAST);
+        panelListe.add(panelPlus,BorderLayout.NORTH);
 
         panelDMHaut.add(panelInfoPatient);
         panelDMHaut.add(panelListe);
@@ -534,7 +573,7 @@ public class AccueilGUI {
 
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
-        panelGauche.add(panHistorique);
+        panelGauche.add(panPatients);
         panelFin.add(panelHaut, BorderLayout.NORTH);
         panelFin.add(splitPan, BorderLayout.CENTER);
 
@@ -548,9 +587,9 @@ public class AccueilGUI {
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
         panelHaut.setBackground(LIGHT_BLUE);
         prez.setBackground(LIGHT_BLUE);
-      panelDroit.setBackground(LIGHT_BLUE);
-        panHistorique.setBackground(LIGHT_BLUE);
-       patientNom.setBackground(LIGHT_BLUE);
+        panelDroit.setBackground(LIGHT_BLUE);
+        panPatients.setBackground(LIGHT_BLUE);
+        patientNom.setBackground(LIGHT_BLUE);
         panelInfoPatient.setBackground(LIGHT_BLUE);
         panelMessage.setBackground(LIGHT_BLUE);
         panelDMHaut.setBackground(LIGHT_BLUE);
@@ -578,13 +617,12 @@ public class AccueilGUI {
         panelListe2.setBackground(LIGHT_BLUE);
         panelDetail2.setBackground(LIGHT_BLUE);
         DMA.setBackground(LIGHT_BLUE);
+        panelPlus.setBackground(LIGHT_BLUE);
 
-        
         t.setBackground(LIGHT_BLUE);
         tDMA.setBackground(LIGHT_BLUE);
         tableau.setBackground(LIGHT_BLUE);
         tableauDMA.setBackground(LIGHT_BLUE);
-
 
         ficheResultat.setBackground(LIGHT_BLUE);
     }
@@ -646,11 +684,11 @@ public class AccueilGUI {
     }
 
     public JPanel getPanHistorique() {
-        return panHistorique;
+        return panPatients;
     }
 
-    public void setPanHistorique(JPanel panHistorique) {
-        this.panHistorique = panHistorique;
+    public void setPanHistorique(JPanel panPatients) {
+        this.panPatients = panPatients;
     }
 
     public JScrollPane getT() {
@@ -1427,6 +1465,38 @@ public class AccueilGUI {
 
     public void setTitle2(TitledBorder title2) {
         this.title2 = title2;
+    }
+
+    public JButton getAjoutActe() {
+        return ajoutActe;
+    }
+
+    public void setAjoutActe(JButton ajoutActe) {
+        this.ajoutActe = ajoutActe;
+    }
+
+    public ImageIcon getPlus() {
+        return plus;
+    }
+
+    public void setPlus(ImageIcon plus) {
+        this.plus = plus;
+    }
+
+    public Image getPlusIm() {
+        return plusIm;
+    }
+
+    public void setPlusIm(Image plusIm) {
+        this.plusIm = plusIm;
+    }
+
+    public Image getPlusImFin() {
+        return plusImFin;
+    }
+
+    public void setPlusImFin(Image plusImFin) {
+        this.plusImFin = plusImFin;
     }
 
 }

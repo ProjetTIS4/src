@@ -11,8 +11,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -78,9 +81,14 @@ public class ActeGUI {
     private JTextArea resultat2;
     private JScrollPane resu;
 
+    ////////////Bouton Valider ///////////////
+    private JButton valider;
+    private ImageIcon validerImgIcon;
+
+
     public ActeGUI() {
         ajouterActe = new JFrame("Ajouter un acte");
-        ajouterActe.setMinimumSize(new Dimension(480,600));
+        ajouterActe.setMinimumSize(new Dimension(500, 700));
 //        ajouterActe.setPreferredSize(new Dimension(300, 100));
 
         panelDate = new JPanel(new FlowLayout());
@@ -91,7 +99,7 @@ public class ActeGUI {
         panelRes = new JPanel(new FlowLayout());
         jPanel2 = new JPanel(new GridBagLayout());
         jPanel3 = new JPanel(new GridBagLayout());
-         jPanel4 = new JPanel(new GridBagLayout());
+        jPanel4 = new JPanel(new GridBagLayout());
 
         date = new JLabel("Date : ");
         jour = new JTextField("JJ");
@@ -131,6 +139,14 @@ public class ActeGUI {
         resultat2.setLineWrap(true);
         resu = new JScrollPane();
         resu.setViewportView(resultat2);
+        
+        validerImgIcon = new ImageIcon("src/Annexes/valider.png");
+
+        
+        valider = new JButton(validerImgIcon);
+        valider.setContentAreaFilled(false);
+        valider.setBorderPainted(false);
+     
 
         panelDate.add(date);
         panelDate.add(jour);
@@ -183,8 +199,13 @@ public class ActeGUI {
         jPanel2.add(panelOp, gbc);
 
         gbc.gridy = 5;
-        gbc.insets = new Insets(0, 15, 15, 15);
+        gbc.insets = new Insets(0, 15, 0, 15);
         jPanel2.add(panelRes, gbc);
+        
+                gbc.gridy = 6;
+        gbc.insets = new Insets(0, 15, 15, 15);
+        gbc.anchor = GridBagConstraints.CENTER;
+        jPanel2.add(valider, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -439,4 +460,62 @@ public class ActeGUI {
     public void setResu(JScrollPane resu) {
         this.resu = resu;
     }
+
+    public TitledBorder getTitle2() {
+        return title2;
+    }
+
+    public void setTitle2(TitledBorder title2) {
+        this.title2 = title2;
+    }
+
+    public GridBagConstraints getGbc() {
+        return gbc;
+    }
+
+    public void setGbc(GridBagConstraints gbc) {
+        this.gbc = gbc;
+    }
+
+    public JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public void setjPanel2(JPanel jPanel2) {
+        this.jPanel2 = jPanel2;
+    }
+
+    public JPanel getjPanel3() {
+        return jPanel3;
+    }
+
+    public void setjPanel3(JPanel jPanel3) {
+        this.jPanel3 = jPanel3;
+    }
+
+    public JPanel getjPanel4() {
+        return jPanel4;
+    }
+
+    public void setjPanel4(JPanel jPanel4) {
+        this.jPanel4 = jPanel4;
+    }
+
+    public JButton getValider() {
+        return valider;
+    }
+
+    public void setValider(JButton valider) {
+        this.valider = valider;
+    }
+
+    public ImageIcon getValiderImgIcon() {
+        return validerImgIcon;
+    }
+
+    public void setValiderImgIcon(ImageIcon validerImgIcon) {
+        this.validerImgIcon = validerImgIcon;
+    }
+    
+    
 }

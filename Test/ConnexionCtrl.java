@@ -30,13 +30,12 @@ public class ConnexionCtrl implements Runnable {
     ConnexionGUI c;
 
     public ConnexionCtrl() {
-
+        initLookAndFeel(); // Appelle la fonction qui choisit le Look and Feel Nimbus 
         c = new ConnexionGUI();
+
     }
 
     public void run() {
-
-        initLookAndFeel(); // Appelle la fonction qui choisit le Look and Feel Nimbus 
 
         //////////////////////// Fenêtre ////////////////////////
         c.getConnexion().setBounds(450, 190, 700, 460);
@@ -123,7 +122,6 @@ public class ConnexionCtrl implements Runnable {
                         j = 0;
                     }
 
-                    System.out.println(data[0][0]);
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }

@@ -18,6 +18,7 @@ public class Service {
     
     public enum NomService {
     ANESTHESIOLOGIE,
+    ANAPATHOLOGIE,
     CARDIOLOGIE,
     CHIRURGIE,
     DERMATOLOGIE,
