@@ -5,17 +5,13 @@
  */
 package Test;
 
-import Test.RoundedCornerBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.geom.RoundRectangle2D;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,9 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  *
@@ -41,6 +34,7 @@ public class ConnexionGUI {
     private JPanel jPanel;
     private JPanel jPanel2;
     private JPanel jPanel3;
+    
 
     private JTextField textUtilisateur; // Le champ de texte pour remplir le nom d'utilisateur
     private JPasswordField jPasswordField1; // Le champ de texte pour remplir son mdp. Cela cache les caractères écrits
@@ -147,8 +141,8 @@ public class ConnexionGUI {
         jPanel2.setBackground(LIGHT_BLUE2);
         // jPanel3.setBackground(LIGHT_BLUE2);
         jPanel.setOpaque(false);
+    
     }
-
     public JFrame getConnexion() {
         return connexion;
     }

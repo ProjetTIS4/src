@@ -104,17 +104,17 @@ public class Patient extends Personne {
 
     public void setSexe(String sexe) {
         if (sexe.equals("HOMME")) {
-            this.sexe = Sexe.HOMME;}
-        else if (sexe.equals(("M"))) {
             this.sexe = Sexe.HOMME;
-        } 
-        else if (sexe.equals(("FEMME"))) {
+        } else if (sexe.equals(("M"))) {
+            this.sexe = Sexe.HOMME;
+        } else if (sexe.equals(("FEMME"))) {
             this.sexe = Sexe.FEMME;
-        }
-        else if (sexe.equals(("F"))) {
+        } else if (sexe.equals(("F"))) {
             this.sexe = Sexe.FEMME;
         }
     }
+
+
 
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
@@ -129,6 +129,8 @@ public class Patient extends Personne {
         dateNaissance = new Date(jour, mois, annee);
 
     }
+
+
 
     public void setIPP(String IPP) {
         this.IPP = IPP;

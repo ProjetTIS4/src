@@ -5,11 +5,8 @@
  */
 package Test;
 
-import NF.Service.NomService;
 import NF.Personnel;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -103,7 +100,7 @@ public class ConnexionCtrl implements Runnable {
                         if (mdp.equals(data[j][3])) { //On vérifie que le mot de passe est correct
                             c.getConnexion().setVisible(false);
                             p = new Personnel(data[j][0], data[j][1], data[j][4], data[j][5], data[j][2], data[j][3]);
-                            SwingUtilities.invokeLater(new AccueilPH(p));
+                            SwingUtilities.invokeLater(new AccueilCtrl(p));
 
                         } else {
 

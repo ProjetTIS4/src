@@ -20,15 +20,14 @@ public class FichesDM {
     private String operations;
     private String resultats;
     private boolean lettreDeSortie;
-    private String correspondance;
 
-    public FichesDM(Patient patient, String observation, String prescriptions, String operations, String resultats, String correspondance) {
+
+    public FichesDM(Patient patient, String observation, String prescriptions, String operations, String resultats) {
         this.patient = patient;
         this.observations = observation;
         this.prescriptions = prescriptions;
         this.operations = operations;
         this.resultats = resultats;
-        this.correspondance = correspondance;
         this.lettreDeSortie = false;
 
     }
@@ -61,9 +60,7 @@ public class FichesDM {
         return lettreDeSortie;
     }
 
-    public String getCorrespondance() {
-        return correspondance;
-    }
+
 
     public Date getDate() {
         return date;
@@ -97,9 +94,7 @@ public class FichesDM {
         this.lettreDeSortie=b;
     }
 
-    public void setCorrespondance(String cor) {
-       this.correspondance=cor;
-    }
+
 
     public void setDate(Date d) {
        this.date=d;

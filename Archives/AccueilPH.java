@@ -12,7 +12,6 @@ package Test;
 import NF.DM;
 import NF.Date;
 import NF.FichesDM;
-import NF.Service.NomService;
 import NF.Patient;
 import NF.Patient.Sexe;
 import java.awt.BorderLayout;
@@ -53,7 +52,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -80,7 +78,7 @@ public class AccueilPH implements Runnable {
     //Variable test pendant qu'on n'a pas de BDD
     Patient patient = new Patient("Fowler", "Sage", Sexe.FEMME, "5 avenue libération", new Date(23, 10, 1999));
     DM dm1 = new DM(patient);
-    FichesDM fiche = new FichesDM(patient, " obs", "prescription", "operation", "resultats", "correspondance");
+    FichesDM fiche = new FichesDM(patient, " obs", "prescription", "operation", "resultats");
 
     public AccueilPH(Personnel p) {
         this.p = p;

@@ -27,8 +27,8 @@ public class DM {
         return patient;
     }
 
-    public void addFiche(String observation, String prescriptions, String operations, String resultats, String correspondance){
-        listefiches.add(new FichesDM(patient, observation, prescriptions, operations,resultats, correspondance));
+    public void addFiche(String observation, String prescriptions, String operations, String resultats){
+        listefiches.add(new FichesDM(patient, observation, prescriptions, operations,resultats));
     }
 
 }
