@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +27,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
@@ -52,6 +54,9 @@ public class AccueilGUI {
     private JScrollPane t;
     private JPanel panelMessage; // Panel de droite qui invite à cliquer sur un patient dans la liste
     private JTabbedPane tp; // Panel qui sépare le DM et le DMA en onglet 
+    
+    private JPanel panelRecherche;
+    private JPanel panelRechercheDroit; // Panel contenant le bouton valider et le bouton retour
     //
 //Côté DM
     private JPanel panelDMHaut;
@@ -76,7 +81,7 @@ public class AccueilGUI {
     private JScrollPane result;
     private JPanel ficheResultat;
     private JSplitPane DM;
-     private JTabbedPane detailsDM; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
+    private JTabbedPane detailsDM; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
@@ -104,6 +109,12 @@ public class AccueilGUI {
     private JLabel presentation2;
 
 //// Gauche 
+    // Barre de recherche
+    private JTextField barreRecherche;
+    private JButton rechercher;
+    private JComboBox choix;
+    private JButton retour;
+    // Tableau patients
     private TitledBorder titre3;
     private JTable tableau;
 
@@ -194,6 +205,14 @@ public class AccueilGUI {
         panelTest = new JPanel(new GridBagLayout());
         panPatients = new JPanel(new BorderLayout());
         panelMessage = new JPanel(new GridBagLayout());
+        panelRecherche= new JPanel(new BorderLayout());
+        panelRechercheDroit = new JPanel(new GridLayout(1,2));
+
+//// Panel gauche
+        barreRecherche = new JTextField("Tapez votre recherche ici...");
+        rechercher = new JButton("🔍");
+        choix = new JComboBox();
+        retour = new JButton("↶");
 
 ////Côté DM
         panelDMHaut = new JPanel((new GridLayout(1, 2)));
@@ -213,7 +232,7 @@ public class AccueilGUI {
         panelDetail = new JPanel(new BorderLayout());
         detailsDM = new JTabbedPane();
         //
-       // panelFiche = new JPanel(new GridLayout(2, 2));
+        // panelFiche = new JPanel(new GridLayout(2, 2));
         obs = new JScrollPane();
         ficheObservations = new JPanel(new BorderLayout());
         pres = new JScrollPane();
@@ -262,11 +281,13 @@ public class AccueilGUI {
         presentation2.setHorizontalAlignment(SwingConstants.CENTER);
         presentation2.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 
-
-
-        
-
 ////////////////////////////Panel Gauche ////////////////////////////
+        ///////////////// Barre de recherche /////////////////
+        
+        barreRecherche.setForeground(Color.gray);
+        choix.addItem("Nom");
+        choix.addItem("Prénom");
+        
         ///////////////// Panel liste de patients /////////////////
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
@@ -333,12 +354,12 @@ public class AccueilGUI {
         tableauDM = new JTable();
         tDM = new JScrollPane(tableauDM);
         tDM.setOpaque(true);
-        
-                plus = new ImageIcon("src/Annexes/plus.png");
+
+        plus = new ImageIcon("src/Annexes/plus.png");
         plusIm = plus.getImage(); // Convertissemnt pour pouvoir redimensionner
         plusImFin = plusIm.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
         plus = new ImageIcon(plusImFin); // On reconvertit
-        
+
         ajoutActe = new JButton(plus);
         ajoutActe.setContentAreaFilled(false);
         ajoutActe.setBorderPainted(true);
@@ -350,7 +371,7 @@ public class AccueilGUI {
 
 // Observations
         observations2 = new JTextArea();
-        observations2.setMargin(new Insets(6,6,6,6));
+        observations2.setMargin(new Insets(6, 6, 6, 6));
         observations2.setLineWrap(true);
         observations2.setEditable(false);
         obs.setViewportView(observations2);
@@ -359,7 +380,7 @@ public class AccueilGUI {
 
 // Prescription
         prescription2 = new JTextArea();
-        prescription2.setMargin(new Insets(6,6,6,6));
+        prescription2.setMargin(new Insets(6, 6, 6, 6));
         prescription2.setLineWrap(true);
         prescription2.setEditable(false);
         pres.setViewportView(prescription2);
@@ -368,7 +389,7 @@ public class AccueilGUI {
 
 //Opération
         operationInfo = new JTextArea();
-        operationInfo.setMargin(new Insets(6,6,6,6));
+        operationInfo.setMargin(new Insets(6, 6, 6, 6));
         operationInfo.setLineWrap(true);
         operationInfo.setEditable(false);
         op.setViewportView(operationInfo);
@@ -377,7 +398,7 @@ public class AccueilGUI {
 
 //Résultats
         resultatInfo = new JTextArea();
-        resultatInfo.setMargin(new Insets(6,6,6,6));
+        resultatInfo.setMargin(new Insets(6, 6, 6, 6));
         resultatInfo.setLineWrap(true);
         resultatInfo.setEditable(false);
         result.setViewportView(resultatInfo);
@@ -468,6 +489,7 @@ public class AccueilGUI {
 
         panelMessage.add(messageArrive);
         panelDroit.add(panelMessage, BorderLayout.CENTER);
+       
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -516,17 +538,17 @@ public class AccueilGUI {
         panelListe.add(tDM);
 
         panelPlus.add(ajoutActe, BorderLayout.EAST);
-        panelListe.add(panelPlus,BorderLayout.NORTH);
+        panelListe.add(panelPlus, BorderLayout.NORTH);
 
         panelDMHaut.add(panelInfoPatient);
         panelDMHaut.add(panelListe);
         panelDMHaut.setPreferredSize(new Dimension(200, 300));
 
         ficheObservations.add(obs);
-        detailsDM.add("Observations",ficheObservations);
+        detailsDM.add("Observations", ficheObservations);
 
         fichePrescription.add(pres);
-        detailsDM.add("Prescriptions",fichePrescription);
+        detailsDM.add("Prescriptions", fichePrescription);
 
         ficheOperation.add(op);
         detailsDM.add("Opérations", ficheOperation);
@@ -580,6 +602,14 @@ public class AccueilGUI {
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
         panelGauche.add(panPatients);
+     
+        panelRechercheDroit.add(rechercher);  
+        panelRechercheDroit.add(retour);        
+        panelRecherche.add(barreRecherche,BorderLayout.CENTER);
+        
+        panelRecherche.add(panelRechercheDroit,BorderLayout.EAST);
+        panelRecherche.add(choix,BorderLayout.WEST);
+        panelGauche.add(panelRecherche,BorderLayout.NORTH);
         panelFin.add(panelHaut, BorderLayout.NORTH);
         panelFin.add(splitPan, BorderLayout.CENTER);
 
@@ -624,6 +654,8 @@ public class AccueilGUI {
         panelDetail2.setBackground(LIGHT_BLUE);
         DMA.setBackground(LIGHT_BLUE);
         panelPlus.setBackground(LIGHT_BLUE);
+        panelRecherche.setBackground(LIGHT_BLUE);
+        panelRechercheDroit.setBackground(LIGHT_BLUE);
 
         t.setBackground(LIGHT_BLUE);
         tDMA.setBackground(LIGHT_BLUE);
@@ -1528,7 +1560,53 @@ public class AccueilGUI {
     public void setDetailsDM(JTabbedPane detailsDM) {
         this.detailsDM = detailsDM;
     }
-    
-    
+
+    public JPanel getPanelRecherche() {
+        return panelRecherche;
+    }
+
+    public void setPanelRecherche(JPanel panelRecherche) {
+        this.panelRecherche = panelRecherche;
+    }
+
+    public JTextField getBarreRecherche() {
+        return barreRecherche;
+    }
+
+    public void setBarreRecherche(JTextField barreRecherche) {
+        this.barreRecherche = barreRecherche;
+    }
+
+    public JButton getRechercher() {
+        return rechercher;
+    }
+
+    public void setRechercher(JButton rechercher) {
+        this.rechercher = rechercher;
+    }
+
+    public JComboBox getChoix() {
+        return choix;
+    }
+
+    public void setChoix(JComboBox choix) {
+        this.choix = choix;
+    }
+
+    public JPanel getPanelRechercheDroit() {
+        return panelRechercheDroit;
+    }
+
+    public void setPanelRechercheDroit(JPanel panelRechercheDroit) {
+        this.panelRechercheDroit = panelRechercheDroit;
+    }
+
+    public JButton getRetour() {
+        return retour;
+    }
+
+    public void setRetour(JButton retour) {
+        this.retour = retour;
+    }
 
 }

@@ -10,8 +10,14 @@ import NF.FichesDM;
 import NF.Patient;
 import NF.Patient.Sexe;
 import NF.Personnel;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_CONTROL;
+import static java.awt.event.KeyEvent.VK_ENTER;
+import static java.awt.event.KeyEvent.VK_Z;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -34,9 +40,10 @@ public class AccueilCtrl implements Runnable {
     private AccueilGUI a;
     private Patient patient;
     private FichesDM fiche;
+    private int taille;
+    private String dataTable[][];
 
     private DefaultTableModel model;
-
 
     public AccueilCtrl(Personnel p) {
         this.a = new AccueilGUI();
@@ -58,7 +65,7 @@ public class AccueilCtrl implements Runnable {
             Statement stm = con.createStatement();
             ResultSet res = stm.executeQuery(query);
 
-            int taille = 0;
+            taille = 0;
 
             if (res.next()) {
                 taille = res.getInt("COUNT(IPP)");
@@ -67,7 +74,7 @@ public class AccueilCtrl implements Runnable {
             String data[][] = new String[taille][9];
             String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe"};
 //            res2.close();
-            String dataTable[][] = new String[taille][5];
+            dataTable = new String[taille][5];
             query = "SELECT * FROM patient";
             res = stm.executeQuery(query);
             int i = 0;
@@ -101,8 +108,6 @@ public class AccueilCtrl implements Runnable {
 
             model = new DefaultTableModel(dataTable, columns);
             a.getTableau().setModel(model);
-
-            
 
             //////// Régler la taille de la fenêtre et permettre d'arrêter le programme à la fermeture de la fenêtre
             a.getAccueil().setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -154,8 +159,6 @@ public class AccueilCtrl implements Runnable {
                     SwingUtilities.invokeLater(new ConnexionCtrl());
                 }
             });
-            
-           
 
             a.getTableau().addMouseListener(new MouseAdapter() {
 
@@ -284,14 +287,61 @@ public class AccueilCtrl implements Runnable {
                 }
             }
             );
-            
-             a.getAjoutActe().addMouseListener(new MouseAdapter() {
+            // Listener sur le bouton "+" pour ajouter un acte      
+
+            a.getAjoutActe().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
-                    
-                    SwingUtilities.invokeLater(new ActeCtrl(ipp,a));
+                    SwingUtilities.invokeLater(new ActeCtrl(ipp, a));
                 }
+            });
+
+            // Listener sur le bouuton rechercher 
+            a.getBarreRecherche().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    a.getBarreRecherche().setText("");
+                    a.getBarreRecherche().setForeground(Color.black);
+                }
+            });
+
+            a.getRechercher().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    recherche();
+                }
+            });
+
+            a.getRetour().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    model = new DefaultTableModel(dataTable, columns);
+                    a.getTableau().setModel(model);
+
+                }
+            });
+            
+            
+
+            a.getBarreRecherche().addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyChar() == VK_ENTER) {
+                        recherche();
+                    }
+                }
+
+                @Override
+                public void keyTyped(KeyEvent e) {
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                }
+
             });
 
             a.getTableauDM().addMouseListener(new MouseAdapter() {
@@ -370,7 +420,7 @@ public class AccueilCtrl implements Runnable {
         }
 
     }
-    
+
     public Sexe creerSexe(String sexe) {
         Sexe s = null;
         if (sexe.equals("HOMME")) {
@@ -384,6 +434,7 @@ public class AccueilCtrl implements Runnable {
         }
         return s;
     }
+
     public Date CreerDateNaissanceString(String date) {
         Date d = null;
 
@@ -393,5 +444,54 @@ public class AccueilCtrl implements Runnable {
 
         d = new Date(jour, mois, annee);
         return d;
+    }
+
+    public void recherche() {
+
+        String s = a.getBarreRecherche().getText();
+        String dataRecherche[][] = new String[taille][5];
+        String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe"};
+        int k = 0;
+        for (int i = 0; i < taille; i++) {
+            if (a.getChoix().getSelectedItem().equals("Nom")) {
+                s = s.toUpperCase();
+                if (dataTable[i][1].contains(s)) {
+
+                    dataRecherche[k][0] = dataTable[i][0];
+                    dataRecherche[k][1] = dataTable[i][1];
+                    dataRecherche[k][2] = dataTable[i][2];
+                    dataRecherche[k][3] = dataTable[i][3];
+                    dataRecherche[k][4] = dataTable[i][4];
+                    k++;
+
+                    model = new DefaultTableModel(dataRecherche, columns);
+                    a.getTableau().setModel(model);
+
+                } else if (s.equals("")) {
+                    model = new DefaultTableModel(dataTable, columns);
+                    a.getTableau().setModel(model);
+                }
+
+            } else {
+
+                if (dataTable[i][2].contains(s)) {
+
+                    dataRecherche[k][0] = dataTable[i][0];
+                    dataRecherche[k][1] = dataTable[i][1];
+                    dataRecherche[k][2] = dataTable[i][2];
+                    dataRecherche[k][3] = dataTable[i][3];
+                    dataRecherche[k][4] = dataTable[i][4];
+                    k++;
+
+                    model = new DefaultTableModel(dataRecherche, columns);
+                    a.getTableau().setModel(model);
+
+                } else if (s.equals("")) {
+                    model = new DefaultTableModel(dataTable, columns);
+                    a.getTableau().setModel(model);
+                }
+            }
+
+        }
     }
 }

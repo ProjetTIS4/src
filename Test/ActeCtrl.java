@@ -222,14 +222,7 @@ public class ActeCtrl implements Runnable {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-//finally {
-//                    try {
-//                        con.close();
-//                        stm.close();
-//                    } catch (Exception e) {
-//                    }
-//
-                //             }
+
             }
         });
 
