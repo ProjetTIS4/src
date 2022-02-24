@@ -76,6 +76,7 @@ public class AccueilGUI {
     private JScrollPane result;
     private JPanel ficheResultat;
     private JSplitPane DM;
+     private JTabbedPane detailsDM; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
@@ -210,8 +211,9 @@ public class AccueilGUI {
         panelPlus = new JPanel(new BorderLayout());
         ///
         panelDetail = new JPanel(new BorderLayout());
+        detailsDM = new JTabbedPane();
         //
-        panelFiche = new JPanel(new GridLayout(2, 2));
+       // panelFiche = new JPanel(new GridLayout(2, 2));
         obs = new JScrollPane();
         ficheObservations = new JPanel(new BorderLayout());
         pres = new JScrollPane();
@@ -265,7 +267,7 @@ public class AccueilGUI {
         
 
 ////////////////////////////Panel Gauche ////////////////////////////
-        ///////////////// Panel Historique /////////////////
+        ///////////////// Panel liste de patients /////////////////
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
         tableau = new JTable();
@@ -348,6 +350,7 @@ public class AccueilGUI {
 
 // Observations
         observations2 = new JTextArea();
+        observations2.setMargin(new Insets(6,6,6,6));
         observations2.setLineWrap(true);
         observations2.setEditable(false);
         obs.setViewportView(observations2);
@@ -356,6 +359,7 @@ public class AccueilGUI {
 
 // Prescription
         prescription2 = new JTextArea();
+        prescription2.setMargin(new Insets(6,6,6,6));
         prescription2.setLineWrap(true);
         prescription2.setEditable(false);
         pres.setViewportView(prescription2);
@@ -364,6 +368,7 @@ public class AccueilGUI {
 
 //Opération
         operationInfo = new JTextArea();
+        operationInfo.setMargin(new Insets(6,6,6,6));
         operationInfo.setLineWrap(true);
         operationInfo.setEditable(false);
         op.setViewportView(operationInfo);
@@ -372,6 +377,7 @@ public class AccueilGUI {
 
 //Résultats
         resultatInfo = new JTextArea();
+        resultatInfo.setMargin(new Insets(6,6,6,6));
         resultatInfo.setLineWrap(true);
         resultatInfo.setEditable(false);
         result.setViewportView(resultatInfo);
@@ -517,16 +523,16 @@ public class AccueilGUI {
         panelDMHaut.setPreferredSize(new Dimension(200, 300));
 
         ficheObservations.add(obs);
-        panelFiche.add(ficheObservations);
+        detailsDM.add("Observations",ficheObservations);
 
         fichePrescription.add(pres);
-        panelFiche.add(fichePrescription);
+        detailsDM.add("Prescriptions",fichePrescription);
 
         ficheOperation.add(op);
-        panelFiche.add(ficheOperation);
+        detailsDM.add("Opérations", ficheOperation);
 
         ficheResultat.add(result);
-        panelFiche.add(ficheResultat);
+        detailsDM.add("Résultats", ficheResultat);
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -1498,5 +1504,31 @@ public class AccueilGUI {
     public void setPlusImFin(Image plusImFin) {
         this.plusImFin = plusImFin;
     }
+
+    public JPanel getPanPatients() {
+        return panPatients;
+    }
+
+    public void setPanPatients(JPanel panPatients) {
+        this.panPatients = panPatients;
+    }
+
+    public JPanel getPanelPlus() {
+        return panelPlus;
+    }
+
+    public void setPanelPlus(JPanel panelPlus) {
+        this.panelPlus = panelPlus;
+    }
+
+    public JTabbedPane getDetailsDM() {
+        return detailsDM;
+    }
+
+    public void setDetailsDM(JTabbedPane detailsDM) {
+        this.detailsDM = detailsDM;
+    }
+    
+    
 
 }

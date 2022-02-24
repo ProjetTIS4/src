@@ -199,12 +199,12 @@ public class ActeCtrl implements Runnable {
                                 String num = res.getString("numFiche");
 
                                 dataDM[i][0] = num;
-                                if (resul != null) {
+                                if (resul != "") {
                                     dataDM[i][1] = "true";
                                 } else {
                                     dataDM[i][1] = "VIDE";
                                 }
-                                if (lettre != null) {
+                                if (lettre != "") {
                                     dataDM[i][2] = "true";
                                 } else {
                                     dataDM[i][2] = "VIDE";

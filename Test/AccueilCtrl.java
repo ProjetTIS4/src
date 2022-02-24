@@ -275,7 +275,7 @@ public class AccueilCtrl implements Runnable {
                             a.getPrescription2().setText("");
                             a.getOperationInfo().setText("");
                             a.getResultatInfo().setText("");
-                            a.getPanelFiche().setVisible(false);
+                            a.getDetailsDM().setVisible(false);
 
                         } catch (SQLException ex) {
                             ex.printStackTrace();
@@ -351,8 +351,8 @@ public class AccueilCtrl implements Runnable {
                             a.getOperationInfo().setText(fiche.getOperations());
                             a.getResultatInfo().setText(fiche.getResultats());
 
-                            a.getPanelDetail().add(a.getPanelFiche());
-                            a.getPanelFiche().setVisible(true);
+                            a.getPanelDetail().add(a.getDetailsDM());
+                            a.getDetailsDM().setVisible(true);
                             a.getAccueil().validate();
                             a.getAccueil().repaint();
 
