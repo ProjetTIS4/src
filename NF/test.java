@@ -6,8 +6,10 @@
 package NF;
 
 import NF.Patient.Sexe;
+import NF.Personnel.Poste;
 import java.util.Calendar;
-
+import NF.Service.NomService;
+ 
 
 /**
  *
@@ -20,13 +22,17 @@ public class test {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Date date = new Date (20,10,1999);
+        Date date = new Date (1998,12,25);
        Calendar rightNow = Calendar.getInstance();
        Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
        System.out.println(patient.getIPP());
        System.out.println(patient.getEntreeServie());
    System.out.println(rightNow.getTime());
        System.out.println(patient.toString());
+       
+     //  Personnel p=new Personnel("ttt","fff","cardiologie",Poste.PHService,"lll","yyy");
+  //     System.out.println(p.getNomService());
+       
    //     LocalDate current_date = LocalDate.now();
   //          System.out.println("Current date: "+current_date);
 

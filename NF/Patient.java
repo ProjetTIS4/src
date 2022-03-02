@@ -5,7 +5,6 @@
  */
 package NF;
 
-
 import java.time.LocalDate;
 
 /**
@@ -53,8 +52,8 @@ public class Patient extends Personne {
     }
 
     public String toString() {
-        return getNom().toUpperCase() + " " + getPrenom().substring(0, 1).toUpperCase() + getPrenom().substring(1).toLowerCase() + " " + 
-                dateNaissance.getJour()+"/"+(dateNaissance.getMois())+"/"+dateNaissance.getAnnee();
+        return getNom().toUpperCase() + " " + getPrenom().substring(0, 1).toUpperCase() + getPrenom().substring(1).toLowerCase() + " "
+                + dateNaissance.getJour() + "/" + (dateNaissance.getMois()) + "/" + dateNaissance.getAnnee();
     }
 
     public boolean equals(Object o) {
@@ -81,10 +80,10 @@ public class Patient extends Personne {
     public Date getDate() {
         return dateNaissance;
     }
-    
-    public String stringDate(){
-    
-        return(""+ dateNaissance.getJour()+"/"+dateNaissance.getMois()+"/"+dateNaissance.getAnnee());
+
+    public String stringDate() {
+
+        return ("" + dateNaissance.getJour() + "/" + dateNaissance.getMois() + "/" + dateNaissance.getAnnee());
     }
 
     public String getIPP() {
@@ -106,13 +105,35 @@ public class Patient extends Personne {
     public void setSexe(String sexe) {
         if (sexe.equals("HOMME")) {
             this.sexe = Sexe.HOMME;
+        } else if (sexe.equals(("M"))) {
+            this.sexe = Sexe.HOMME;
         } else if (sexe.equals(("FEMME"))) {
+            this.sexe = Sexe.FEMME;
+        } else if (sexe.equals(("F"))) {
             this.sexe = Sexe.FEMME;
         }
     }
 
+
+
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
+    }
+
+    public void setDateNaissanceString(String date) {
+
+        int jour = Integer.parseInt("" + date.charAt(0) + date.charAt(1));
+        int mois = Integer.parseInt("" + date.charAt(3) + date.charAt(4));
+        int annee = Integer.parseInt("" + date.charAt(6) + date.charAt(7) + date.charAt(8) + date.charAt(9));
+
+        dateNaissance = new Date(jour, mois, annee);
+
+    }
+
+
+
+    public void setIPP(String IPP) {
+        this.IPP = IPP;
     }
 
 }

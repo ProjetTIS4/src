@@ -14,8 +14,8 @@ import java.util.Vector;
 public class DPI {
 
     private Patient patient;
-    private DMA dma;
-    private DM dm;
+    private Vector<DMA> dma;
+    private Vector<DM> dm;
 
     public DPI(Patient patient) {
         this.patient = patient;
@@ -28,26 +28,25 @@ public class DPI {
         return patient;
     }
 
-    public DM getDm() {
+    public Vector<DM> getDm() {
         return dm;
     }
 
-    public DMA getDma() {
+    public Vector<DMA> getDma() {
         return dma;
     }
 
     
     public void addDMA(Personnel ph, Date date){
-        if(dma==null){
-            this.dma=new DMA(patient);
+
+            dma.add(new DMA(patient, date));
         }
         
-    }
     
-    public void addDM(){
-        if(dm==null){
-            this.dm=new DM(patient);
-        }
+    
+    public void addDM(Date date){
+            dm.add(new DM(patient, date));
+
     }
     
 }

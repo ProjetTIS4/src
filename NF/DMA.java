@@ -17,11 +17,14 @@ public class DMA {
 
     private Vector<FichesDMA> listefiches;
     private Patient patient;
+    private Date debut;
+    private Date fin;
 
-    public DMA(Patient patient) {
+    public DMA(Patient patient, Date debut) {
 
         this.patient = patient;
-
+        this.debut = debut;
+        this.fin = null;
     }
 
     public Vector<FichesDMA> getListefiches() {
@@ -32,7 +35,7 @@ public class DMA {
         return patient;
     }
 
-    public void addFiche(Date date, Personnel ph){
+    public void addFiche(Date date, Personnel ph) {
         listefiches.add(new FichesDMA(date, ph));
     }
 }
