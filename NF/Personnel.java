@@ -15,7 +15,7 @@ package NF;
  */
 public class Personnel extends Personne {
 
-    private NomService service;
+    private Service.NomService service;
     private Poste poste;
     private String mdp; // à envoyer dans la BDD
     private String login;
@@ -32,13 +32,16 @@ public class Personnel extends Personne {
         Pharmacien;
 
     }
+    
+    
 
 
-    public Personnel(String nom, String prenom, NomService service, Poste poste, String login, String mdp) {
+    public Personnel(String nom, String prenom, String service, Poste poste, String login, String mdp) {
         super(nom, prenom);
-        this.service = service;
+        setNomServiceString(service);
         this.mdp = mdp; // A envoyer dans la BDD
         this.login = login; // A envoyer dans la BDD
+        this.poste=poste;
 
     }
 
@@ -66,14 +69,21 @@ public class Personnel extends Personne {
         this.login = login;
     }
 
-    public NomService getNomService() {
+    public Service.NomService getNomService() {
 
         return service;
     }
 
-    public void setNomService(NomService service) {
+    public void setNomService(Service.NomService service) {
         this.service = service;
     }
+    
+        public void setNomServiceString(String service) {
+          for(Service.NomService s : Service.NomService.values()){
+            if (s.name().equals(service.toUpperCase())){
+                this.service=s;
+            }
+    }}
 
     public String toString() {
         return "Dr " + getPrenom() + " " + getNom() + ", " + getNomService().toString();
@@ -88,15 +98,17 @@ public class Personnel extends Personne {
         }
     }
     
-    public Poste setPoste(String poste){
-        String txt=poste;
-        Poste postef=null;
+
+    public void setPoste(String poste){
+        String txt=poste.toUpperCase();
+ 
         for(Poste p : Poste.values()){
             if (p.name().equals(txt)){
-                postef=p;
+                this.poste=p;
             }
         }        
-        return postef;
+     
+
     }
 
 }

@@ -16,6 +16,39 @@ public class Service {
     private String email;
     private NomService nom;
 
+    public enum NomService {
+        ANESTHESIOLOGIE,
+        CARDIOLOGIE,
+        DERMATOLOGIE,
+        GERONTOLOGIE,
+        GYNECOLOGIE,
+        HEMATOLOGIE,
+        NEUROLOGIE,
+        PEDIATRIE,
+        RADIOLOGIE,
+        UROLOGIE,
+        ONCOLOGIE,
+        MEDECINE,
+        CHIRURGIE,
+        URGENCES,
+        PNEUMOLOGIE,
+        OBSTETRIE,
+        LaboratoireAnalyse,
+        GASTROENTEROLOGIE;
+
+    }
+
+public NomService getNomService(String service){
+        String txt=service;
+        NomService servicef=null;
+        for(NomService s : NomService.values()){
+            if (s.name().equals(txt)){
+                servicef=s;
+            }
+        }        
+        return servicef;
+    }
+
     public Service(String tel, String localisation, String mail, NomService nom) {
         this.tel = tel;
         this.localisation = localisation;

@@ -13,7 +13,7 @@ public class Localisation {
 
     private int etage;
     private int chambre;
-    private NomService nom;
+    private Service.NomService nom;
     private Lit lit;
 
     public enum Lit {
@@ -21,7 +21,7 @@ public class Localisation {
         F
     }
 
-    public Localisation(int etage, int chambre, NomService nom, Lit lit) {
+    public Localisation(int etage, int chambre, Service.NomService nom, Lit lit) {
 
         this.etage = etage;
         this.chambre = chambre;
@@ -37,7 +37,7 @@ public class Localisation {
         return this.chambre;
     }
 
-    public NomService getService() {
+    public Service.NomService getService() {
         return this.nom;
     }
 
@@ -53,7 +53,7 @@ public class Localisation {
         this.chambre = chambre;
     }
 
-    public void setService(NomService nom) {
+    public void setService(Service.NomService nom) {
         this.nom = nom;
     }
 
