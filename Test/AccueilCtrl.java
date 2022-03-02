@@ -297,7 +297,7 @@ public class AccueilCtrl implements Runnable {
                 }
             });
 
-            // Listener sur le bouuton rechercher 
+            // Listener sur le bouton rechercher 
             a.getBarreRecherche().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {

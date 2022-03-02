@@ -10,10 +10,16 @@ package Archives;
  * @author lenal
  */
 import NF.DM;
+import NF.DMA;
 import NF.Date;
 import NF.FichesDM;
+
+import NF.FichesDMA;
+import NF.Service.NomService;
+
 import NF.Patient;
 import NF.Patient.Sexe;
+import NF.Personnel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,7 +38,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.border.TitledBorder;
-import NF.Personnel;
 import NF.Personnel.Poste;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -77,9 +82,16 @@ public class AccueilPH implements Runnable {
 
     //Variable test pendant qu'on n'a pas de BDD
     Patient patient = new Patient("Fowler", "Sage", Sexe.FEMME, "5 avenue libération", new Date(23, 10, 1999));
+    Poste poste= NF.Personnel.Poste.PHService;
+    Personnel medecin = new Personnel("Pol", "Paul", "Cardio", poste, "Polp", "Polp");
     DM dm1 = new DM(patient);
+<<<<<<< HEAD:Archives/AccueilPH.java
     FichesDM fiche = new FichesDM(patient, " obs", "prescription", "operation", "resultats");
 
+=======
+    FichesDM ficheDM = new FichesDM(patient, " obs", "prescription", "operation", "resultats", "correspondance");
+    //FichesDMA ficheDMA = new FichesDMA(new Date(23, 10, 1999), medecin );
+>>>>>>> manon:Test/AccueilPH.java
     public AccueilPH(Personnel p) {
         this.p = p;
         accueil = new JFrame("Accueil");
@@ -299,6 +311,8 @@ public class AccueilPH implements Runnable {
 
             JTabbedPane tp = new JTabbedPane();
             tp.setBackground(LIGHT_BLUE);
+            
+            
             ///////////////// Panel DM /////////////////
 
             //Création du Panel du haut de la partie DM
@@ -443,7 +457,7 @@ public class AccueilPH implements Runnable {
             JPanel panelFiche = new JPanel(new GridLayout(2, 2));
 
             // Observations
-            JTextArea observations2 = new JTextArea(fiche.getObservations());
+            JTextArea observations2 = new JTextArea(ficheDM.getObservations());
             observations2.setLineWrap(true);
             observations2.setEditable(false);
             JScrollPane obs = new JScrollPane();
@@ -457,7 +471,7 @@ public class AccueilPH implements Runnable {
             ficheObservations.setBackground(LIGHT_BLUE);
 
 // Prescription
-            JTextArea prescription2 = new JTextArea(fiche.getPrescriptions());
+            JTextArea prescription2 = new JTextArea(ficheDM.getPrescriptions());
             prescription2.setLineWrap(true);
             prescription2.setEditable(false);
             JScrollPane pres = new JScrollPane();
@@ -471,7 +485,7 @@ public class AccueilPH implements Runnable {
             fichePrescription.setBackground(LIGHT_BLUE);
 
 //Opération
-            JTextArea operationInfo = new JTextArea(fiche.getOperations());
+            JTextArea operationInfo = new JTextArea(ficheDM.getOperations());
             operationInfo.setLineWrap(true);
             operationInfo.setEditable(false);
             JScrollPane op = new JScrollPane();
@@ -488,7 +502,11 @@ public class AccueilPH implements Runnable {
             // gbc.gridx = 1;
             gbc.gridy = 1;
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             JTextArea resultatInfo = new JTextArea(fiche.getResultats());
+=======
+            JTextArea resultatInfo = new JTextArea(ficheDM.getResultats());
+>>>>>>> manon:Test/AccueilPH.java
             resultatInfo.setLineWrap(true);
             resultatInfo.setEditable(false);
             JScrollPane result = new JScrollPane();
@@ -509,18 +527,32 @@ public class AccueilPH implements Runnable {
             DM.setBackground(LIGHT_BLUE);
 
             //  DM.add(panelDMHaut);
+            
+            
+            
+            
+            
             ////////////////s/ Panel DMA /////////////////
             //Création du Panel du haut de la partie DMA
             JPanel panelDMAHaut = new JPanel((new GridLayout(1, 2)));
             panelDMAHaut.setBackground(LIGHT_BLUE);
 
             //Création du Panel contenant les informations du Patient
+<<<<<<< HEAD:Archives/AccueilPH.java
             JPanel panelInfoPatient2 = new JPanel();
             TitledBorder titleInfo2 = BorderFactory.createTitledBorder("informations du patient");
             panelInfoPatient2.setBorder(titleInfo2);
             panelInfoPatient2.setBackground(LIGHT_BLUE);
 
             JPanel panelTest2 = new JPanel(new GridBagLayout());
+=======
+            JPanel panelInfoPatientDMA = new JPanel();
+            TitledBorder titleInfoDMA = BorderFactory.createTitledBorder("informations du patient");
+            panelInfoPatientDMA.setBorder(titleInfoDMA);
+            panelInfoPatientDMA.setBackground(LIGHT_BLUE);
+
+            JPanel panelTestDMA = new JPanel(new GridBagLayout());
+>>>>>>> manon:Test/AccueilPH.java
 
             //Image
             gbc.gridx = 0;
@@ -540,7 +572,11 @@ public class AccueilPH implements Runnable {
             Image newimgFDMA = imgFDMA.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image     
             iconeF = new ImageIcon(newimgFDMA); // On reconvertit
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelTest2.add(image2DMA, gbc);
+=======
+            panelTestDMA.add(image2DMA, gbc);
+>>>>>>> manon:Test/AccueilPH.java
 
 // Nom
             //gbc.gridx = 1;
@@ -559,7 +595,11 @@ public class AccueilPH implements Runnable {
             patientNomDMA.add(nomDMA);
             patientNomDMA.add(nom2DMA);
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelTest2.add(patientNomDMA, gbc);
+=======
+            panelTestDMA.add(patientNomDMA, gbc);
+>>>>>>> manon:Test/AccueilPH.java
             patientNomDMA.setBackground(LIGHT_BLUE);
 
 // Prénom
@@ -567,58 +607,91 @@ public class AccueilPH implements Runnable {
             gbc.gridy = 2;
 
             JLabel prenomDMA = new JLabel("Prénom :");
+<<<<<<< HEAD:Archives/AccueilPH.java
             prenom.setFont(new Font("Cambria", Font.PLAIN, 18));
+=======
+            prenomDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
+>>>>>>> manon:Test/AccueilPH.java
             JLabel prenom2DMA = new JLabel(patient.getPrenom());
             JPanel pPrenomDMA = new JPanel();
             pPrenomDMA.setLayout(new BoxLayout(pPrenomDMA, BoxLayout.X_AXIS));
             pPrenomDMA.add(prenomDMA);
             pPrenomDMA.add(prenom2DMA);
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelTest2.add(pPrenomDMA, gbc);
+=======
+            panelTestDMA.add(pPrenomDMA, gbc);
+>>>>>>> manon:Test/AccueilPH.java
             pPrenomDMA.setBackground(LIGHT_BLUE);
 //Sexe
             gbc.gridy = 3;
 
             JLabel sexeDMA = new JLabel("Sexe : ");
+<<<<<<< HEAD:Archives/AccueilPH.java
             sexe.setFont(new Font("Cambria", Font.PLAIN, 18));
+=======
+            sexeDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
+>>>>>>> manon:Test/AccueilPH.java
             JLabel sexeInfoDMA = new JLabel("" + patient.getSexe());
             JPanel patientSexeDMA = new JPanel();
             patientSexeDMA.setLayout(new BoxLayout(patientSexeDMA, BoxLayout.X_AXIS));
             patientSexeDMA.add(sexeDMA);
             patientSexeDMA.add(sexeInfoDMA);
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelTest2.add(patientSexeDMA, gbc);
+=======
+            panelTestDMA.add(patientSexeDMA, gbc);
+>>>>>>> manon:Test/AccueilPH.java
             patientSexeDMA.setBackground(LIGHT_BLUE);
 
 //Date de naissance
             gbc.gridy = 4;
 
             JLabel dateDMA = new JLabel("Date de naissance :");
+<<<<<<< HEAD:Archives/AccueilPH.java
             date.setFont(new Font("Cambria", Font.PLAIN, 18));
+=======
+            dateDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
+>>>>>>> manon:Test/AccueilPH.java
             JLabel dateInfoDMA = new JLabel(patient.stringDate());
             JPanel patientDateDMA = new JPanel();
             patientDateDMA.setLayout(new BoxLayout(patientDateDMA, BoxLayout.X_AXIS));
             patientDateDMA.add(dateDMA);
             patientDateDMA.add(dateInfoDMA);
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelTest2.add(patientDateDMA, gbc);
+=======
+            panelTestDMA.add(patientDateDMA, gbc);
+>>>>>>> manon:Test/AccueilPH.java
             patientDateDMA.setBackground(LIGHT_BLUE);
 
             //Adresse
             gbc.gridy = 5;
 
             JLabel adresseDMA = new JLabel("Adresse :");
+<<<<<<< HEAD:Archives/AccueilPH.java
             adresse.setFont(new Font("Cambria", Font.PLAIN, 18));
+=======
+            adresseDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
+>>>>>>> manon:Test/AccueilPH.java
             JLabel adresseInfoDMA = new JLabel(patient.getAdresse());
 //            adresseInfo.setPreferredSize(new Dimension(130, 80));
 //            adresseInfo.setLineWrap(true);
 //            adresseInfo.setEditable(false);
+<<<<<<< HEAD:Archives/AccueilPH.java
             adresseInfo.setBackground(LIGHT_BLUE);
+=======
+            adresseInfoDMA.setBackground(LIGHT_BLUE);
+>>>>>>> manon:Test/AccueilPH.java
             JPanel patientAdresseDMA = new JPanel();
             patientAdresseDMA.setLayout(new BoxLayout(patientAdresseDMA, BoxLayout.X_AXIS));
             patientAdresseDMA.add(adresse);
             patientAdresseDMA.add(adresseInfo);
 
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelTest2.add(patientAdresseDMA, gbc);
             patientAdresseDMA.setBackground(LIGHT_BLUE);
 
@@ -632,10 +705,26 @@ public class AccueilPH implements Runnable {
             panelListe2.setBackground(LIGHT_BLUE);
 
             JTable tableauDMA = new JTable();
+=======
+            panelTestDMA.add(patientAdresseDMA, gbc);
+            patientAdresseDMA.setBackground(LIGHT_BLUE);
+
+            panelInfoPatientDMA.add(panelTestDMA);
+            panelTestDMA.setBackground(LIGHT_BLUE);
+
+            //Création du Panel contenant la liste des DMAs du patient 
+            JPanel panelListeDMA = new JPanel(new BorderLayout());
+            TitledBorder titleListeDMA = BorderFactory.createTitledBorder("Liste des DMAs");
+            panelListeDMA.setBorder(titleListeDMA);
+            panelListeDMA.setBackground(LIGHT_BLUE);
+
+            JTable tableauDMA = new JTable(new ModelTableauDM());
+>>>>>>> manon:Test/AccueilPH.java
             JScrollPane tDMA = new JScrollPane(tableauDMA);
             tDMA.setOpaque(true);
             tableauDMA.setBackground(LIGHT_BLUE);
             tDMA.setBackground(LIGHT_BLUE);
+<<<<<<< HEAD:Archives/AccueilPH.java
             panelListe2.add(tDMA);
 
             // Ajout des deux précédents panels au premier
@@ -668,6 +757,30 @@ public class AccueilPH implements Runnable {
 //            ficheResultatDMA.setBackground(LIGHT_BLUE);
             //Création du Panel DM
             JSplitPane DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetail2);
+=======
+            panelListeDMA.add(tDMA);
+
+            // Ajout des deux précédents panels au premier
+            panelDMAHaut.add(panelInfoPatientDMA);
+            panelDMAHaut.add(panelListeDMA);
+            panelDMAHaut.setPreferredSize(new Dimension(200, 300));
+
+            //Création du Panel avec les détails du DMA sur lequel on a cliqué
+            JPanel panelDetailDMA = new JPanel(new BorderLayout());
+            TitledBorder titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
+            panelDetailDMA.setBorder(titleDetailDMA);
+            panelDetailDMA.setBackground(LIGHT_BLUE);
+
+            //JPanel panelFicheDMA = new JPanel(new GridLayout(2, 2));
+
+//Nature des Résultats
+            // gbc.gridx = 1;
+            gbc.gridy = 1;
+
+
+            //Création du Panel DMA
+            JSplitPane DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetailDMA);
+>>>>>>> manon:Test/AccueilPH.java
             //  DM.setResizeWeight(0.2);
             TitledBorder title2 = BorderFactory.createTitledBorder("informations générales");
             DMA.setBorder(title2);
@@ -724,6 +837,7 @@ public class AccueilPH implements Runnable {
                         tp.add("DMA", DMA);
                         panelDroit.add(tp);
 
+                        ////Pour le DM////
                         nom2.setText(patient.getNom());
                         prenom2.setText(patient.getPrenom());
                         sexeInfo.setText("" + patient.getSexe());
@@ -738,7 +852,11 @@ public class AccueilPH implements Runnable {
 
                         }
 
+<<<<<<< HEAD:Archives/AccueilPH.java
 ////Pour le DMA////
+=======
+                        ////Pour le DMA////
+>>>>>>> manon:Test/AccueilPH.java
                         nom2DMA.setText(patient.getNom());
                         prenom2DMA.setText(patient.getPrenom());
                         sexeInfoDMA.setText("" + patient.getSexe());
@@ -853,6 +971,7 @@ public class AccueilPH implements Runnable {
                                 i++;
                             }
 
+<<<<<<< HEAD:Archives/AccueilPH.java
                             fiche.setObservations(dataDMF[0][0]);
                             fiche.setPrescriptions(dataDMF[0][1]);
                             fiche.setOperations(dataDMF[0][2]);
@@ -862,6 +981,19 @@ public class AccueilPH implements Runnable {
                             prescription2.setText(fiche.getPrescriptions());
                             operationInfo.setText(fiche.getOperations());
                             resultatInfo.setText(fiche.getResultats());
+=======
+                            //Change les nfos dans la fiche DM crée au début
+                            ficheDM.setObservations(dataDMF[0][0]);
+                            ficheDM.setPrescriptions(dataDMF[0][1]);
+                            ficheDM.setOperations(dataDMF[0][2]);
+                            ficheDM.setResultats(dataDMF[0][3]);
+
+                            //affiche les infos qui viennent d'être récup
+                            observations2.setText(ficheDM.getObservations());
+                            prescription2.setText(ficheDM.getPrescriptions());
+                            operationInfo.setText(ficheDM.getOperations());
+                            resultatInfo.setText(ficheDM.getResultats());
+>>>>>>> manon:Test/AccueilPH.java
 
                             panelDetail.add(panelFiche);
                             panelFiche.setVisible(true);
@@ -876,6 +1008,74 @@ public class AccueilPH implements Runnable {
                 }
             }
             );
+            
+            tableauDMA.addMouseListener(new MouseAdapter() {
+
+                public void mouseClicked(MouseEvent me) {
+                    if (me.getClickCount() == 1) {
+                        int ligne = tableauDMA.getSelectedRow();
+                        Object cellule = tableauDMA.getValueAt(ligne, 0);
+                        String s = "" + cellule;
+
+                        try {
+                            String query = "SELECT COUNT(*) FROM fichesDMA WHERE IPPatient=" + ipp;
+                            Statement stm = con.createStatement();
+                            ResultSet res = stm.executeQuery(query);
+
+                            int taille = 0;
+
+                            if (res.next()) {
+                                taille = res.getInt("COUNT(*)");
+                            }
+
+                            String dataDMAF[][] = new String[taille][4];
+                            String columnsDMA[] = {"Liste des prestations"};
+//            res2.close();
+////////////////////////////il faut modifier pour récupérer les bonnes informations du DMa et non pas du DM pour les afficher correctement/////
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numFiche=" + s;
+                            res = stm.executeQuery(query);
+                            int i = 0;
+                            while (res.next()) {
+
+                                String prestations = res.getString("prestations");
+                                String pres2 = res.getString("prescriptions");
+                                String op2 = res.getString("operations");
+                                String resul2 = res.getString("resultats");
+
+                                dataDMAF[i][0] = obs2;
+                                dataDMAF[i][1] = pres2;
+                                dataDMAF[i][2] = op2;
+                                dataDMAF[i][3] = resul2;
+
+                                i++;
+                            }
+
+                            //Change les nfos dans la fiche DM crée au début
+                            ficheDM.setObservations(dataDMF[0][0]);
+                            ficheDM.setPrescriptions(dataDMF[0][1]);
+                            ficheDM.setOperations(dataDMF[0][2]);
+                            ficheDM.setResultats(dataDMF[0][3]);
+
+                            //affiche les infos qui viennent d'être récup
+                            observations2.setText(ficheDM.getObservations());
+                            prescription2.setText(ficheDM.getPrescriptions());
+                            operationInfo.setText(ficheDM.getOperations());
+                            resultatInfo.setText(ficheDM.getResultats());
+
+                            panelDetail.add(panelFiche);
+                            panelFiche.setVisible(true);
+                            accueil.validate();
+                            accueil.repaint();
+
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+                }
+            }
+            );
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

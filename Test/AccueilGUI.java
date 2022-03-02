@@ -85,16 +85,18 @@ public class AccueilGUI {
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
-    private JPanel panelInfoPatient2; //Création du Panel contenant les informations du Patient
+    private JPanel panelInfoPatientDMA; //Création du Panel contenant les informations du Patient
+    private JPanel panelTestDMA;
     private JPanel panelTest2;
     private JPanel patientNomDMA;
     private JPanel pPrenomDMA;
     private JPanel patientSexeDMA;
     private JPanel patientDateDMA;
     private JPanel patientAdresseDMA;
-    private JPanel panelListe2;
+    private JPanel panelListeDMA;
+    private JPanel panelPlusDMA;
     private JScrollPane tDMA;
-    private JPanel panelDetail2;
+    private JPanel panelDetailDMA;
     private JPanel panelFicheDMA;
     private JSplitPane DMA;
 
@@ -146,9 +148,13 @@ public class AccueilGUI {
     private TitledBorder titleListe;
     private JTable tableauDM;
     private JButton ajoutActe;
+    private JButton ajoutActeDMA;
     private ImageIcon plus;
+    private ImageIcon plusDMA;
     private Image plusIm;
+    private Image plusImDMA;
     private Image plusImFin;
+    private Image plusImFinDMA;
 
     //Détails des DMs
     private TitledBorder titleDetail;
@@ -164,7 +170,7 @@ public class AccueilGUI {
     private TitledBorder title;
 
 //// Droite DMA
-    private TitledBorder titleInfo2;
+    private TitledBorder titleInfoDMA;
     private Image img2DMA;
     private Image newimg2DMA;
     private JLabel image2DMA;
@@ -184,13 +190,13 @@ public class AccueilGUI {
     private JLabel adresseInfoDMA;
 
     // Tableau des DMAs
-    private TitledBorder titleListe2;
+    private TitledBorder titleListeDMA;
     private JTable tableauDMA;
 
     //Détails des DMAs
-    private TitledBorder titleDetail2;
+    private TitledBorder titleDetailDMA;
+    private TitledBorder titleDMA;
 
-    private TitledBorder title2;
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
@@ -198,11 +204,11 @@ public class AccueilGUI {
         panelDroit = new JPanel(new BorderLayout());
         panelGauche = new JPanel(new BorderLayout());
         panelHaut = new JPanel(new BorderLayout());
-        splitPan = new JSplitPane(
-                JSplitPane.HORIZONTAL_SPLIT, panelGauche, panelDroit);
+        splitPan = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelGauche, panelDroit);
         prez = new JPanel(new GridLayout(2, 1));
         tp = new JTabbedPane();
         panelTest = new JPanel(new GridBagLayout());
+        panelTestDMA = new JPanel(new GridBagLayout());
         panPatients = new JPanel(new BorderLayout());
         panelMessage = new JPanel(new GridBagLayout());
         panelRecherche= new JPanel(new BorderLayout());
@@ -244,20 +250,28 @@ public class AccueilGUI {
         //
         DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelDetail);   //Création du Panel DM
         //
-        ////Côté DMA
+        
+        
+////Côté DMA
         panelDMAHaut = new JPanel((new GridLayout(1, 2)));  //Création du Panel du haut de la partie DMA
-        panelInfoPatient2 = new JPanel(); //Création du Panel contenant les informations du Patient
-        panelTest2 = new JPanel(new GridBagLayout());
+        
+        panelInfoPatientDMA = new JPanel(); //Création du Panel contenant les informations du Patient
+        
+        //panelTest2 = new JPanel(new GridBagLayout());
         patientNomDMA = new JPanel();
         pPrenomDMA = new JPanel();
         patientSexeDMA = new JPanel();
         patientDateDMA = new JPanel();
         patientAdresseDMA = new JPanel();
-        panelListe2 = new JPanel(new BorderLayout()); //Création du Panel contenant la liste des DMAs du patient 
+        
+        panelListeDMA = new JPanel(new BorderLayout());
+        panelPlusDMA = new JPanel(new BorderLayout());
+        
+        panelListeDMA = new JPanel(new BorderLayout()); //Création du Panel contenant la liste des DMAs du patient 
         tDMA = new JScrollPane(tableauDMA);
-        panelDetail2 = new JPanel(new BorderLayout()); //Création du Panel avec les détails du DMA sur lequel on a cliqué
+        panelDetailDMA = new JPanel(new BorderLayout()); //Création du Panel avec les détails du DMA sur lequel on a cliqué
         panelFicheDMA = new JPanel(new GridLayout(2, 2));
-        DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetail2);
+        DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetailDMA);
 
         splitPan.setResizeWeight(0.2);
 
@@ -411,8 +425,8 @@ public class AccueilGUI {
 
 ///////////////// Panel DMA /////////////////
         //Création du Panel contenant les informations du Patient
-        titleInfo2 = BorderFactory.createTitledBorder("informations du patient");
-        panelInfoPatient2.setBorder(titleInfo2);
+        titleInfoDMA = BorderFactory.createTitledBorder("informations du patient");
+        panelInfoPatientDMA.setBorder(titleInfoDMA);
 
 //Image
         iconeH = new ImageIcon("src/Annexes/homme.png");
@@ -434,19 +448,19 @@ public class AccueilGUI {
 
 // Prénom
         prenomDMA = new JLabel("Prénom :");
-        prenom.setFont(new Font("Cambria", Font.PLAIN, 18));
+        prenomDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
         prenom2DMA = new JLabel();
         pPrenomDMA.setLayout(new BoxLayout(pPrenomDMA, BoxLayout.X_AXIS));
 
 //Sexe
         sexeDMA = new JLabel("Sexe : ");
-        sexe.setFont(new Font("Cambria", Font.PLAIN, 18));
+        sexeDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
         sexeInfoDMA = new JLabel();
         patientSexeDMA.setLayout(new BoxLayout(patientSexeDMA, BoxLayout.X_AXIS));
 
 //Date de naissance
         dateDMA = new JLabel("Date de naissance :");
-        date.setFont(new Font("Cambria", Font.PLAIN, 18));
+        dateDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
         dateInfoDMA = new JLabel();
         patientDateDMA.setLayout(new BoxLayout(patientDateDMA, BoxLayout.X_AXIS));
 
@@ -457,14 +471,27 @@ public class AccueilGUI {
         patientAdresseDMA.setLayout(new BoxLayout(patientAdresseDMA, BoxLayout.X_AXIS));
 
 //Création du Panel contenant la liste des DMAs du patient 
-        titleListe2 = BorderFactory.createTitledBorder("Liste des DMAs");
-        panelListe2.setBorder(titleListe2);
+        titleListeDMA = BorderFactory.createTitledBorder("Liste des DMAs");
+        panelListeDMA.setBorder(titleListeDMA);
+        
+        
         tableauDMA = new JTable();
+        tDMA = new JScrollPane(tableauDMA);
         tDMA.setOpaque(true);
+        
+        plusDMA = new ImageIcon("src/Annexes/plus.png");
+        plusImDMA = plusDMA.getImage(); // Convertissemnt pour pouvoir redimensionner
+        plusImFinDMA = plusImDMA.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        plusDMA = new ImageIcon(plusImFinDMA); // On reconvertit
 
+        ajoutActeDMA = new JButton(plusDMA);
+        ajoutActeDMA.setContentAreaFilled(false);
+        ajoutActeDMA.setBorderPainted(true);
+        ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
-        titleDetail2 = BorderFactory.createTitledBorder("Détails de ce DMA");
-        panelDetail2.setBorder(titleDetail2);
+        titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
+        panelDetailDMA.setBorder(titleDetailDMA);
 
 //Nature des Résultats
 //            JTextArea resultatInfoDMA = new JTextArea(ficheDMA.getPrestations());
@@ -479,12 +506,12 @@ public class AccueilGUI {
 //            panelFicheDMA.add(ficheResultatDMA);
 //            ficheResultatDMA.setBackground(LIGHT_BLUE);
 //Création du Panel DMA
-        title2 = BorderFactory.createTitledBorder("informations générales");
-        DMA.setBorder(title2);
+        titleDMA = BorderFactory.createTitledBorder("informations générales");
+        DMA.setBorder(titleDMA);
 
 ///////////////////// On ajoute les éléments les uns dans les autres ///////////////////// 
         prez.add(presentation);
-        prez.add(presentation2);
+        prez.add(presentation2); // Pourquoi y'en a deux ?
         panPatients.add(t, BorderLayout.CENTER);
 
         panelMessage.add(messageArrive);
@@ -510,7 +537,7 @@ public class AccueilGUI {
         gbc.anchor = GridBagConstraints.WEST;
 
         patientNom.add(nom);
-        patientNom.add(nom2);
+        patientNom.add(nom2); //Pourquoi pour chaque info y'en a deux?
         panelTest.add(patientNom, gbc);
 
         pPrenom.add(prenom);
@@ -560,7 +587,7 @@ public class AccueilGUI {
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 0);
         gbc.anchor = GridBagConstraints.CENTER;
-        panelTest2.add(image2DMA, gbc);
+        panelTestDMA.add(image2DMA, gbc);
 
         patientNomDMA.add(nomDMA);
         patientNomDMA.add(nom2DMA);
@@ -569,36 +596,45 @@ public class AccueilGUI {
         gbc.ipadx = 0;
         gbc.insets = new Insets(20, 20, 0, 0);
         gbc.anchor = GridBagConstraints.WEST;
-        panelTest2.add(patientNomDMA, gbc);
+        panelTestDMA.add(patientNomDMA, gbc);
 
         pPrenomDMA.add(prenomDMA);
         pPrenomDMA.add(prenom2DMA);
 
         gbc.insets = new Insets(0, 20, 0, 0);
         gbc.gridy = 2;
-        panelTest2.add(pPrenomDMA, gbc);
+        panelTestDMA.add(pPrenomDMA, gbc);
 
         patientSexeDMA.add(sexeDMA);
         patientSexeDMA.add(sexeInfoDMA);
 
         gbc.gridy = 3;
-        panelTest2.add(patientSexeDMA, gbc);
+        panelTestDMA.add(patientSexeDMA, gbc);
 
         patientDateDMA.add(dateDMA);
         patientDateDMA.add(dateInfoDMA);
 
         gbc.gridy = 4;
-        panelTest2.add(patientDateDMA, gbc);
+        panelTestDMA.add(patientDateDMA, gbc);
 
         patientAdresseDMA.add(adresseDMA);
         patientAdresseDMA.add(adresseInfoDMA);
 
         gbc.gridy = 5;
-        panelTest2.add(patientAdresseDMA, gbc);
+        panelTestDMA.add(patientAdresseDMA, gbc);
 
-        panelInfoPatient2.add(panelTest2);
-        panelListe2.add(tDMA);
+        panelInfoPatientDMA.add(panelTestDMA);
+        panelListeDMA.add(tDMA);
+        
+        panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
+        panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
+        
+        panelDMAHaut.add(panelInfoPatientDMA);
+        panelDMAHaut.add(panelListeDMA);
+        panelDMAHaut.setPreferredSize(new Dimension(200, 300));
 
+        
+        
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
         panelGauche.add(panPatients);
@@ -615,10 +651,7 @@ public class AccueilGUI {
 
         accueil.add(panelFin);
 
-        // Ajout des deux précédents panels au premier
-        panelDMAHaut.add(panelInfoPatient2);
-        panelDMAHaut.add(panelListe2);
-        panelDMAHaut.setPreferredSize(new Dimension(200, 300));
+
 
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
         panelHaut.setBackground(LIGHT_BLUE);
@@ -643,15 +676,15 @@ public class AccueilGUI {
         ficheOperation.setBackground(LIGHT_BLUE);
         DM.setBackground(LIGHT_BLUE);
         panelDMAHaut.setBackground(LIGHT_BLUE);
-        panelInfoPatient2.setBackground(LIGHT_BLUE);
+        panelInfoPatientDMA.setBackground(LIGHT_BLUE);
         patientNomDMA.setBackground(LIGHT_BLUE);
         pPrenomDMA.setBackground(LIGHT_BLUE);
         patientSexeDMA.setBackground(LIGHT_BLUE);
         patientDateDMA.setBackground(LIGHT_BLUE);
         patientAdresseDMA.setBackground(LIGHT_BLUE);
-        panelTest2.setBackground(LIGHT_BLUE);
-        panelListe2.setBackground(LIGHT_BLUE);
-        panelDetail2.setBackground(LIGHT_BLUE);
+        panelTestDMA.setBackground(LIGHT_BLUE);
+        panelListeDMA.setBackground(LIGHT_BLUE);
+        panelDetailDMA.setBackground(LIGHT_BLUE);
         DMA.setBackground(LIGHT_BLUE);
         panelPlus.setBackground(LIGHT_BLUE);
         panelRecherche.setBackground(LIGHT_BLUE);
@@ -929,20 +962,20 @@ public class AccueilGUI {
         this.panelDMAHaut = panelDMAHaut;
     }
 
-    public JPanel getPanelInfoPatient2() {
-        return panelInfoPatient2;
+    public JPanel getPanelInfoPatientDMA() {
+        return panelInfoPatientDMA;
     }
 
-    public void setPanelInfoPatient2(JPanel panelInfoPatient2) {
-        this.panelInfoPatient2 = panelInfoPatient2;
+    public void setPanelInfoPatientDMA(JPanel panelInfoPatientDMA) {
+        this.panelInfoPatientDMA = panelInfoPatientDMA;
     }
 
-    public JPanel getPanelTest2() {
-        return panelTest2;
+    public JPanel getPanelTestDMA() {
+        return panelTestDMA;
     }
 
-    public void setPanelTest2(JPanel panelTest2) {
-        this.panelTest2 = panelTest2;
+    public void setPanelTestDMA(JPanel panelTest2) {
+        this.panelTestDMA = panelTest2;
     }
 
     public JPanel getPatientNomDMA() {
@@ -985,12 +1018,12 @@ public class AccueilGUI {
         this.patientAdresseDMA = patientAdresseDMA;
     }
 
-    public JPanel getPanelListe2() {
-        return panelListe2;
+    public JPanel getPanelListeDMA() {
+        return panelListeDMA;
     }
 
-    public void setPanelListe2(JPanel panelListe2) {
-        this.panelListe2 = panelListe2;
+    public void setPanelListeDMA(JPanel panelListeDMA) {
+        this.panelListeDMA = panelListeDMA;
     }
 
     public JScrollPane gettDMA() {
@@ -1002,11 +1035,11 @@ public class AccueilGUI {
     }
 
     public JPanel getPanelDetail2() {
-        return panelDetail2;
+        return panelDetailDMA;
     }
 
     public void setPanelDetail2(JPanel panelDetail2) {
-        this.panelDetail2 = panelDetail2;
+        this.panelDetailDMA = panelDetail2;
     }
 
     public JPanel getPanelFicheDMA() {
@@ -1345,12 +1378,12 @@ public class AccueilGUI {
         this.title = title;
     }
 
-    public TitledBorder getTitleInfo2() {
-        return titleInfo2;
+    public TitledBorder getTitleInfoDMA() {
+        return titleInfoDMA;
     }
 
-    public void setTitleInfo2(TitledBorder titleInfo2) {
-        this.titleInfo2 = titleInfo2;
+    public void setTitleInfoDMA(TitledBorder titleInfo2) {
+        this.titleInfoDMA = titleInfo2;
     }
 
     public Image getImg2DMA() {
@@ -1473,12 +1506,12 @@ public class AccueilGUI {
         this.adresseInfoDMA = adresseInfoDMA;
     }
 
-    public TitledBorder getTitleListe2() {
-        return titleListe2;
+    public TitledBorder getTitleListeDMA() {
+        return titleListeDMA;
     }
 
     public void setTitleListe2(TitledBorder titleListe2) {
-        this.titleListe2 = titleListe2;
+        this.titleListeDMA = titleListe2;
     }
 
     public JTable getTableauDMA() {
@@ -1490,19 +1523,19 @@ public class AccueilGUI {
     }
 
     public TitledBorder getTitleDetail2() {
-        return titleDetail2;
+        return titleDetailDMA;
     }
 
-    public void setTitleDetail2(TitledBorder titleDetail2) {
-        this.titleDetail2 = titleDetail2;
+    public void setTitleDetailDMA(TitledBorder titleDetailDMA) {
+        this.titleDetailDMA = titleDetailDMA;
     }
 
-    public TitledBorder getTitle2() {
-        return title2;
+    public TitledBorder getTitleDMA() {
+        return titleDMA;
     }
 
-    public void setTitle2(TitledBorder title2) {
-        this.title2 = title2;
+    public void setTitleDMA(TitledBorder titleDMA) {
+        this.titleDMA = titleDMA;
     }
 
     public JButton getAjoutActe() {

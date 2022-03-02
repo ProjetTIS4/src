@@ -9,7 +9,7 @@ package NF;
  *
  * @author manon
  */
-//On ne mettra pas de set dans cette classe car le DM fonctionne en Append-only
+//On ne mettra pas de set qui modifie les informations dans cette l'application car le DM fonctionne en Append-only
 public class FichesDM {
 
     private Date date;
@@ -65,6 +65,7 @@ public class FichesDM {
     public Date getDate() {
         return date;
     }
+
  public void setPHResponsable(Personnel PH) {
        this.PHResponsable=PH;
     }
@@ -99,4 +100,5 @@ public class FichesDM {
     public void setDate(Date d) {
        this.date=d;
     }
+
 }
