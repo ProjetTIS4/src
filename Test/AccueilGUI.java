@@ -54,7 +54,7 @@ public class AccueilGUI {
     private JScrollPane t;
     private JPanel panelMessage; // Panel de droite qui invite à cliquer sur un patient dans la liste
     private JTabbedPane tp; // Panel qui sépare le DM et le DMA en onglet 
-    
+
     private JPanel panelRecherche;
     private JPanel panelRechercheDroit; // Panel contenant le bouton valider et le bouton retour
     //
@@ -148,13 +148,12 @@ public class AccueilGUI {
     private TitledBorder titleListe;
     private JTable tableauDM;
     private JButton ajoutActe;
-    private JButton ajoutActeDMA;
+
     private ImageIcon plus;
-    private ImageIcon plusDMA;
+
     private Image plusIm;
-    private Image plusImDMA;
+
     private Image plusImFin;
-    private Image plusImFinDMA;
 
     //Détails des DMs
     private TitledBorder titleDetail;
@@ -192,11 +191,14 @@ public class AccueilGUI {
     // Tableau des DMAs
     private TitledBorder titleListeDMA;
     private JTable tableauDMA;
+    private JButton ajoutActeDMA;
+    private ImageIcon plusDMA;
+    private Image plusImDMA;
+    private Image plusImFinDMA;
 
     //Détails des DMAs
     private TitledBorder titleDetailDMA;
     private TitledBorder titleDMA;
-
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
@@ -211,8 +213,8 @@ public class AccueilGUI {
         panelTestDMA = new JPanel(new GridBagLayout());
         panPatients = new JPanel(new BorderLayout());
         panelMessage = new JPanel(new GridBagLayout());
-        panelRecherche= new JPanel(new BorderLayout());
-        panelRechercheDroit = new JPanel(new GridLayout(1,2));
+        panelRecherche = new JPanel(new BorderLayout());
+        panelRechercheDroit = new JPanel(new GridLayout(1, 2));
 
 //// Panel gauche
         barreRecherche = new JTextField("Tapez votre recherche ici...");
@@ -250,23 +252,22 @@ public class AccueilGUI {
         //
         DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelDetail);   //Création du Panel DM
         //
-        
-        
+
 ////Côté DMA
         panelDMAHaut = new JPanel((new GridLayout(1, 2)));  //Création du Panel du haut de la partie DMA
-        
+
         panelInfoPatientDMA = new JPanel(); //Création du Panel contenant les informations du Patient
-        
+
         //panelTest2 = new JPanel(new GridBagLayout());
         patientNomDMA = new JPanel();
         pPrenomDMA = new JPanel();
         patientSexeDMA = new JPanel();
         patientDateDMA = new JPanel();
         patientAdresseDMA = new JPanel();
-        
+
         panelListeDMA = new JPanel(new BorderLayout());
         panelPlusDMA = new JPanel(new BorderLayout());
-        
+
         panelListeDMA = new JPanel(new BorderLayout()); //Création du Panel contenant la liste des DMAs du patient 
         tDMA = new JScrollPane(tableauDMA);
         panelDetailDMA = new JPanel(new BorderLayout()); //Création du Panel avec les détails du DMA sur lequel on a cliqué
@@ -297,11 +298,10 @@ public class AccueilGUI {
 
 ////////////////////////////Panel Gauche ////////////////////////////
         ///////////////// Barre de recherche /////////////////
-        
         barreRecherche.setForeground(Color.gray);
         choix.addItem("Nom");
         choix.addItem("Prénom");
-        
+
         ///////////////// Panel liste de patients /////////////////
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
@@ -473,12 +473,11 @@ public class AccueilGUI {
 //Création du Panel contenant la liste des DMAs du patient 
         titleListeDMA = BorderFactory.createTitledBorder("Liste des DMAs");
         panelListeDMA.setBorder(titleListeDMA);
-        
-        
+
         tableauDMA = new JTable();
         tDMA = new JScrollPane(tableauDMA);
         tDMA.setOpaque(true);
-        
+
         plusDMA = new ImageIcon("src/Annexes/plus.png");
         plusImDMA = plusDMA.getImage(); // Convertissemnt pour pouvoir redimensionner
         plusImFinDMA = plusImDMA.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
@@ -488,7 +487,7 @@ public class AccueilGUI {
         ajoutActeDMA.setContentAreaFilled(false);
         ajoutActeDMA.setBorderPainted(true);
         ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
-        
+
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
         titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
         panelDetailDMA.setBorder(titleDetailDMA);
@@ -516,7 +515,6 @@ public class AccueilGUI {
 
         panelMessage.add(messageArrive);
         panelDroit.add(panelMessage, BorderLayout.CENTER);
-       
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -625,33 +623,29 @@ public class AccueilGUI {
 
         panelInfoPatientDMA.add(panelTestDMA);
         panelListeDMA.add(tDMA);
-        
+
         panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
         panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
-        
+
         panelDMAHaut.add(panelInfoPatientDMA);
         panelDMAHaut.add(panelListeDMA);
         panelDMAHaut.setPreferredSize(new Dimension(200, 300));
 
-        
-        
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
         panelGauche.add(panPatients);
-     
-        panelRechercheDroit.add(rechercher);  
-        panelRechercheDroit.add(retour);        
-        panelRecherche.add(barreRecherche,BorderLayout.CENTER);
-        
-        panelRecherche.add(panelRechercheDroit,BorderLayout.EAST);
-        panelRecherche.add(choix,BorderLayout.WEST);
-        panelGauche.add(panelRecherche,BorderLayout.NORTH);
+
+        panelRechercheDroit.add(rechercher);
+        panelRechercheDroit.add(retour);
+        panelRecherche.add(barreRecherche, BorderLayout.CENTER);
+
+        panelRecherche.add(panelRechercheDroit, BorderLayout.EAST);
+        panelRecherche.add(choix, BorderLayout.WEST);
+        panelGauche.add(panelRecherche, BorderLayout.NORTH);
         panelFin.add(panelHaut, BorderLayout.NORTH);
         panelFin.add(splitPan, BorderLayout.CENTER);
 
         accueil.add(panelFin);
-
-
 
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
         panelHaut.setBackground(LIGHT_BLUE);
