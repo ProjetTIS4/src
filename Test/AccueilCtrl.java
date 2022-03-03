@@ -243,42 +243,46 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
-                            String dataDM[][] = new String[taille][8];
-                            String columns[] = {"Date", "CR", "lettre sortie"};
+                            String dataDMA[][] = new String[taille][8];
+                            String columns[] = {"Date de début", "Date de fin"};
 //            res2.close();
 
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + s;
+                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
                             res = stm.executeQuery(query);
                             int i = 0;
                             while (res.next()) {
 
-                                String resul = res.getString("resultats");
+                                String dated = res.getString("dateEntree");
 
-                                String lettre = res.getString("lettreDeSortie");
-                                String num = res.getString("numFiche");
+                                String datef = res.getString("dateSortie");
+                                String prescription = res.getString("prescriptions");
 
-                                dataDM[i][0] = num;
-                                if (resul != "") {
-                                    dataDM[i][1] = "true";
-                                } else {
-                                    dataDM[i][1] = "VIDE";
-                                }
-                                if (lettre != "") {
-                                    dataDM[i][2] = "true";
-                                } else {
-                                    dataDM[i][2] = "VIDE";
-                                }
-
+                                    dataDMA[i][0] = dated;
+                                    dataDMA[i][1] = datef;
+                                    dataDMA[i][2] = prescription;
                                 i++;
                             }
 
                             ipp = s;
-                            a.getTableauDM().setModel(new DefaultTableModel(dataDM, columns));
+                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columns));
                             a.getObservations2().setText("");
                             a.getPrescription2().setText("");
                             a.getOperationInfo().setText("");
                             a.getResultatInfo().setText("");
                             a.getDetailsDM().setVisible(false);
+                            
+                            //fiche = new FichesDMA(patient, prescriptions);
+                            fiche.setPrescriptions(dataDMA[0][3]);
+                            
+                            a.getObservations2().setText(fiche.getObservations());
+                            a.getPrescription2().setText(fiche.getPrescriptions());
+                            a.getOperationInfo().setText(fiche.getOperations());
+                            a.getResultatInfo().setText(fiche.getResultats());
+
+                            a.getPanelDetail().add(a.getDetailsDM());
+                            a.getDetailsDM().setVisible(true);
+                            a.getAccueil().validate();
+                            a.getAccueil().repaint();
 
                         } catch (SQLException ex) {
                             ex.printStackTrace();

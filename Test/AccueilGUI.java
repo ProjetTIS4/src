@@ -87,7 +87,6 @@ public class AccueilGUI {
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
     private JPanel panelInfoPatientDMA; //Création du Panel contenant les informations du Patient
     private JPanel panelTestDMA;
-    private JPanel panelTest2;
     private JPanel patientNomDMA;
     private JPanel pPrenomDMA;
     private JPanel patientSexeDMA;
@@ -296,7 +295,7 @@ public class AccueilGUI {
         presentation2.setHorizontalAlignment(SwingConstants.CENTER);
         presentation2.setFont(new Font("Bookman Old Style", Font.PLAIN, 20));
 
-////////////////////////////Panel Gauche ////////////////////////////
+////////////////////////////Panel Gauche ////////////////////////////////////////////////////////////////////////////////////
         ///////////////// Barre de recherche /////////////////
         barreRecherche.setForeground(Color.gray);
         choix.addItem("Nom");
@@ -309,7 +308,7 @@ public class AccueilGUI {
         t = new JScrollPane(tableau);
         t.setOpaque(true);
 
-////////////////////////////Panel Droit ////////////////////////////
+////////////////////////////Panel Droit ////////////////////////////////////////////////////////////////////////////////////
         messageArrive = new JLabel("Veuillez cliquer sur un patient pour voir ses informations apparaître ici "); //Le texte "Nom d'utilisateur :"
         messageArrive.setFont(new Font("Bookman Old Style", Font.PLAIN, 18)); //On modifie la police et la taille de l'écriture
 
@@ -504,6 +503,7 @@ public class AccueilGUI {
 //            ficheResultatDMA.add(resultDMA);
 //            panelFicheDMA.add(ficheResultatDMA);
 //            ficheResultatDMA.setBackground(LIGHT_BLUE);
+
 //Création du Panel DMA
         titleDMA = BorderFactory.createTitledBorder("informations générales");
         DMA.setBorder(titleDMA);
@@ -534,8 +534,8 @@ public class AccueilGUI {
         gbc.insets = new Insets(20, 20, 0, 0);
         gbc.anchor = GridBagConstraints.WEST;
 
-        patientNom.add(nom);
-        patientNom.add(nom2); //Pourquoi pour chaque info y'en a deux?
+        patientNom.add(nom); //ajoute le label "Nom:"
+        patientNom.add(nom2); //ajoute le contenu du nom
         panelTest.add(patientNom, gbc);
 
         pPrenom.add(prenom);
@@ -598,39 +598,44 @@ public class AccueilGUI {
 
         pPrenomDMA.add(prenomDMA);
         pPrenomDMA.add(prenom2DMA);
-
         gbc.insets = new Insets(0, 20, 0, 0);
         gbc.gridy = 2;
         panelTestDMA.add(pPrenomDMA, gbc);
 
         patientSexeDMA.add(sexeDMA);
         patientSexeDMA.add(sexeInfoDMA);
-
         gbc.gridy = 3;
         panelTestDMA.add(patientSexeDMA, gbc);
 
         patientDateDMA.add(dateDMA);
         patientDateDMA.add(dateInfoDMA);
-
         gbc.gridy = 4;
         panelTestDMA.add(patientDateDMA, gbc);
 
         patientAdresseDMA.add(adresseDMA);
         patientAdresseDMA.add(adresseInfoDMA);
-
         gbc.gridy = 5;
         panelTestDMA.add(patientAdresseDMA, gbc);
 
         panelInfoPatientDMA.add(panelTestDMA);
         panelListeDMA.add(tDMA);
-
         panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
         panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
+
+        
 
         panelDMAHaut.add(panelInfoPatientDMA);
         panelDMAHaut.add(panelListeDMA);
         panelDMAHaut.setPreferredSize(new Dimension(200, 300));
 
+        
+        
+        
+        
+        
+        
+        
+        
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
         panelGauche.add(panPatients);
