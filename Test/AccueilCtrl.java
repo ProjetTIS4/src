@@ -238,11 +238,14 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
+                            String dataDMA[][] = new String[taille][8];
+                            String columnsDMA[] = {"Date de début", "Date de fin"};
                             String dataDM[][] = new String[taille][8];
                             String columns[] = {"Date", "CR", "lettre sortie"};
 //            res2.close();
 
                             query = "SELECT * FROM fichesDM WHERE IPPatient=" + s;
+
                             res = stm.executeQuery(query);
                             int i = 0;
                             while (res.next()) {
@@ -266,9 +269,32 @@ public class AccueilCtrl implements Runnable {
 
                                 i++;
                             }
+                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
+                            res = stm.executeQuery(query);
+                            while (res.next()) {
+
+                                String dated = res.getString("dateEntree");
+
+                                String datef = res.getString("dateSortie");
+                                String prescription = res.getString("prescriptions");
+
+                                dataDMA[i][0] = dated;
+                                dataDMA[i][1] = datef;
+                                dataDMA[i][2] = prescription;
+
+                                i++;
+                            }
 
                             ipp = s;
                             a.getTableauDM().setModel(new DefaultTableModel(dataDM, columns) {
+
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    //Only the third column
+                                    return false;
+                                }
+                            });
+                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
 
                                 @Override
                                 public boolean isCellEditable(int row, int column) {
