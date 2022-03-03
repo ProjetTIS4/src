@@ -31,7 +31,7 @@ public class ActeCtrl implements Runnable {
     public ActeCtrl(String ipp, AccueilGUI ac) {
         a = new ActeGUI();
         this.ipp = ipp;
-        this.ac=ac;
+        this.ac = ac;
 
     }
 
@@ -157,67 +157,75 @@ public class ActeCtrl implements Runnable {
 
                     Connection con = DriverManager.getConnection(url, user, password);
 
-                    String requete = "INSERT INTO fichesDM (IPPatient,numFiche,observations,prescriptions,operations,resultats,correspondance,lettreDeSortie) VALUES ('" + ipp
-                            + "','"+a.getJour().getText()+a.getMois().getText()+"2','"
-                            + a.getObservations2().getText()
+                    String requete = "INSERT INTO fichesDM (IPPatient,numFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('" + ipp
+                            + "','" + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() + "','test"
+                            + "','"
+                            + (a.getObservations2().getText())
                             + "','"
                             + a.getPrestations2().getText()
                             + "','"
                             + a.getOperations2().getText()
                             + "','"
                             + a.getResultat2().getText()
-                            + "','','')";
-
+                            + "','')";
+                    
+                    
+           //   StringEscapeUtils.escapeJava
+             
                     System.out.println(requete);
                     Statement stm = con.createStatement();
                     stm.executeUpdate(requete);
-                    
+
                     a.getAjouterActe().dispose();
-                
-                  
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
-                            ResultSet res = stm.executeQuery(query);
 
-                            int taille = 0;
+                    String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
+                    ResultSet res = stm.executeQuery(query);
 
-                            if (res.next()) {
-                                taille = res.getInt("COUNT(*)");
-                            }
+                    int taille = 0;
 
-                            String dataDM[][] = new String[taille][8];
-                            String columns[] = {"Date", "CR", "lettre sortie"};
+                    if (res.next()) {
+                        taille = res.getInt("COUNT(*)");
+                    }
+
+                    String dataDM[][] = new String[taille][8];
+                    String columns[] = {"Date", "CR", "lettre sortie"};
 //            res2.close();
 
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp;
-                            res = stm.executeQuery(query);
-                            int i = 0;
-                            while (res.next()) {
+                    query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp;
+                    res = stm.executeQuery(query);
+                    int i = 0;
+                    while (res.next()) {
 
-                                String resul = res.getString("resultats");
+                        String resul = res.getString("resultats");
 
-                                String lettre = res.getString("lettreDeSortie");
-                                String num = res.getString("numFiche");
+                        String lettre = res.getString("lettreDeSortie");
+                        String num = res.getString("numFiche");
 
-                                dataDM[i][0] = num;
-                                if (resul != "") {
-                                    dataDM[i][1] = "true";
-                                } else {
-                                    dataDM[i][1] = "VIDE";
-                                }
-                                if (lettre != "") {
-                                    dataDM[i][2] = "true";
-                                } else {
-                                    dataDM[i][2] = "VIDE";
-                                }
+                        dataDM[i][0] = num;
+                        if (resul != "") {
+                            dataDM[i][1] = "true";
+                        } else {
+                            dataDM[i][1] = "VIDE";
+                        }
+                        if (lettre != "") {
+                            dataDM[i][2] = "true";
+                        } else {
+                            dataDM[i][2] = "VIDE";
+                        }
 
-                                i++;
-                            }
+                        i++;
+                    }
 
-                           
-                            ac.getTableauDM().setModel(new DefaultTableModel(dataDM, columns));
-                            ac.getAccueil().validate();
-                          ac.getAccueil().repaint();
-                    
+                    ac.getTableauDM().setModel(new DefaultTableModel(dataDM, columns){
+
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //Only the third column
+                    return false;
+                }
+            });
+                    ac.getAccueil().validate();
+                    ac.getAccueil().repaint();
 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
