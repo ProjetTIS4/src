@@ -233,6 +233,61 @@ public class AccueilCtrl implements Runnable {
                         a.getAccueil().repaint();
 
                         try {
+                            String query = "SELECT COUNT(*) FROM DM WHERE IPPatient=" + s;
+                            Statement stm = con.createStatement();
+                            ResultSet res = stm.executeQuery(query);
+
+                            int taille = 0;
+
+                            if (res.next()) {
+                                taille = res.getInt("COUNT(*)");
+                            }
+ 
+                            String dataDMA[][] = new String[taille][8];
+                            String columns[] = {"Date", "CR", "lettre de sortie"};
+//            res2.close();
+
+                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
+                            res = stm.executeQuery(query);
+                            int i = 0;
+                            while (res.next()) {
+
+                                String dated = res.getString("dateEntree");
+
+                                String datef = res.getString("dateSortie");
+                                String prescription = res.getString("prescriptions");
+
+                                    dataDMA[i][0] = dated;
+                                    dataDMA[i][1] = datef;
+                                    dataDMA[i][2] = prescription;
+                                i++;
+                            }
+
+                            ipp = s;
+                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columns));
+                            a.getObservations2().setText("");
+                            a.getPrescription2().setText("");
+                            a.getOperationInfo().setText("");
+                            a.getResultatInfo().setText("");
+                            a.getDetailsDM().setVisible(false);
+                            
+                            //fiche = new FichesDMA(patient, prescriptions);
+                            fiche.setPrescriptions(dataDMA[0][3]);
+                            
+                            a.getObservations2().setText(fiche.getObservations());
+                            a.getPrescription2().setText(fiche.getPrescriptions());
+                            a.getOperationInfo().setText(fiche.getOperations());
+                            a.getResultatInfo().setText(fiche.getResultats());
+
+                            a.getPanelDetail().add(a.getDetailsDM());
+                            a.getDetailsDM().setVisible(true);
+                            a.getAccueil().validate();
+                            a.getAccueil().repaint();
+
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        try {
                             String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s;
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
@@ -242,7 +297,7 @@ public class AccueilCtrl implements Runnable {
                             if (res.next()) {
                                 taille = res.getInt("COUNT(*)");
                             }
-
+ 
                             String dataDMA[][] = new String[taille][8];
                             String columns[] = {"Date de début", "Date de fin"};
 //            res2.close();
