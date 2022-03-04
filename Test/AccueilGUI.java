@@ -190,7 +190,7 @@ public class AccueilGUI {
     // Tableau des DMAs
     private TitledBorder titleListeDMA;
     private JTable tableauDMA;
-    private JButton ajoutActeDMA;
+    private JButton ajoutDMA;
     private ImageIcon plusDMA;
     private Image plusImDMA;
     private Image plusImFinDMA;
@@ -482,10 +482,10 @@ public class AccueilGUI {
         plusImFinDMA = plusImDMA.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
         plusDMA = new ImageIcon(plusImFinDMA); // On reconvertit
 
-        ajoutActeDMA = new JButton(plusDMA);
-        ajoutActeDMA.setContentAreaFilled(false);
-        ajoutActeDMA.setBorderPainted(true);
-        ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        ajoutDMA = new JButton(plusDMA);
+        ajoutDMA.setContentAreaFilled(false);
+        ajoutDMA.setBorderPainted(true);
+        ajoutDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
 
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
         titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
@@ -619,7 +619,7 @@ public class AccueilGUI {
 
         panelInfoPatientDMA.add(panelTestDMA);
         panelListeDMA.add(tDMA);
-        panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
+        panelPlusDMA.add(ajoutDMA, BorderLayout.EAST);
         panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
 
         
@@ -695,6 +695,54 @@ public class AccueilGUI {
         tableauDMA.setBackground(LIGHT_BLUE);
 
         ficheResultat.setBackground(LIGHT_BLUE);
+    }
+
+    public JPanel getPanelPlusDMA() {
+        return panelPlusDMA;
+    }
+
+    public void setPanelPlusDMA(JPanel panelPlusDMA) {
+        this.panelPlusDMA = panelPlusDMA;
+    }
+
+    public JPanel getPanelDetailDMA() {
+        return panelDetailDMA;
+    }
+
+    public void setPanelDetailDMA(JPanel panelDetailDMA) {
+        this.panelDetailDMA = panelDetailDMA;
+    }
+
+    public JButton getAjoutDMA() {
+        return ajoutDMA;
+    }
+
+    public void setAjoutDMA(JButton ajoutActeDMA) {
+        this.ajoutDMA = ajoutActeDMA;
+    }
+
+    public ImageIcon getPlusDMA() {
+        return plusDMA;
+    }
+
+    public void setPlusDMA(ImageIcon plusDMA) {
+        this.plusDMA = plusDMA;
+    }
+
+    public Image getPlusImDMA() {
+        return plusImDMA;
+    }
+
+    public void setPlusImDMA(Image plusImDMA) {
+        this.plusImDMA = plusImDMA;
+    }
+
+    public Image getPlusImFinDMA() {
+        return plusImFinDMA;
+    }
+
+    public void setPlusImFinDMA(Image plusImFinDMA) {
+        this.plusImFinDMA = plusImFinDMA;
     }
 
     public JFrame getAccueil() {

@@ -145,6 +145,8 @@ public class AccueilCtrl implements Runnable {
 //            a.getSexeInfoDMA().setText("" + patient.getSexe());
 //            a.getDateInfoDMA().setText(patient.stringDate());
 //            a.getAdresseInfoDMA().setText(patient.getAdresse());
+
+
 // Listener de déconnexion
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
@@ -276,11 +278,11 @@ public class AccueilCtrl implements Runnable {
                                 String dated = res.getString("dateEntree");
 
                                 String datef = res.getString("dateSortie");
-                                String prescription = res.getString("prescriptions");
+                                //String prescription = res.getString("prescriptions");
 
                                 dataDMA[i][0] = dated;
                                 dataDMA[i][1] = datef;
-                                dataDMA[i][2] = prescription;
+                                //dataDMA[i][2] = prescription;
 
                                 i++;
                             }
@@ -322,6 +324,15 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     SwingUtilities.invokeLater(new ActeCtrl(ipp, a));
+                }
+            });
+            
+            //Listener sur le bouton "+" pour ajouter un DMA
+            a.getAjoutDMA().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    SwingUtilities.invokeLater(new AjoutDMACtrl(ipp, a));
                 }
             });
 
@@ -455,6 +466,8 @@ public class AccueilCtrl implements Runnable {
 
     }
 
+    
+    
     public Sexe creerSexe(String sexe) {
         Sexe s = null;
         if (sexe.equals("HOMME")) {
@@ -469,6 +482,8 @@ public class AccueilCtrl implements Runnable {
         return s;
     }
 
+    
+    
     public Date CreerDateNaissanceString(String date) {
         Date d = null;
 
@@ -480,6 +495,8 @@ public class AccueilCtrl implements Runnable {
         return d;
     }
 
+    
+    
     public void recherche() {
 
         String s = a.getBarreRecherche().getText();
@@ -556,4 +573,6 @@ public class AccueilCtrl implements Runnable {
 
         }
     }
+    
+    
 }
