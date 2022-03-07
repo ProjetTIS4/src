@@ -14,9 +14,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import static java.awt.event.KeyEvent.VK_CONTROL;
 import static java.awt.event.KeyEvent.VK_ENTER;
-import static java.awt.event.KeyEvent.VK_Z;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -145,8 +143,6 @@ public class AccueilCtrl implements Runnable {
 //            a.getSexeInfoDMA().setText("" + patient.getSexe());
 //            a.getDateInfoDMA().setText(patient.stringDate());
 //            a.getAdresseInfoDMA().setText(patient.getAdresse());
-
-
 // Listener de déconnexion
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
@@ -229,7 +225,10 @@ public class AccueilCtrl implements Runnable {
                         a.getAccueil().validate();
                         a.getAccueil().repaint();
 
+                        ////Pour le DM////                       
                         try {
+
+// REMPLIR LE TABLEAU DES ACTES DMs   
                             String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s;
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
@@ -240,11 +239,9 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
-                            String dataDMA[][] = new String[taille][8];
-                            String columnsDMA[] = {"Date de début", "Date de fin"};
-                            String dataDM[][] = new String[taille][8];
+                            
+                            String dataActeDM[][] = new String[taille][8];
                             String columns[] = {"Date", "CR", "lettre sortie"};
-//            res2.close();
 
                             query = "SELECT * FROM fichesDM WHERE IPPatient=" + s;
 
@@ -255,40 +252,79 @@ public class AccueilCtrl implements Runnable {
                                 String resul = res.getString("resultats");
 
                                 String lettre = res.getString("lettreDeSortie");
-                                String num = res.getString("numFiche");
+                                String num = res.getString("numeroFiche");
 
-                                dataDM[i][0] = num;
+                                dataActeDM[i][0] = num;
                                 if (resul != "") {
-                                    dataDM[i][1] = "true";
+                                    dataActeDM[i][1] = "true";
                                 } else {
-                                    dataDM[i][1] = "VIDE";
+                                    dataActeDM[i][1] = "VIDE";
                                 }
                                 if (lettre != "") {
-                                    dataDM[i][2] = "true";
+                                    dataActeDM[i][2] = "true";
                                 } else {
-                                    dataDM[i][2] = "VIDE";
+                                    dataActeDM[i][2] = "VIDE";
                                 }
 
                                 i++;
                             }
-                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
+// REMPLIR LE TABLEAU DES DMAs
+//                            query = "SELECT COUNT(*) FROM DMA WHERE IPPatient=" + s;
+//                            res = stm.executeQuery(query);
+//
+//                            taille = 0;
+//
+//                            if (res.next()) {
+//                                taille = res.getInt("COUNT(*)");
+//                            }
+//
+//                            String dataDMA[][] = new String[taille][8];
+//                            String columnsDMA[] = {"Date de début", "Date de fin"};
+//                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
+//                            res = stm.executeQuery(query);
+//                            while (res.next()) {
+//
+//                                String dated = res.getString("dateEntree");
+//                                String datef = res.getString("dateSortie");
+//                                
+//
+//                                dataDMA[i][0] = dated;
+//                                dataDMA[i][1] = datef;
+//                                
+//
+//                                i++;
+//                            }
+
+// REMPLIR LE TABLEAU DES DMs    
+                            query = "SELECT COUNT(*) FROM DM WHERE IPPatient=" + s;
                             res = stm.executeQuery(query);
+
+                            taille = 0;
+
+                            if (res.next()) {
+                                taille = res.getInt("COUNT(*)");
+                            }
+
+                            String dataDM[][] = new String[taille][2];
+                            String columnsDM[] = {"Date ", "Date de fin"};
+
+                            query = "SELECT * FROM DM WHERE IPPatient=" + s;
+
+                            res = stm.executeQuery(query);
+                            i = 0;
                             while (res.next()) {
 
                                 String dated = res.getString("dateEntree");
-
                                 String datef = res.getString("dateSortie");
-                                //String prescription = res.getString("prescriptions");
 
-                                dataDMA[i][0] = dated;
-                                dataDMA[i][1] = datef;
-                                //dataDMA[i][2] = prescription;
+                                dataDM[i][0] = dated;
+                                dataDM[i][1] = datef;
 
                                 i++;
                             }
 
                             ipp = s;
-                            a.getTableauDM().setModel(new DefaultTableModel(dataDM, columns) {
+                            a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columns) {
 
                                 @Override
                                 public boolean isCellEditable(int row, int column) {
@@ -296,7 +332,9 @@ public class AccueilCtrl implements Runnable {
                                     return false;
                                 }
                             });
-                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
+                            
+                            
+                            a.getTableauDM().setModel(new DefaultTableModel(dataDM, columnsDM) {
 
                                 @Override
                                 public boolean isCellEditable(int row, int column) {
@@ -304,6 +342,16 @@ public class AccueilCtrl implements Runnable {
                                     return false;
                                 }
                             });
+
+
+//                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
+//
+//                                @Override
+//                                public boolean isCellEditable(int row, int column) {
+//                                    //Only the third column
+//                                    return false;
+//                                }
+//                            });
                             a.getObservations2().setText("");
                             a.getPrescription2().setText("");
                             a.getOperationInfo().setText("");
@@ -324,15 +372,6 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     SwingUtilities.invokeLater(new ActeCtrl(ipp, a));
-                }
-            });
-            
-            //Listener sur le bouton "+" pour ajouter un DMA
-            a.getAjoutDMA().addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent me) {
-
-                    SwingUtilities.invokeLater(new AjoutDMACtrl(ipp, a));
                 }
             });
 
@@ -388,12 +427,12 @@ public class AccueilCtrl implements Runnable {
 
             });
 
-            a.getTableauDM().addMouseListener(new MouseAdapter() {
+            a.getTableauActeDm().addMouseListener(new MouseAdapter() {
 
                 public void mouseClicked(MouseEvent me) {
                     if (me.getClickCount() == 1) {
-                        int ligne = a.getTableauDM().getSelectedRow();
-                        Object cellule = a.getTableauDM().getValueAt(ligne, 0);
+                        int ligne = a.getTableauActeDm().getSelectedRow();
+                        Object cellule = a.getTableauActeDm().getValueAt(ligne, 0);
 
                         String s = "" + cellule;
 
@@ -409,10 +448,10 @@ public class AccueilCtrl implements Runnable {
                             }
 
                             String dataDMF[][] = new String[taille][4];
-                            String columns[] = {"observations", "prescription", "operations", "resultats"};
-//            res2.close();
+                 //           String columns[] = {"observations", "prescription", "operations", "resultats"};
 
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numFiche=" + s;
+
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
                             res = stm.executeQuery(query);
                             int i = 0;
                             while (res.next()) {
@@ -466,8 +505,6 @@ public class AccueilCtrl implements Runnable {
 
     }
 
-    
-    
     public Sexe creerSexe(String sexe) {
         Sexe s = null;
         if (sexe.equals("HOMME")) {
@@ -482,8 +519,6 @@ public class AccueilCtrl implements Runnable {
         return s;
     }
 
-    
-    
     public Date CreerDateNaissanceString(String date) {
         Date d = null;
 
@@ -495,8 +530,6 @@ public class AccueilCtrl implements Runnable {
         return d;
     }
 
-    
-    
     public void recherche() {
 
         String s = a.getBarreRecherche().getText();
@@ -573,6 +606,4 @@ public class AccueilCtrl implements Runnable {
 
         }
     }
-    
-    
 }

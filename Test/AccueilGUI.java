@@ -67,8 +67,10 @@ public class AccueilGUI {
     private JPanel patientSexe;
     private JPanel patientDate;
     private JPanel patientAdresse;
+    private JPanel panelDM;
     private JPanel panelListe;
     private JPanel panelPlus;
+    private JScrollPane ScrollDM;
     private JScrollPane tDM;
     private JPanel panelDetail;
     private JPanel panelFiche;
@@ -82,6 +84,7 @@ public class AccueilGUI {
     private JPanel ficheResultat;
     private JSplitPane DM;
     private JTabbedPane detailsDM; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
+    private JPanel panelSouthDM;
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
@@ -143,15 +146,20 @@ public class AccueilGUI {
     private JLabel adresse;
     private JLabel adresseInfo;
 
-    // Tableau des DMs
-    private TitledBorder titleListe;
+    // Tableau des  DM
+    private TitledBorder titleDM;
     private JTable tableauDM;
+    private JButton ajoutDM;
+    private ImageIcon plusDM;
+    private Image plusImDM;
+    private Image plusImFinDM;
+
+    // Tableau des Actes du DM
+    private TitledBorder titleListe;
+    private JTable tableauActeDm;
     private JButton ajoutActe;
-
     private ImageIcon plus;
-
     private Image plusIm;
-
     private Image plusImFin;
 
     //Détails des DMs
@@ -190,7 +198,7 @@ public class AccueilGUI {
     // Tableau des DMAs
     private TitledBorder titleListeDMA;
     private JTable tableauDMA;
-    private JButton ajoutDMA;
+    private JButton ajoutActeDMA;
     private ImageIcon plusDMA;
     private Image plusImDMA;
     private Image plusImFinDMA;
@@ -223,6 +231,7 @@ public class AccueilGUI {
 
 ////Côté DM
         panelDMHaut = new JPanel((new GridLayout(1, 2)));
+        panelDM = new JPanel(new BorderLayout());
 
         ///
         panelInfoPatient = new JPanel(); //Création du Panel contenant les informations du Patient
@@ -240,6 +249,7 @@ public class AccueilGUI {
         detailsDM = new JTabbedPane();
         //
         // panelFiche = new JPanel(new GridLayout(2, 2));
+        panelSouthDM = new JPanel(new BorderLayout());
         obs = new JScrollPane();
         ficheObservations = new JPanel(new BorderLayout());
         pres = new JScrollPane();
@@ -249,7 +259,7 @@ public class AccueilGUI {
         result = new JScrollPane();
         ficheResultat = new JPanel(new BorderLayout());
         //
-        DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelDetail);   //Création du Panel DM
+        DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelSouthDM);   //Création du Panel DM
         //
 
 ////Côté DMA
@@ -360,12 +370,30 @@ public class AccueilGUI {
         adresseInfo = new JLabel();
         patientAdresse.setLayout(new BoxLayout(patientAdresse, BoxLayout.X_AXIS));
 
-//Création du Panel contenant la liste des DMs du patient 
+        //Création du Panel contenant la liste des DMs du patient 
+        titleDM = BorderFactory.createTitledBorder("Liste des DMs");
+        panelDM.setBorder(titleListe);
+
+        tableauDM = new JTable();
+        ScrollDM = new JScrollPane(tableauDM);
+        ScrollDM.setOpaque(true);
+
+        plusDM = new ImageIcon("src/Annexes/plus.png");
+        plusImDM = plusDM.getImage(); // Convertissemnt pour pouvoir redimensionner
+        plusImFinDM = plusImDM.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        plusDM = new ImageIcon(plusImFinDM); // On reconvertit
+
+        ajoutDM = new JButton(plusDM);
+        ajoutDM.setContentAreaFilled(false);
+        ajoutDM.setBorderPainted(true);
+        ajoutDM.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+
+//Création du Panel contenant la liste des actes dans un DM du patient 
         titleListe = BorderFactory.createTitledBorder("Liste des actes");
         panelListe.setBorder(titleListe);
 
-        tableauDM = new JTable();
-        tDM = new JScrollPane(tableauDM);
+        tableauActeDm = new JTable();
+        tDM = new JScrollPane(tableauActeDm);
         tDM.setOpaque(true);
 
         plus = new ImageIcon("src/Annexes/plus.png");
@@ -482,10 +510,10 @@ public class AccueilGUI {
         plusImFinDMA = plusImDMA.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
         plusDMA = new ImageIcon(plusImFinDMA); // On reconvertit
 
-        ajoutDMA = new JButton(plusDMA);
-        ajoutDMA.setContentAreaFilled(false);
-        ajoutDMA.setBorderPainted(true);
-        ajoutDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        ajoutActeDMA = new JButton(plusDMA);
+        ajoutActeDMA.setContentAreaFilled(false);
+        ajoutActeDMA.setBorderPainted(true);
+        ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
 
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
         titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
@@ -503,7 +531,6 @@ public class AccueilGUI {
 //            ficheResultatDMA.add(resultDMA);
 //            panelFicheDMA.add(ficheResultatDMA);
 //            ficheResultatDMA.setBackground(LIGHT_BLUE);
-
 //Création du Panel DMA
         titleDMA = BorderFactory.createTitledBorder("informations générales");
         DMA.setBorder(titleDMA);
@@ -561,13 +588,16 @@ public class AccueilGUI {
 
         panelInfoPatient.add(panelTest);
         panelListe.add(tDM);
+        panelDM.add(ScrollDM);
 
         panelPlus.add(ajoutActe, BorderLayout.EAST);
         panelListe.add(panelPlus, BorderLayout.NORTH);
 
         panelDMHaut.add(panelInfoPatient);
-        panelDMHaut.add(panelListe);
+        panelDMHaut.add(panelDM);
         panelDMHaut.setPreferredSize(new Dimension(200, 300));
+        panelSouthDM.add(panelListe, BorderLayout.WEST);
+        panelSouthDM.add(panelDetail, BorderLayout.CENTER);
 
         ficheObservations.add(obs);
         detailsDM.add("Observations", ficheObservations);
@@ -619,23 +649,13 @@ public class AccueilGUI {
 
         panelInfoPatientDMA.add(panelTestDMA);
         panelListeDMA.add(tDMA);
-        panelPlusDMA.add(ajoutDMA, BorderLayout.EAST);
+        panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
         panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
-
-        
 
         panelDMAHaut.add(panelInfoPatientDMA);
         panelDMAHaut.add(panelListeDMA);
         panelDMAHaut.setPreferredSize(new Dimension(200, 300));
 
-        
-        
-        
-        
-        
-        
-        
-        
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
         panelGauche.add(panPatients);
@@ -667,7 +687,7 @@ public class AccueilGUI {
         patientAdresse.setBackground(LIGHT_BLUE);
         panelTest.setBackground(LIGHT_BLUE);
         panelListe.setBackground(LIGHT_BLUE);
-        tableauDM.setBackground(LIGHT_BLUE);
+        tableauActeDm.setBackground(LIGHT_BLUE);
         tDM.setBackground(LIGHT_BLUE);
         panelDetail.setBackground(LIGHT_BLUE);
         ficheObservations.setBackground(LIGHT_BLUE);
@@ -688,61 +708,15 @@ public class AccueilGUI {
         panelPlus.setBackground(LIGHT_BLUE);
         panelRecherche.setBackground(LIGHT_BLUE);
         panelRechercheDroit.setBackground(LIGHT_BLUE);
+        panelDM.setBackground(LIGHT_BLUE);
 
         t.setBackground(LIGHT_BLUE);
         tDMA.setBackground(LIGHT_BLUE);
         tableau.setBackground(LIGHT_BLUE);
         tableauDMA.setBackground(LIGHT_BLUE);
+         tableauDM.setBackground(LIGHT_BLUE);
 
         ficheResultat.setBackground(LIGHT_BLUE);
-    }
-
-    public JPanel getPanelPlusDMA() {
-        return panelPlusDMA;
-    }
-
-    public void setPanelPlusDMA(JPanel panelPlusDMA) {
-        this.panelPlusDMA = panelPlusDMA;
-    }
-
-    public JPanel getPanelDetailDMA() {
-        return panelDetailDMA;
-    }
-
-    public void setPanelDetailDMA(JPanel panelDetailDMA) {
-        this.panelDetailDMA = panelDetailDMA;
-    }
-
-    public JButton getAjoutDMA() {
-        return ajoutDMA;
-    }
-
-    public void setAjoutDMA(JButton ajoutActeDMA) {
-        this.ajoutDMA = ajoutActeDMA;
-    }
-
-    public ImageIcon getPlusDMA() {
-        return plusDMA;
-    }
-
-    public void setPlusDMA(ImageIcon plusDMA) {
-        this.plusDMA = plusDMA;
-    }
-
-    public Image getPlusImDMA() {
-        return plusImDMA;
-    }
-
-    public void setPlusImDMA(Image plusImDMA) {
-        this.plusImDMA = plusImDMA;
-    }
-
-    public Image getPlusImFinDMA() {
-        return plusImFinDMA;
-    }
-
-    public void setPlusImFinDMA(Image plusImFinDMA) {
-        this.plusImFinDMA = plusImFinDMA;
     }
 
     public JFrame getAccueil() {
@@ -1687,6 +1661,126 @@ public class AccueilGUI {
 
     public void setRetour(JButton retour) {
         this.retour = retour;
+    }
+
+    public JPanel getPanelDM() {
+        return panelDM;
+    }
+
+    public void setPanelDM(JPanel panelDM) {
+        this.panelDM = panelDM;
+    }
+
+    public JScrollPane getScrollDM() {
+        return ScrollDM;
+    }
+
+    public void setScrollDM(JScrollPane ScrollDM) {
+        this.ScrollDM = ScrollDM;
+    }
+
+    public JPanel getPanelSouthDM() {
+        return panelSouthDM;
+    }
+
+    public void setPanelSouthDM(JPanel panelSouthDM) {
+        this.panelSouthDM = panelSouthDM;
+    }
+
+    public JPanel getPanelPlusDMA() {
+        return panelPlusDMA;
+    }
+
+    public void setPanelPlusDMA(JPanel panelPlusDMA) {
+        this.panelPlusDMA = panelPlusDMA;
+    }
+
+    public JPanel getPanelDetailDMA() {
+        return panelDetailDMA;
+    }
+
+    public void setPanelDetailDMA(JPanel panelDetailDMA) {
+        this.panelDetailDMA = panelDetailDMA;
+    }
+
+    public TitledBorder getTitleDM() {
+        return titleDM;
+    }
+
+    public void setTitleDM(TitledBorder titleDM) {
+        this.titleDM = titleDM;
+    }
+
+    public JButton getAjoutDM() {
+        return ajoutDM;
+    }
+
+    public void setAjoutDM(JButton ajoutDM) {
+        this.ajoutDM = ajoutDM;
+    }
+
+    public ImageIcon getPlusDM() {
+        return plusDM;
+    }
+
+    public void setPlusDM(ImageIcon plusDM) {
+        this.plusDM = plusDM;
+    }
+
+    public Image getPlusImDM() {
+        return plusImDM;
+    }
+
+    public void setPlusImDM(Image plusImDM) {
+        this.plusImDM = plusImDM;
+    }
+
+    public Image getPlusImFinDM() {
+        return plusImFinDM;
+    }
+
+    public void setPlusImFinDM(Image plusImFinDM) {
+        this.plusImFinDM = plusImFinDM;
+    }
+
+    public JTable getTableauActeDm() {
+        return tableauActeDm;
+    }
+
+    public void setTableauActeDm(JTable tableauActeDm) {
+        this.tableauActeDm = tableauActeDm;
+    }
+
+    public JButton getAjoutActeDMA() {
+        return ajoutActeDMA;
+    }
+
+    public void setAjoutActeDMA(JButton ajoutActeDMA) {
+        this.ajoutActeDMA = ajoutActeDMA;
+    }
+
+    public ImageIcon getPlusDMA() {
+        return plusDMA;
+    }
+
+    public void setPlusDMA(ImageIcon plusDMA) {
+        this.plusDMA = plusDMA;
+    }
+
+    public Image getPlusImDMA() {
+        return plusImDMA;
+    }
+
+    public void setPlusImDMA(Image plusImDMA) {
+        this.plusImDMA = plusImDMA;
+    }
+
+    public Image getPlusImFinDMA() {
+        return plusImFinDMA;
+    }
+
+    public void setPlusImFinDMA(Image plusImFinDMA) {
+        this.plusImFinDMA = plusImFinDMA;
     }
 
 }
