@@ -37,14 +37,15 @@ public class ConnexionGUI {
     private JPanel jPanel3;
     private JPanel panelBoutons;
     private JPanel panelConnexion;
-    
+    private JPanel panelImage;
+    private JPanel panelRetour;
+
     private JButton PHS;
     private JButton PHA;
     private JButton SA;
     private JButton SM;
     private JButton PHMT;
-    private JLabel qui ;
-    
+    private JLabel qui;
 
     private JTextField textUtilisateur; // Le champ de texte pour remplir le nom d'utilisateur
     private JPasswordField jPasswordField1; // Le champ de texte pour remplir son mdp. Cela cache les caractères écrits
@@ -56,13 +57,13 @@ public class ConnexionGUI {
     private ImageIcon icone;
     private JLabel image;
 
+    private JButton retour;
     private JLabel connexionTexte;
+    private JLabel connexionTexte2;
     private JLabel utilisateur;
     private JLabel mdp;
 
     private GridBagConstraints gbc;
-    
-    
 
     public ConnexionGUI() {
         connexion = new JFrame("Connexion");//Création de la fenêtre de connexion
@@ -70,44 +71,46 @@ public class ConnexionGUI {
         jPanel = new JPanel(new GridBagLayout());
         jPanel2 = new JPanel(new GridBagLayout());
         jPanel3 = new JPanel(new GridBagLayout());
-        panelBoutons = new JPanel(new GridLayout(3,3));
+        panelBoutons = new JPanel(new GridLayout(3, 3));
         panelConnexion = new JPanel(new BorderLayout());
-   
+        panelImage = new JPanel(new BorderLayout());
+        panelRetour = new JPanel(new BorderLayout());
 
         erreur = new JLabel("");
-        
+
         PHS = new JButton("Praticien Hospitalier de service");
         PHA = new JButton("Praticien Hospitalier anesthésiste");
         PHMT = new JButton("Praticien Hospitalier médico-technique");
         SA = new JButton("Secrétaire administrative");
         SM = new JButton("Secrétaire médicale");
-        
+
         qui = new JLabel("Je suis ...");
         qui.setFont(new Font("Bookman Old Style", Font.PLAIN, 18)); //On modifie la police et la taille de l'écriture
         qui.setHorizontalAlignment(JLabel.CENTER);
 
         // Création de tous les éléments apparaissant dans la fenêtre 
         //Panel bouton 
-        
-    
         panelBoutons.add(qui);
         panelBoutons.add(PHS);
         panelBoutons.add(PHA);
         panelBoutons.add(PHMT);
         panelBoutons.add(SA);
-        panelBoutons.add(SM);       
-        
+        panelBoutons.add(SM);
+
         //Image
         icone = new ImageIcon("src/Annexes/Hubspital_logo.png");
         image = new JLabel(icone);
         image.setOpaque(true);
         image.setBackground(WHITE);
 
-        panelConnexion.add(image, BorderLayout.WEST); //On ajoute l'image dans la partie gauche de notre fenêtre
+        panelImage.add(image, BorderLayout.CENTER); //On ajoute l'image dans la partie gauche de notre fenêtre
 
         //Partie Connexion
+        retour = new JButton("↶");
         connexionTexte = new JLabel("Connexion ");
+        connexionTexte2 = new JLabel("  ");
         connexionTexte.setFont(new Font("Bookman Old Style", Font.PLAIN, 25));
+        connexionTexte2.setFont(new Font("Bookman Old Style", Font.ITALIC, 16));
         utilisateur = new JLabel("Nom d'utilisateur : "); //Le texte "Nom d'utilisateur :"
         utilisateur.setFont(new Font("Bookman Old Style", Font.PLAIN, 18)); //On modifie la police et la taille de l'écriture
         mdp = new JLabel("Mot de passe : "); // Le texte "Mot de passe :"
@@ -129,7 +132,10 @@ public class ConnexionGUI {
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel.add(connexionTexte, gbc);
 
-        gbc.insets = new Insets(100, 0, 5, 0);
+        gbc.insets = new Insets(60, 0, 5, 0);
+        jPanel.add(connexionTexte2, gbc);
+
+        gbc.insets = new Insets(130, 0, 5, 0);
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel.add(erreur, gbc);
 
@@ -170,8 +176,18 @@ public class ConnexionGUI {
 
         jPanel3.add(jPanel2, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.anchor = GridBagConstraints.PAGE_START;
+
+        jPanel3.add(retour, gbc);
+
+        panelRetour.add(retour, BorderLayout.WEST);
+        panelImage.add(panelRetour, BorderLayout.NORTH);
+        panelConnexion.add(panelImage, BorderLayout.WEST); //On ajoute l'image dans la partie gauche de notre fenêtre
         panelConnexion.add(jPanel3, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
-         //connexion.add(panelBoutons, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
+        //connexion.add(panelBoutons, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
 
         jPanel3.setBackground(BLUE);
         jPanel2.setBackground(LIGHT_BLUE2);
@@ -181,15 +197,14 @@ public class ConnexionGUI {
         SA.setBackground(BLUE);
         SM.setBackground(BLUE);
         panelBoutons.setBackground(LIGHT_BLUE2);
-        
+        panelRetour.setBackground(WHITE);
+
         connexion.setContentPane(panelBoutons);
 
         jPanel.setOpaque(false);
-       
-        
-        
-    
+
     }
+
     public JFrame getConnexion() {
         return connexion;
     }
@@ -365,7 +380,37 @@ public class ConnexionGUI {
     public void setPanelConnexion(JPanel panelConnexion) {
         this.panelConnexion = panelConnexion;
     }
-    
-    
+
+    public JLabel getConnexionTexte2() {
+        return connexionTexte2;
+    }
+
+    public void setConnexionTexte2(JLabel connexionTexte2) {
+        this.connexionTexte2 = connexionTexte2;
+    }
+
+    public JPanel getPanelImage() {
+        return panelImage;
+    }
+
+    public void setPanelImage(JPanel panelImage) {
+        this.panelImage = panelImage;
+    }
+
+    public JPanel getPanelRetour() {
+        return panelRetour;
+    }
+
+    public void setPanelRetour(JPanel panelRetour) {
+        this.panelRetour = panelRetour;
+    }
+
+    public JButton getRetour() {
+        return retour;
+    }
+
+    public void setRetour(JButton retour) {
+        this.retour = retour;
+    }
 
 }

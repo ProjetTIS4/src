@@ -44,14 +44,14 @@ public class ConnexionCtrl implements Runnable {
     public void run() {
 
         //////////////////////// Fenêtre ////////////////////////
-        c.getConnexion().setBounds(450, 190, 700, 460);
+        c.getConnexion().setBounds(450, 190, 720, 460);
         c.getConnexion().setDefaultCloseOperation(EXIT_ON_CLOSE);
         c.getConnexion().setVisible(true);
 
         c.getPHS().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 valeurBouton = "PHS";
-                System.out.print("test");
+                c.getConnexionTexte2().setText("Personnel Hospitalier de Service");
                 c.getConnexion().setContentPane(c.getPanelConnexion());
                 c.getConnexion().validate();
                 c.getConnexion().repaint();
@@ -61,7 +61,7 @@ public class ConnexionCtrl implements Runnable {
         c.getPHA().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 valeurBouton = "PHA";
-                System.out.print("test");
+                c.getConnexionTexte2().setText("Personnel Hospitalier Anesthésiste");
                 c.getConnexion().setContentPane(c.getPanelConnexion());
                 c.getConnexion().validate();
                 c.getConnexion().repaint();
@@ -71,6 +71,7 @@ public class ConnexionCtrl implements Runnable {
         c.getPHMT().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 valeurBouton = "PHMT";
+                c.getConnexionTexte2().setText("Personnel Hospitalier Médico Technique");
                 c.getConnexion().setContentPane(c.getPanelConnexion());
                 c.getConnexion().validate();
                 c.getConnexion().repaint();
@@ -80,6 +81,7 @@ public class ConnexionCtrl implements Runnable {
         c.getSA().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 valeurBouton = "SA";
+                c.getConnexionTexte2().setText("Secrétaire Administrative");
                 c.getConnexion().setContentPane(c.getPanelConnexion());
                 c.getConnexion().validate();
                 c.getConnexion().repaint();
@@ -89,11 +91,22 @@ public class ConnexionCtrl implements Runnable {
         c.getSM().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 valeurBouton = "SM";
+                c.getConnexionTexte2().setText("Secrétaire Médicale");
                 c.getConnexion().setContentPane(c.getPanelConnexion());
                 c.getConnexion().validate();
                 c.getConnexion().repaint();
             }
         });
+        
+             c.getRetour().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                c.getConnexion().setContentPane(c.getPanelBoutons());
+                c.getConnexion().validate();
+                c.getConnexion().repaint();
+            }
+        });
+
 
         //////////////////////// Listener de connexion ////////////////////////
         c.getValider().addMouseListener(new MouseAdapter() {
