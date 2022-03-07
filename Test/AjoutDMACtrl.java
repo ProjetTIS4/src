@@ -22,21 +22,21 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author lenal
  */
-public class ActeCtrl implements Runnable {
+public class AjoutDMACtrl implements Runnable {
 
-    ActeGUI a;
+    AjoutDMAGUI a;
     String ipp;
     AccueilGUI ac;
 
-    public ActeCtrl(String ipp, AccueilGUI ac) {
-        a = new ActeGUI();
+    public AjoutDMACtrl(String ipp, AccueilGUI ac) {
+        a = new AjoutDMAGUI();
         this.ipp = ipp;
         this.ac = ac;
-
     }
 
     @Override
     public void run() {
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -50,10 +50,10 @@ public class ActeCtrl implements Runnable {
 
         //////////////////////// Fenêtre ////////////////////////
         // a.getAjouterActe().setBounds(450, 190, 700, 460);
-        a.getAjouterActe().setVisible(true);
-        a.getAjouterActe().setSize(500, 700);
+        a.getAjouterDMA().setVisible(true);
+        a.getAjouterDMA().setSize(500, 700);
 
-        //////////////////////// Panel Date ////////////////////////
+//////////////////////// Panel Date ////////////////////////
         a.getJour().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -157,28 +157,19 @@ public class ActeCtrl implements Runnable {
 
                     Connection con = DriverManager.getConnection(url, user, password);
 
-                    String requete = "INSERT INTO fichesDM (IPPatient,numFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('" + ipp
-                            + "','" + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() + "','test"
+                    String requete = "INSERT INTO DMA (IPPatient,numeroSejour,dateEntree,dateSortie) VALUES ('" + ipp
+                            + "','" + "compteur" + "','" + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() + "','test"
                             + "','"
-                            + (a.getObservations2().getText())
-                            + "','"
-                            + a.getPrestations2().getText()
-                            + "','"
-                            + a.getOperations2().getText()
-                            + "','"
-                            + a.getResultat2().getText()
-                            + "','')";
-                    
-                    
-           //   StringEscapeUtils.escapeJava
-             
+                            + (a.getNom2().getText());
+
+                    //   StringEscapeUtils.escapeJava
                     System.out.println(requete);
                     Statement stm = con.createStatement();
                     stm.executeUpdate(requete);
 
-                    a.getAjouterActe().dispose();
+                    a.getAjouterDMA().dispose();
 
-                    String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
+                    String query = "SELECT COUNT(*) FROM fichesDMA WHERE IPPatient=" + ipp;
                     ResultSet res = stm.executeQuery(query);
 
                     int taille = 0;
@@ -187,43 +178,33 @@ public class ActeCtrl implements Runnable {
                         taille = res.getInt("COUNT(*)");
                     }
 
-                    String dataDM[][] = new String[taille][8];
-                    String columns[] = {"Date", "CR", "lettre sortie"};
+                    String dataDMA[][] = new String[taille][8];
+                    String columns[] = {"Date d'entrée", "Date de sortie"};
 //            res2.close();
 
-                    query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp;
+                    query = "SELECT * FROM fichesDMA WHERE IPPatient=" + ipp;
                     res = stm.executeQuery(query);
                     int i = 0;
                     while (res.next()) {
 
-                        String resul = res.getString("resultats");
+                        String dated = res.getString("dateEntree");
 
-                        String lettre = res.getString("lettreDeSortie");
-                        String num = res.getString("numFiche");
+                        String datef = res.getString("dateSortie");;
 
-                        dataDM[i][0] = num;
-                        if (resul != "") {
-                            dataDM[i][1] = "true";
-                        } else {
-                            dataDM[i][1] = "VIDE";
-                        }
-                        if (lettre != "") {
-                            dataDM[i][2] = "true";
-                        } else {
-                            dataDM[i][2] = "VIDE";
-                        }
+                        dataDMA[i][0] = dated;
+                        dataDMA[i][1]= datef;
 
                         i++;
                     }
 
-                    ac.getTableauDM().setModel(new DefaultTableModel(dataDM, columns){
+                    ac.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columns) {
 
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //Only the third column
-                    return false;
-                }
-            });
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    });
                     ac.getAccueil().validate();
                     ac.getAccueil().repaint();
 
@@ -235,5 +216,4 @@ public class ActeCtrl implements Runnable {
         });
 
     }
-
 }

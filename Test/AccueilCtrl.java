@@ -106,7 +106,14 @@ public class AccueilCtrl implements Runnable {
                 i++;
             }
 
-            model = new DefaultTableModel(dataTable, columns);
+            model = new DefaultTableModel(dataTable, columns) {
+
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //Only the third column
+                    return false;
+                }
+            };
             a.getTableau().setModel(model);
 
             //////// Régler la taille de la fenêtre et permettre d'arrêter le programme à la fermeture de la fenêtre
@@ -131,18 +138,6 @@ public class AccueilCtrl implements Runnable {
             }
 
 ////// Panel Droite ////
-            //Panel DM ///
-            // Panel Info Patient //
-//            a.getNom2().setText(patient.getNom());
-//            a.getPrenom2().setText(patient.getPrenom());
-//            a.getSexeInfo().setText("" + patient.getSexe());
-//            a.getDateInfo().setText(patient.stringDate());
-//            a.getAdresseInfo().setText(patient.getAdresse());
-            // Panel Info DM // 
-//            a.getObservations2().setText(fiche.getObservations());
-//            a.getPrescription2().setText(fiche.getPrescriptions());
-//            a.getOperationInfo().setText(fiche.getOperations());
-//            a.getResultatInfo().setText(fiche.getResultats());
             //Panel DMA ///
             // Panel Info Patient //
 //            a.getNom2DMA().setText(patient.getNom());
@@ -150,6 +145,8 @@ public class AccueilCtrl implements Runnable {
 //            a.getSexeInfoDMA().setText("" + patient.getSexe());
 //            a.getDateInfoDMA().setText(patient.stringDate());
 //            a.getAdresseInfoDMA().setText(patient.getAdresse());
+
+
 // Listener de déconnexion
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
@@ -243,11 +240,14 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
+                            String dataDMA[][] = new String[taille][8];
+                            String columnsDMA[] = {"Date de début", "Date de fin"};
                             String dataDM[][] = new String[taille][8];
                             String columns[] = {"Date", "CR", "lettre sortie"};
 //            res2.close();
 
                             query = "SELECT * FROM fichesDM WHERE IPPatient=" + s;
+
                             res = stm.executeQuery(query);
                             int i = 0;
                             while (res.next()) {
@@ -271,9 +271,39 @@ public class AccueilCtrl implements Runnable {
 
                                 i++;
                             }
+                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
+                            res = stm.executeQuery(query);
+                            while (res.next()) {
+
+                                String dated = res.getString("dateEntree");
+
+                                String datef = res.getString("dateSortie");
+                                //String prescription = res.getString("prescriptions");
+
+                                dataDMA[i][0] = dated;
+                                dataDMA[i][1] = datef;
+                                //dataDMA[i][2] = prescription;
+
+                                i++;
+                            }
 
                             ipp = s;
-                            a.getTableauDM().setModel(new DefaultTableModel(dataDM, columns));
+                            a.getTableauDM().setModel(new DefaultTableModel(dataDM, columns) {
+
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    //Only the third column
+                                    return false;
+                                }
+                            });
+                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
+
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    //Only the third column
+                                    return false;
+                                }
+                            });
                             a.getObservations2().setText("");
                             a.getPrescription2().setText("");
                             a.getOperationInfo().setText("");
@@ -294,6 +324,15 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     SwingUtilities.invokeLater(new ActeCtrl(ipp, a));
+                }
+            });
+            
+            //Listener sur le bouton "+" pour ajouter un DMA
+            a.getAjoutDMA().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    SwingUtilities.invokeLater(new AjoutDMACtrl(ipp, a));
                 }
             });
 
@@ -317,13 +356,18 @@ public class AccueilCtrl implements Runnable {
             a.getRetour().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    model = new DefaultTableModel(dataTable, columns);
+                    model = new DefaultTableModel(dataTable, columns) {
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    };
                     a.getTableau().setModel(model);
 
                 }
             });
-            
-            
 
             a.getBarreRecherche().addKeyListener(new KeyListener() {
 
@@ -350,6 +394,7 @@ public class AccueilCtrl implements Runnable {
                     if (me.getClickCount() == 1) {
                         int ligne = a.getTableauDM().getSelectedRow();
                         Object cellule = a.getTableauDM().getValueAt(ligne, 0);
+
                         String s = "" + cellule;
 
                         try {
@@ -421,6 +466,8 @@ public class AccueilCtrl implements Runnable {
 
     }
 
+    
+    
     public Sexe creerSexe(String sexe) {
         Sexe s = null;
         if (sexe.equals("HOMME")) {
@@ -435,6 +482,8 @@ public class AccueilCtrl implements Runnable {
         return s;
     }
 
+    
+    
     public Date CreerDateNaissanceString(String date) {
         Date d = null;
 
@@ -446,6 +495,8 @@ public class AccueilCtrl implements Runnable {
         return d;
     }
 
+    
+    
     public void recherche() {
 
         String s = a.getBarreRecherche().getText();
@@ -464,11 +515,25 @@ public class AccueilCtrl implements Runnable {
                     dataRecherche[k][4] = dataTable[i][4];
                     k++;
 
-                    model = new DefaultTableModel(dataRecherche, columns);
+                    model = new DefaultTableModel(dataRecherche, columns) {
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    };
                     a.getTableau().setModel(model);
 
                 } else if (s.equals("")) {
-                    model = new DefaultTableModel(dataTable, columns);
+                    model = new DefaultTableModel(dataTable, columns) {
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    };
                     a.getTableau().setModel(model);
                 }
 
@@ -483,15 +548,31 @@ public class AccueilCtrl implements Runnable {
                     dataRecherche[k][4] = dataTable[i][4];
                     k++;
 
-                    model = new DefaultTableModel(dataRecherche, columns);
+                    model = new DefaultTableModel(dataRecherche, columns) {
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    };
                     a.getTableau().setModel(model);
 
                 } else if (s.equals("")) {
-                    model = new DefaultTableModel(dataTable, columns);
+                    model = new DefaultTableModel(dataTable, columns) {
+
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    };
                     a.getTableau().setModel(model);
                 }
             }
 
         }
     }
+    
+    
 }
