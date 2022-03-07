@@ -28,14 +28,6 @@ public class Date {
         this.heure = heure;
         this.minutes = minutes;
     }
-    
-        public Date(int jour, int mois, int annee) {
-        this.jour = jour;
-        this.mois = mois;
-        this.annee = annee;
-        this.heure = 0;
-        this.minutes =0;
-    }
 
 
     public Date(int jour, int mois, int annee) {
