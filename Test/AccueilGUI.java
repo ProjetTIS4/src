@@ -405,6 +405,7 @@ public class AccueilGUI {
         ajoutActe.setContentAreaFilled(false);
         ajoutActe.setBorderPainted(true);
         ajoutActe.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        ajoutActe.setVisible(false);
 
 //Création du Panel avec les détails du DM sur lequel on a cliqué
         titleDetail = BorderFactory.createTitledBorder("Détails de cet acte");

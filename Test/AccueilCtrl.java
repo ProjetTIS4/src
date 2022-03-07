@@ -42,6 +42,7 @@ public class AccueilCtrl implements Runnable {
     private String dataTable[][];
     private String s;
     private String dataDMHide[][];
+    private String sej ;
 
     private DefaultTableModel model;
 
@@ -62,7 +63,7 @@ public class AccueilCtrl implements Runnable {
 
             Connection con = DriverManager.getConnection(url, user, password);
 
-            String query = "SELECT COUNT(IPP) FROM patient";
+            String query =  "SELECT COUNT(IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin()+"'";
             Statement stm = con.createStatement();
             ResultSet res = stm.executeQuery(query);
 
@@ -76,7 +77,7 @@ public class AccueilCtrl implements Runnable {
             String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe"};
 //            res2.close();
             dataTable = new String[taille][5];
-            query = "SELECT * FROM patient";
+            query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin()+"'";
             res = stm.executeQuery(query);
             int i = 0;
             while (res.next()) {
@@ -155,6 +156,7 @@ public class AccueilCtrl implements Runnable {
 
                     if (me.getClickCount() == 1) {
                           a.getTableauActeDm().setModel(new DefaultTableModel());
+                           a.getAjoutActe().setVisible(false);
                           
                         int ligne = a.getTableau().getSelectedRow();
                         Object cellule = a.getTableau().getValueAt(ligne, 0);
@@ -290,11 +292,14 @@ public class AccueilCtrl implements Runnable {
                     if (me.getClickCount() == 1) {
                          int ligne = a.getTableauDM().getSelectedRow();
                          System.out.println(ligne);
+                         a.getAjoutActe().setVisible(true);
+                         sej =dataDMHide[ligne][2];
 
                         try {
 
                             // REMPLIR LE TABLEAU DES ACTES DMs   
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s;
+                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + sej; 
+                            
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
 
@@ -359,7 +364,7 @@ public class AccueilCtrl implements Runnable {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
-                    SwingUtilities.invokeLater(new ActeCtrl(ipp, a));
+                    SwingUtilities.invokeLater(new ActeCtrl(ipp, a,p,sej));
                 }
             });
 

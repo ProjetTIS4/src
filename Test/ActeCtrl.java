@@ -5,6 +5,7 @@
  */
 package Test;
 
+import NF.Personnel;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,14 +25,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ActeCtrl implements Runnable {
 
-    ActeGUI a;
-    String ipp;
-    AccueilGUI ac;
+    private ActeGUI a;
+    private String ipp;
+    private AccueilGUI ac;
+    private Personnel p;
+    private String s;
 
-    public ActeCtrl(String ipp, AccueilGUI ac) {
+    public ActeCtrl(String ipp, AccueilGUI ac, Personnel p, String s) {
         a = new ActeGUI();
         this.ipp = ipp;
         this.ac = ac;
+        this.p =p;
+        this.s=s;
 
     }
 
@@ -157,9 +162,14 @@ public class ActeCtrl implements Runnable {
 
                     Connection con = DriverManager.getConnection(url, user, password);
 
-                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('" + ipp
-                            + "','140102050'"
-                            + "','" + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() + "','test"
+                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('" 
+                            + ipp
+                            + "','"
+                            + s
+                            + "','"
+                            + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() 
+                            + "','"
+                            + p.getLogin()
                             + "','"
                             + (a.getObservations2().getText())
                             + "','"
@@ -169,10 +179,8 @@ public class ActeCtrl implements Runnable {
                             + "','"
                             + a.getResultat2().getText()
                             + "','')";
-                    
-                    
-           //   StringEscapeUtils.escapeJava
-             
+
+                    //   StringEscapeUtils.escapeJava
                     System.out.println(requete);
                     Statement stm = con.createStatement();
                     stm.executeUpdate(requete);
@@ -200,7 +208,7 @@ public class ActeCtrl implements Runnable {
                         String resul = res.getString("resultats");
 
                         String lettre = res.getString("lettreDeSortie");
-                        String num = res.getString("numFiche");
+                        String num = res.getString("numeroFiche");
 
                         dataDM[i][0] = num;
                         if (resul != "") {
@@ -217,14 +225,14 @@ public class ActeCtrl implements Runnable {
                         i++;
                     }
 
-                    ac.getTableauDM().setModel(new DefaultTableModel(dataDM, columns){
+                    ac.getTableauActeDm().setModel(new DefaultTableModel(dataDM, columns) {
 
-                @Override
-                public boolean isCellEditable(int row, int column) {
-                    //Only the third column
-                    return false;
-                }
-            });
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    });
                     ac.getAccueil().validate();
                     ac.getAccueil().repaint();
 
