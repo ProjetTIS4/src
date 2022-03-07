@@ -15,10 +15,6 @@ public class DM {
 
     private Patient patient;
     private Vector<FichesDM> listefiches;
-
-   
-
-
     private Date debut;
     private Date fin;
 
@@ -29,15 +25,12 @@ public class DM {
     }
 
     //On ne mettra pas de set dans cette classe car le DM fonctionne en Append-only
-
- public Patient getPatient() {
+    public Patient getPatient() {
         return patient;
     }
 
-
     public void addFiche(String observation, String prescriptions, String operations, String resultats) {
         listefiches.add(new FichesDM(patient, observation, prescriptions, operations, resultats));
-
     }
 
 }
