@@ -374,6 +374,16 @@ public class AccueilCtrl implements Runnable {
                     SwingUtilities.invokeLater(new ActeCtrl(ipp, a));
                 }
             });
+            
+            //Listener sur le bouton "+" pour ajouter un DMA
+            a.getAjoutDMA().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    SwingUtilities.invokeLater(new AjoutDMACtrl(ipp, a));
+                }
+            });
+
 
             // Listener sur le bouton rechercher 
             a.getBarreRecherche().addMouseListener(new MouseAdapter() {

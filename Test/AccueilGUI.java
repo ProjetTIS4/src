@@ -1782,5 +1782,16 @@ public class AccueilGUI {
     public void setPlusImFinDMA(Image plusImFinDMA) {
         this.plusImFinDMA = plusImFinDMA;
     }
+    
+     
 
+    public JButton getAjoutDMA() {
+        return ajoutActeDMA;
+    }
+
+    public void setAjoutDMA(JButton ajoutActeDMA) {
+        this.ajoutActeDMA = ajoutActeDMA;
+    }
+
+    
 }
