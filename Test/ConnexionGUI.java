@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,12 +29,21 @@ public class ConnexionGUI {
 
     private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 150);
     private static final Color WHITE = new Color(255, 255, 255);
-    private static final Color GRIS = new Color(225, 248, 255);
+    private static final Color BLUE = new Color(225, 248, 255);
 
     private JFrame connexion;//Création de la fenêtre de connexion
     private JPanel jPanel;
     private JPanel jPanel2;
     private JPanel jPanel3;
+    private JPanel panelBoutons;
+    private JPanel panelConnexion;
+    
+    private JButton PHS;
+    private JButton PHA;
+    private JButton SA;
+    private JButton SM;
+    private JButton PHMT;
+    private JLabel qui ;
     
 
     private JTextField textUtilisateur; // Le champ de texte pour remplir le nom d'utilisateur
@@ -51,6 +61,8 @@ public class ConnexionGUI {
     private JLabel mdp;
 
     private GridBagConstraints gbc;
+    
+    
 
     public ConnexionGUI() {
         connexion = new JFrame("Connexion");//Création de la fenêtre de connexion
@@ -58,17 +70,40 @@ public class ConnexionGUI {
         jPanel = new JPanel(new GridBagLayout());
         jPanel2 = new JPanel(new GridBagLayout());
         jPanel3 = new JPanel(new GridBagLayout());
+        panelBoutons = new JPanel(new GridLayout(3,3));
+        panelConnexion = new JPanel(new BorderLayout());
+   
 
         erreur = new JLabel("");
+        
+        PHS = new JButton("Praticien Hospitalier de service");
+        PHA = new JButton("Praticien Hospitalier anesthésiste");
+        PHMT = new JButton("Praticien Hospitalier médico-technique");
+        SA = new JButton("Secrétaire administrative");
+        SM = new JButton("Secrétaire médicale");
+        
+        qui = new JLabel("Je suis ...");
+        qui.setFont(new Font("Bookman Old Style", Font.PLAIN, 18)); //On modifie la police et la taille de l'écriture
+        qui.setHorizontalAlignment(JLabel.CENTER);
 
         // Création de tous les éléments apparaissant dans la fenêtre 
+        //Panel bouton 
+        
+    
+        panelBoutons.add(qui);
+        panelBoutons.add(PHS);
+        panelBoutons.add(PHA);
+        panelBoutons.add(PHMT);
+        panelBoutons.add(SA);
+        panelBoutons.add(SM);       
+        
         //Image
         icone = new ImageIcon("src/Annexes/Hubspital_logo.png");
         image = new JLabel(icone);
         image.setOpaque(true);
         image.setBackground(WHITE);
 
-        connexion.getContentPane().add(image, BorderLayout.WEST); //On ajoute l'image dans la partie gauche de notre fenêtre
+        panelConnexion.add(image, BorderLayout.WEST); //On ajoute l'image dans la partie gauche de notre fenêtre
 
         //Partie Connexion
         connexionTexte = new JLabel("Connexion ");
@@ -135,12 +170,24 @@ public class ConnexionGUI {
 
         jPanel3.add(jPanel2, gbc);
 
-        connexion.add(jPanel3, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
+        panelConnexion.add(jPanel3, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
+         //connexion.add(panelBoutons, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
 
-        jPanel3.setBackground(GRIS);
+        jPanel3.setBackground(BLUE);
         jPanel2.setBackground(LIGHT_BLUE2);
-        // jPanel3.setBackground(LIGHT_BLUE2);
+        PHS.setBackground(BLUE);
+        PHA.setBackground(BLUE);
+        PHMT.setBackground(BLUE);
+        SA.setBackground(BLUE);
+        SM.setBackground(BLUE);
+        panelBoutons.setBackground(LIGHT_BLUE2);
+        
+        connexion.setContentPane(panelBoutons);
+
         jPanel.setOpaque(false);
+       
+        
+        
     
     }
     public JFrame getConnexion() {
@@ -254,5 +301,71 @@ public class ConnexionGUI {
     public void setGbc(GridBagConstraints gbc) {
         this.gbc = gbc;
     }
+
+    public JPanel getPanelBoutons() {
+        return panelBoutons;
+    }
+
+    public void setPanelBoutons(JPanel panelBoutons) {
+        this.panelBoutons = panelBoutons;
+    }
+
+    public JButton getPHS() {
+        return PHS;
+    }
+
+    public void setPHS(JButton PHS) {
+        this.PHS = PHS;
+    }
+
+    public JButton getPHA() {
+        return PHA;
+    }
+
+    public void setPHA(JButton PHA) {
+        this.PHA = PHA;
+    }
+
+    public JButton getSA() {
+        return SA;
+    }
+
+    public void setSA(JButton SA) {
+        this.SA = SA;
+    }
+
+    public JButton getSM() {
+        return SM;
+    }
+
+    public void setSM(JButton SM) {
+        this.SM = SM;
+    }
+
+    public JButton getPHMT() {
+        return PHMT;
+    }
+
+    public void setPHMT(JButton PHMT) {
+        this.PHMT = PHMT;
+    }
+
+    public JLabel getQui() {
+        return qui;
+    }
+
+    public void setQui(JLabel qui) {
+        this.qui = qui;
+    }
+
+    public JPanel getPanelConnexion() {
+        return panelConnexion;
+    }
+
+    public void setPanelConnexion(JPanel panelConnexion) {
+        this.panelConnexion = panelConnexion;
+    }
+    
+    
 
 }

@@ -7,6 +7,8 @@ package Test;
 
 import NF.Personnel;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.awt.event.KeyListener;
@@ -31,6 +33,7 @@ public class ConnexionCtrl implements Runnable {
     String mdp;
     Personnel p;
     ConnexionGUI c;
+    String valeurBouton;
 
     public ConnexionCtrl() {
         initLookAndFeel(); // Appelle la fonction qui choisit le Look and Feel Nimbus 
@@ -45,6 +48,53 @@ public class ConnexionCtrl implements Runnable {
         c.getConnexion().setDefaultCloseOperation(EXIT_ON_CLOSE);
         c.getConnexion().setVisible(true);
 
+        c.getPHS().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                valeurBouton = "PHS";
+                System.out.print("test");
+                c.getConnexion().setContentPane(c.getPanelConnexion());
+                c.getConnexion().validate();
+                c.getConnexion().repaint();
+            }
+        });
+
+        c.getPHA().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                valeurBouton = "PHA";
+                System.out.print("test");
+                c.getConnexion().setContentPane(c.getPanelConnexion());
+                c.getConnexion().validate();
+                c.getConnexion().repaint();
+            }
+        });
+
+        c.getPHMT().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                valeurBouton = "PHMT";
+                c.getConnexion().setContentPane(c.getPanelConnexion());
+                c.getConnexion().validate();
+                c.getConnexion().repaint();
+            }
+        });
+
+        c.getSA().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                valeurBouton = "SA";
+                c.getConnexion().setContentPane(c.getPanelConnexion());
+                c.getConnexion().validate();
+                c.getConnexion().repaint();
+            }
+        });
+
+        c.getSM().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                valeurBouton = "SM";
+                c.getConnexion().setContentPane(c.getPanelConnexion());
+                c.getConnexion().validate();
+                c.getConnexion().repaint();
+            }
+        });
+
         //////////////////////// Listener de connexion ////////////////////////
         c.getValider().addMouseListener(new MouseAdapter() {
             @Override
@@ -53,23 +103,25 @@ public class ConnexionCtrl implements Runnable {
 
             }
         });
-        
+
         c.getjPasswordField1().addKeyListener(new KeyListener() {
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyChar() == VK_ENTER) {
-                        connexion();
-                    }
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == VK_ENTER) {
+                    connexion();
                 }
+            }
 
-                @Override
-                public void keyTyped(KeyEvent e) {}
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
 
-                @Override
-                public void keyReleased(KeyEvent e) {}
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
 
-            });
+        });
 
     }
 
@@ -97,7 +149,7 @@ public class ConnexionCtrl implements Runnable {
 
             Connection con = DriverManager.getConnection(url, user, password);
 
-            String query = "SELECT COUNT(*) FROM PHS";
+            String query = "SELECT COUNT(*) FROM " + valeurBouton;
             Statement stm = con.createStatement();
             ResultSet res = stm.executeQuery(query);
 
@@ -109,7 +161,7 @@ public class ConnexionCtrl implements Runnable {
 
             String data[][] = new String[taille][6];
 
-            query = "SELECT * FROM PHS";
+            query = "SELECT * FROM " + valeurBouton;
             res = stm.executeQuery(query);
 
             int i = 0;

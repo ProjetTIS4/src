@@ -39,6 +39,7 @@ public class AccueilGUI {
 
 //// Variable pour la couleur des fenêtres
     private static final Color LIGHT_BLUE = new Color(100, 180, 200);
+    private static final Color BLUE = new Color(225, 248, 255);
 
 //// Panel
     private JFrame accueil;
@@ -715,7 +716,7 @@ public class AccueilGUI {
         tDMA.setBackground(LIGHT_BLUE);
         tableau.setBackground(LIGHT_BLUE);
         tableauDMA.setBackground(LIGHT_BLUE);
-         tableauDM.setBackground(LIGHT_BLUE);
+        tableauDM.setBackground(LIGHT_BLUE);
 
         ficheResultat.setBackground(LIGHT_BLUE);
     }
@@ -1783,8 +1784,6 @@ public class AccueilGUI {
     public void setPlusImFinDMA(Image plusImFinDMA) {
         this.plusImFinDMA = plusImFinDMA;
     }
-    
-     
 
     public JButton getAjoutDMA() {
         return ajoutActeDMA;
@@ -1794,5 +1793,4 @@ public class AccueilGUI {
         this.ajoutActeDMA = ajoutActeDMA;
     }
 
-    
 }

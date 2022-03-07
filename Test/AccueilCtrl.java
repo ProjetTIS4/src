@@ -74,9 +74,9 @@ public class AccueilCtrl implements Runnable {
             }
 
             String data[][] = new String[taille][9];
-            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe"};
+            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Localisation"};
 //            res2.close();
-            dataTable = new String[taille][5];
+            dataTable = new String[taille][6];
             query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin()+"'";
             res = stm.executeQuery(query);
             int i = 0;
@@ -90,6 +90,7 @@ public class AccueilCtrl implements Runnable {
                 String adresse = res.getString("adresse");
                 String localisation = res.getString("localisation");
                 String medGen = res.getString("medGen");
+                
                 data[i][0] = IPP;
                 dataTable[i][0] = IPP;
                 data[i][1] = nom_marital;
@@ -103,6 +104,7 @@ public class AccueilCtrl implements Runnable {
                 dataTable[i][4] = sexe;
                 data[i][6] = adresse;
                 data[i][7] = localisation;
+                dataTable[i][5] = localisation;
                 data[i][8] = medGen;
 
                 i++;
