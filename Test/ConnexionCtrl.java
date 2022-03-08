@@ -156,6 +156,7 @@ public class ConnexionCtrl implements Runnable {
     public void connexion() {
 
         try {
+            
             String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
             String user = "DEV";
             String password = "SIH-mmlh2022";

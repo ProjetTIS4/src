@@ -42,7 +42,7 @@ public class AccueilCtrl implements Runnable {
     private String dataTable[][];
     private String s;
     private String dataDMHide[][];
-    private String sej ;
+    private String sej;
 
     private DefaultTableModel model;
 
@@ -63,21 +63,21 @@ public class AccueilCtrl implements Runnable {
 
             Connection con = DriverManager.getConnection(url, user, password);
 
-            String query =  "SELECT COUNT(IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin()+"'";
+            String query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
             Statement stm = con.createStatement();
             ResultSet res = stm.executeQuery(query);
 
             taille = 0;
 
             if (res.next()) {
-                taille = res.getInt("COUNT(IPP)");
+                taille = res.getInt("COUNT(DISTINCT IPP)");
             }
 
             String data[][] = new String[taille][9];
             String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Localisation"};
-//            res2.close();
+
             dataTable = new String[taille][6];
-            query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin()+"'";
+            query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
             res = stm.executeQuery(query);
             int i = 0;
             while (res.next()) {
@@ -90,24 +90,29 @@ public class AccueilCtrl implements Runnable {
                 String adresse = res.getString("adresse");
                 String localisation = res.getString("localisation");
                 String medGen = res.getString("medGen");
-                
-                data[i][0] = IPP;
-                dataTable[i][0] = IPP;
-                data[i][1] = nom_marital;
-                dataTable[i][1] = nom_marital;
-                data[i][2] = nom_usuel;
-                data[i][3] = prenom;
-                dataTable[i][2] = prenom;
-                data[i][4] = dateNaissance;
-                dataTable[i][3] = dateNaissance;
-                data[i][5] = sexe;
-                dataTable[i][4] = sexe;
-                data[i][6] = adresse;
-                data[i][7] = localisation;
-                dataTable[i][5] = localisation;
-                data[i][8] = medGen;
 
-                i++;
+                if (contains(dataTable, IPP, 0)) {
+                   
+                    continue;
+                } else {
+                    data[i][0] = IPP;
+                    dataTable[i][0] = IPP;
+                    data[i][1] = nom_marital;
+                    dataTable[i][1] = nom_marital;
+                    data[i][2] = nom_usuel;
+                    data[i][3] = prenom;
+                    dataTable[i][2] = prenom;
+                    data[i][4] = dateNaissance;
+                    dataTable[i][3] = dateNaissance;
+                    data[i][5] = sexe;
+                    dataTable[i][4] = sexe;
+                    data[i][6] = adresse;
+                    data[i][7] = localisation;
+                    dataTable[i][5] = localisation;
+                    data[i][8] = medGen;
+
+                    i++;
+                }
             }
 
             model = new DefaultTableModel(dataTable, columns) {
@@ -131,17 +136,19 @@ public class AccueilCtrl implements Runnable {
             a.getAccueil().setSize(longueur, hauteur);
 
             ////////// Panel Haut /////////////
-            if (p.getPoste() == Personnel.Poste.PHService) {
+            if (p.getPoste() == Personnel.Poste.PHService || p.getPoste() == Personnel.Poste.PHAnesthesiste || p.getPoste() == Personnel.Poste.PHMedicoTechnique) {
 
                 a.getPresentation().setText("Bienvenue Dr. " + p.getNom().toUpperCase() + " " + p.getPrenom());
                 a.getPresentation2().setText("" + p.getNomService());
 
-            } else {
+            } else if (p.getPoste() == Personnel.Poste.SecretaireAdministrative) {
                 a.getPresentation().setText("Bienvenue " + p.getNom().toUpperCase() + " " + p.getPrenom());
-                a.getPresentation2().setText("" + p.getPoste() + " - " + p.getNomService());
+                a.getPresentation2().setText("Secrétaire administrative");
+            } else if (p.getPoste() == Personnel.Poste.SecretaireMedicale) {
+                a.getPresentation().setText("Bienvenue " + p.getNom().toUpperCase() + " " + p.getPrenom());
+                a.getPresentation2().setText("Secrétaire médicale - " + p.getNomService());
             }
 
- 
 // Listener de déconnexion
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
@@ -157,13 +164,12 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     if (me.getClickCount() == 1) {
-                          a.getTableauActeDm().setModel(new DefaultTableModel());
-                           a.getAjoutActe().setVisible(false);
-                          
+                        a.getTableauActeDm().setModel(new DefaultTableModel());
+                        a.getAjoutActe().setVisible(false);
+
                         int ligne = a.getTableau().getSelectedRow();
                         Object cellule = a.getTableau().getValueAt(ligne, 0);
                         s = "" + cellule;
-                        
 
                         int k = 0;
                         while (data[k][0].equals(s) == false && k < data.length - 1) {
@@ -292,16 +298,16 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     if (me.getClickCount() == 1) {
-                         int ligne = a.getTableauDM().getSelectedRow();
-                         System.out.println(ligne);
-                         a.getAjoutActe().setVisible(true);
-                         sej =dataDMHide[ligne][2];
+                        int ligne = a.getTableauDM().getSelectedRow();
+                        System.out.println(ligne);
+                        a.getAjoutActe().setVisible(true);
+                        sej = dataDMHide[ligne][2];
 
                         try {
 
                             // REMPLIR LE TABLEAU DES ACTES DMs   
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + sej; 
-                            
+                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + sej;
+
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
 
@@ -328,18 +334,19 @@ public class AccueilCtrl implements Runnable {
                                 String num = res.getString("numeroFiche");
 
                                 if (sejour.equals(dataDMHide[ligne][2])) {
-                                   
-                                dataActeDM[i][0] = num;
-                                if (resul != "") {
-                                    dataActeDM[i][1] = "true";
-                                } else {
-                                    dataActeDM[i][1] = "VIDE";
+
+                                    dataActeDM[i][0] = num;
+                                    if (resul != "") {
+                                        dataActeDM[i][1] = "true";
+                                    } else {
+                                        dataActeDM[i][1] = "VIDE";
+                                    }
+                                    if (lettre != "") {
+                                        dataActeDM[i][2] = "true";
+                                    } else {
+                                        dataActeDM[i][2] = "VIDE";
+                                    }
                                 }
-                                if (lettre != "") {
-                                    dataActeDM[i][2] = "true";
-                                } else {
-                                    dataActeDM[i][2] = "VIDE";
-                                }}
 
                                 i++;
                             }
@@ -366,7 +373,7 @@ public class AccueilCtrl implements Runnable {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
-                    SwingUtilities.invokeLater(new ActeCtrl(ipp, a,p,sej));
+                    SwingUtilities.invokeLater(new ActeCtrl(ipp, a, p, sej));
                 }
             });
 
@@ -614,4 +621,32 @@ public class AccueilCtrl implements Runnable {
 
         }
     }
+
+    public boolean contains(String[][] t, String s, int j) {
+        boolean b = false;
+        int size = t.length;
+        String ipp = s;
+
+        System.out.println(s);
+        for (int i = 0; i < size; i++) {
+            String a = t[i][j];
+            b = ipp.equals(a);
+            if (b) {
+                return b;
+            }
+            System.out.println(a);
+            System.out.println(b);
+        }
+//        int i = 0;
+//        while (b != true || i < size - 1) {
+//            String a = t[i][j];
+//            b = ipp.equals(a);
+//            System.out.println(a);
+//            System.out.println(b);
+//            i++;
+//        }
+
+        return b;
+    }
+
 }

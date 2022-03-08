@@ -110,6 +110,13 @@ public class Personnel extends Personne {
         }        
      
     }
+    
+    public void print(){
+    String s;
+    s=""+service+" "+poste+" "+mdp+" "+login;
+    System.out.println(s);
+    
+    }
 
 }
 

@@ -26,7 +26,7 @@ package NF;
         URGENCES,
         PNEUMOLOGIE,
         OBSTETRIE,
-        LaboratoireAnalyse,
+        LABORATOIREANALYSE,
         GASTROENTEROLOGIE;
 
     }

@@ -162,7 +162,7 @@ public class ActeCtrl implements Runnable {
 
                     Connection con = DriverManager.getConnection(url, user, password);
 
-                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('" 
+                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('"
                             + ipp
                             + "','"
                             + s

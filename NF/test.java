@@ -22,13 +22,14 @@ public class test {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Date date = new Date (1998,12,25);
-       Calendar rightNow = Calendar.getInstance();
-       Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
-       System.out.println(patient.getIPP());
-       System.out.println(patient.getEntreeServie());
-   System.out.println(rightNow.getTime());
-       System.out.println(patient.toString());
+//        Date date = new Date (1998,12,25);
+//       Calendar rightNow = Calendar.getInstance();
+//       Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
+//       System.out.println(patient.getIPP());
+//       System.out.println(patient.getEntreeServie());
+//   System.out.println(rightNow.getTime());
+       System.out.println("184689653".equals("184689653"));
+       
        
      //  Personnel p=new Personnel("ttt","fff","cardiologie",Poste.PHService,"lll","yyy");
   //     System.out.println(p.getNomService());
