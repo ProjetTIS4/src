@@ -107,9 +107,9 @@ public class AccueilCtrl implements Runnable {
             }
 
             String data[][] = new String[taille][9];
-            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Localisation"};
+            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre","Service de localisation"};
 
-            dataTable = new String[taille][6];
+            dataTable = new String[taille][7];
 
             switch (p.getPoste()) {
 
@@ -167,7 +167,8 @@ public class AccueilCtrl implements Runnable {
                     dataTable[i][4] = sexe;
                     data[i][6] = adresse;
                     data[i][7] = localisation;
-                    dataTable[i][5] = localisation;
+                    dataTable[i][5] = affichageLoc(localisation);
+                    dataTable[i][6] = affichageSpe(localisation);
                     data[i][8] = medGen;
 
                     i++;
@@ -717,6 +718,20 @@ public class AccueilCtrl implements Runnable {
 //        }
 
         return b;
+    }
+     public String affichageLoc(String s) {
+      String l=s.substring(1,5);
+     
+      
+     return(l);       
+    }
+      
+       
+      public String affichageSpe(String s) {
+      String l=s.substring(5);
+     
+      
+     return(l);       
     }
 
 }

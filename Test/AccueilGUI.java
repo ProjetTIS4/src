@@ -316,6 +316,7 @@ public class AccueilGUI {
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
         tableau = new JTable();
+        tableau.getTableHeader().setReorderingAllowed(false); 
         t = new JScrollPane(tableau);
         t.setOpaque(true);
 
@@ -376,6 +377,8 @@ public class AccueilGUI {
         panelDM.setBorder(titleListe);
 
         tableauDM = new JTable();
+        tableauDM.setAutoCreateRowSorter(true);
+        tableauDM.getTableHeader().setReorderingAllowed(false); 
         ScrollDM = new JScrollPane(tableauDM);
         ScrollDM.setOpaque(true);
 
