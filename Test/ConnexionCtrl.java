@@ -102,6 +102,9 @@ public class ConnexionCtrl implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 
                 c.getConnexion().setContentPane(c.getPanelBoutons());
+                c.getErreur().setVisible(false);
+                c.getTextUtilisateur().setText("");
+                c.getjPasswordField1().setText("");
                 c.getConnexion().validate();
                 c.getConnexion().repaint();
             }

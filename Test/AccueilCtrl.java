@@ -10,6 +10,7 @@ import NF.FichesDM;
 import NF.Patient;
 import NF.Patient.Sexe;
 import NF.Personnel;
+import NF.Personnel.Poste;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -23,6 +24,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.SwingUtilities;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import javax.swing.table.DefaultTableModel;
@@ -62,9 +66,38 @@ public class AccueilCtrl implements Runnable {
             String password = "SIH-mmlh2022";
 
             Connection con = DriverManager.getConnection(url, user, password);
-
-            String query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
             Statement stm = con.createStatement();
+            String query = "";
+
+            switch (p.getPoste()) {
+
+                case PHService:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+
+                    break;
+
+                case PHAnesthesiste:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+
+                    break;
+
+                case PHMedicoTechnique:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+
+                    break;
+
+                case SecretaireAdministrative:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient";
+
+                    break;
+
+                case SecretaireMedicale:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+
+                    break;
+
+            }
+
             ResultSet res = stm.executeQuery(query);
 
             taille = 0;
@@ -77,7 +110,33 @@ public class AccueilCtrl implements Runnable {
             String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Localisation"};
 
             dataTable = new String[taille][6];
-            query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+
+            switch (p.getPoste()) {
+
+                case PHService:
+                    query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+                    break;
+
+                case PHAnesthesiste:
+                    query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+                    break;
+
+                case PHMedicoTechnique:
+                    query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+                    break;
+
+                case SecretaireAdministrative:
+                    query = "SELECT * FROM patient ";
+
+                    break;
+
+                case SecretaireMedicale:
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+
+                    break;
+
+            }
+
             res = stm.executeQuery(query);
             int i = 0;
             while (res.next()) {
@@ -92,7 +151,7 @@ public class AccueilCtrl implements Runnable {
                 String medGen = res.getString("medGen");
 
                 if (contains(dataTable, IPP, 0)) {
-                   
+
                     continue;
                 } else {
                     data[i][0] = IPP;
@@ -153,9 +212,11 @@ public class AccueilCtrl implements Runnable {
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-
+                    String[] choix ={"Oui","Non"};
+                    int input = JOptionPane.showConfirmDialog(a.getAccueil(), "Etes vous sûr ?","Confirmation",YES_NO_OPTION,WARNING_MESSAGE);
+                   if (input==0){
                     a.getAccueil().setVisible(false);
-                    SwingUtilities.invokeLater(new ConnexionCtrl());
+                    SwingUtilities.invokeLater(new ConnexionCtrl());}
                 }
             });
 
@@ -196,8 +257,17 @@ public class AccueilCtrl implements Runnable {
                         }
 
                         a.getPanelMessage().setVisible(false);
-                        a.getTp().add("DM", a.getDM());
-                        a.getTp().add("DMA", a.getDMA());
+                        if (p.getPoste().equals(Poste.SecretaireAdministrative)) {
+
+                            a.getTp().add("DMA", a.getDMA());
+                        } else if (p.getPoste().equals(Poste.SecretaireMedicale)) {
+                            a.getTp().add("DM", a.getDM());
+
+                        } else {
+                            a.getTp().add("DM", a.getDM());
+                            a.getTp().add("DMA", a.getDMA());
+                        }
+
                         a.getPanelDroit().add(a.getTp());
 
                         a.getNom2().setText(patient.getNom());
