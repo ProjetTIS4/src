@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -29,6 +30,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -38,12 +40,19 @@ import javax.swing.border.TitledBorder;
 public class AccueilGUI {
 
 //// Variable pour la couleur des fenêtres
-    private static final Color LIGHT_BLUE = new Color(100, 180, 200); 
+   // private static final Color LIGHT_BLUE = new Color(100, 180, 200);
+    //    private static final Color LIGHT_BLUE = new Color(132, 195, 201);
+    
+      private static final Color LIGHT_BLUE = new Color(152, 208, 223);
     //private static final Color LIGHT_BLUE = new Color(183, 204, 205);
-   // private static final Color LIGHT_BLUE = new Color(213, 240, 240);
+    // private static final Color LIGHT_BLUE = new Color(213, 240, 240);
     private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 150);
     private static final Color BLUE = new Color(225, 248, 255);
     private static final Color BLUE2 = new Color(87, 139, 141);
+//    private static final Color GREYFOND = new Color(227, 237, 238);
+//    private static final Color GREY = new Color(216, 242, 245);
+    private static final Color GREY = new Color(241, 244, 244);
+    private static final Color GREYFOND = new Color(9, 121, 131);
 
 //// Panel
     private JFrame accueil;
@@ -76,7 +85,7 @@ public class AccueilGUI {
     private JPanel panelListe;
     private JPanel panelPlus;
     private JScrollPane ScrollDM;
-    private JScrollPane tDM;
+    private JScrollPane tActeDM;
     private JPanel panelDetail;
     private JPanel panelFiche;
     private JScrollPane obs;
@@ -132,6 +141,7 @@ public class AccueilGUI {
     private ImageIcon iconeH;
 
     private JLabel messageArrive;
+    private Border LoweredBevelBorderInfo;
     private TitledBorder titleInfo;
 
     // Informations du patient 
@@ -152,6 +162,7 @@ public class AccueilGUI {
     private JLabel adresseInfo;
 
     // Tableau des  DM
+    private Border LoweredBevelBorderDM;
     private TitledBorder titleDM;
     private JTable tableauDM;
     private JButton ajoutDM;
@@ -160,6 +171,7 @@ public class AccueilGUI {
     private Image plusImFinDM;
 
     // Tableau des Actes du DM
+    private Border LoweredBevelBorderListe;
     private TitledBorder titleListe;
     private JTable tableauActeDm;
     private JButton ajoutActe;
@@ -168,14 +180,19 @@ public class AccueilGUI {
     private Image plusImFin;
 
     //Détails des DMs
+    private Border LoweredBevelBorderDetail;
     private TitledBorder titleDetail;
     private JTextArea observations2;
+    private Border LoweredBevelBorderObs;
     private TitledBorder titleObs;
     private JTextArea prescription2;
+    private Border LoweredBevelBorderPres;
     private TitledBorder titlePresc;
     private JTextArea operationInfo;
+    private Border LoweredBevelBorderOp;
     private TitledBorder titleOp;
     private JTextArea resultatInfo;
+    private Border LoweredBevelBorderRes;
     private TitledBorder titleRes;
 
     private TitledBorder title;
@@ -320,7 +337,7 @@ public class AccueilGUI {
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
         tableau = new JTable();
-        tableau.getTableHeader().setReorderingAllowed(false); 
+        tableau.getTableHeader().setReorderingAllowed(false);
         t = new JScrollPane(tableau);
         t.setOpaque(true);
 
@@ -331,7 +348,13 @@ public class AccueilGUI {
 ///////////////// Panel DM /////////////////
         //Création du Panel du haut de la partie DM
         //Création du Panel contenant les informations du Patient
-        titleInfo = BorderFactory.createTitledBorder("informations du patient");
+        //titleInfo = BorderFactory.createTitledBorder("informations du patient");
+        //  titleInfo.setTitleColor(GREYFOND);
+        LoweredBevelBorderInfo = BorderFactory.createLoweredBevelBorder();
+        titleInfo = BorderFactory.createTitledBorder(LoweredBevelBorderInfo, "informations du patient",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+
         panelInfoPatient.setBorder(titleInfo);
 
         iconeH = new ImageIcon("src/Annexes/homme.png");
@@ -377,12 +400,15 @@ public class AccueilGUI {
         patientAdresse.setLayout(new BoxLayout(patientAdresse, BoxLayout.X_AXIS));
 
         //Création du Panel contenant la liste des DMs du patient 
-        titleDM = BorderFactory.createTitledBorder("Liste des DMs");
-        panelDM.setBorder(titleListe);
+        LoweredBevelBorderDM = BorderFactory.createLoweredBevelBorder();
+        titleDM = BorderFactory.createTitledBorder(LoweredBevelBorderDM, "Dossier médicaux",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+        panelDM.setBorder(titleDM);
 
         tableauDM = new JTable();
         tableauDM.setAutoCreateRowSorter(true);
-        tableauDM.getTableHeader().setReorderingAllowed(false); 
+        tableauDM.getTableHeader().setReorderingAllowed(false);
         ScrollDM = new JScrollPane(tableauDM);
         ScrollDM.setOpaque(true);
 
@@ -397,12 +423,16 @@ public class AccueilGUI {
         ajoutDM.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
 
 //Création du Panel contenant la liste des actes dans un DM du patient 
-        titleListe = BorderFactory.createTitledBorder("Liste des actes");
+        LoweredBevelBorderListe = BorderFactory.createLoweredBevelBorder();
+        titleListe = BorderFactory.createTitledBorder(LoweredBevelBorderListe, "Liste des actes",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+
         panelListe.setBorder(titleListe);
 
         tableauActeDm = new JTable();
-        tDM = new JScrollPane(tableauActeDm);
-        tDM.setOpaque(true);
+        tActeDM = new JScrollPane(tableauActeDm);
+        tActeDM.setOpaque(true);
 
         plus = new ImageIcon("src/Annexes/plus.png");
         plusIm = plus.getImage(); // Convertissemnt pour pouvoir redimensionner
@@ -416,7 +446,11 @@ public class AccueilGUI {
         ajoutActe.setVisible(false);
 
 //Création du Panel avec les détails du DM sur lequel on a cliqué
-        titleDetail = BorderFactory.createTitledBorder("Détails de cet acte");
+        LoweredBevelBorderDetail = BorderFactory.createLoweredBevelBorder();
+        titleDetail = BorderFactory.createTitledBorder(LoweredBevelBorderDetail, "Détails de cet acte",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+
         panelDetail.setBorder(titleDetail);
 
 // Observations
@@ -425,7 +459,11 @@ public class AccueilGUI {
         observations2.setLineWrap(true);
         observations2.setEditable(false);
         obs.setViewportView(observations2);
-        titleObs = BorderFactory.createTitledBorder("Observations");
+
+        LoweredBevelBorderObs = BorderFactory.createLoweredBevelBorder();
+        titleObs = BorderFactory.createTitledBorder(LoweredBevelBorderObs, "Observations",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
         ficheObservations.setBorder(titleObs);
 
 // Prescription
@@ -434,7 +472,11 @@ public class AccueilGUI {
         prescription2.setLineWrap(true);
         prescription2.setEditable(false);
         pres.setViewportView(prescription2);
-        titlePresc = BorderFactory.createTitledBorder("Prescriptions");
+
+        LoweredBevelBorderPres = BorderFactory.createLoweredBevelBorder();
+        titlePresc = BorderFactory.createTitledBorder(LoweredBevelBorderPres, "Prescriptions",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
         fichePrescription.setBorder(titlePresc);
 
 //Opération
@@ -443,7 +485,10 @@ public class AccueilGUI {
         operationInfo.setLineWrap(true);
         operationInfo.setEditable(false);
         op.setViewportView(operationInfo);
-        titleOp = BorderFactory.createTitledBorder("Opérations");
+        LoweredBevelBorderOp = BorderFactory.createLoweredBevelBorder();
+        titleOp = BorderFactory.createTitledBorder(LoweredBevelBorderOp, "Opérations",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
         ficheOperation.setBorder(titleOp);
 
 //Résultats
@@ -452,7 +497,10 @@ public class AccueilGUI {
         resultatInfo.setLineWrap(true);
         resultatInfo.setEditable(false);
         result.setViewportView(resultatInfo);
-        titleRes = BorderFactory.createTitledBorder("Résultats");
+        LoweredBevelBorderRes = BorderFactory.createLoweredBevelBorder();
+        titleRes = BorderFactory.createTitledBorder(LoweredBevelBorderRes, "Résultats",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
         ficheResultat.setBorder(titleRes);
 
 //Création du Panel DM
@@ -596,8 +644,9 @@ public class AccueilGUI {
         panelTest.add(patientAdresse, gbc);
 
         panelInfoPatient.add(panelTest);
-        panelListe.add(tDM);
+        panelListe.add(tActeDM);
         panelDM.add(ScrollDM);
+        panelDM.setBorder(titleDM);
 
         panelPlus.add(ajoutActe, BorderLayout.EAST);
         panelListe.add(panelPlus, BorderLayout.NORTH);
@@ -689,11 +738,11 @@ public class AccueilGUI {
         patientDate.setOpaque(false);
         patientAdresse.setOpaque(false);
         pPrenom.setOpaque(false);
-   panelTest.setOpaque(false); // Panel contenant les infos du patient pour que ce soit centré dans le panel info patient
-        ficheObservations.setOpaque(false);
-        fichePrescription.setOpaque(false);
-        ficheOperation.setOpaque(false);
-        ficheResultat.setOpaque(false);
+        panelTest.setOpaque(false); // Panel contenant les infos du patient pour que ce soit centré dans le panel info patient
+//        ficheObservations.setOpaque(false);
+//        fichePrescription.setOpaque(false);
+//        ficheOperation.setOpaque(false);
+//        ficheResultat.setOpaque(false);
         //
         patientNomDMA.setOpaque(false);
         pPrenomDMA.setOpaque(false);
@@ -704,34 +753,39 @@ public class AccueilGUI {
         //
         panelPlus.setOpaque(false);
         panelRechercheDroit.setOpaque(false);
-        
+
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
-        
-       panelHaut.setBackground(LIGHT_BLUE);
-panelDroit.setBackground(LIGHT_BLUE);
-panPatients.setBackground(LIGHT_BLUE); // Panel de gauche
-panelInfoPatient.setBackground(LIGHT_BLUE);
+        panelHaut.setBackground(LIGHT_BLUE);
+        panelDroit.setBackground(LIGHT_BLUE);
+        panPatients.setBackground(LIGHT_BLUE); // Panel de gauche
         panelMessage.setBackground(LIGHT_BLUE);
-       panelListe.setBackground(LIGHT_BLUE);
-      panelDetail.setBackground(LIGHT_BLUE);
-  panelInfoPatientDMA.setBackground(LIGHT_BLUE);
-       panelListeDMA.setBackground(LIGHT_BLUE);
-        panelDetailDMA.setBackground(LIGHT_BLUE);
-        
- 
-
         panelRecherche.setBackground(LIGHT_BLUE);
-        panelDM.setBackground(LIGHT_BLUE);
 
-        t.setBackground(LIGHT_BLUE);
+        ficheObservations.setBackground(LIGHT_BLUE);
+        fichePrescription.setBackground(LIGHT_BLUE);
+        ficheOperation.setBackground(LIGHT_BLUE);
+        ficheResultat.setBackground(LIGHT_BLUE);
+        //panelPlus.setBackground(GREY);
+
+        panelListe.setBackground(GREY);
+        panelDetail.setBackground(GREY);
+
+        panelDM.setBackground(GREY);
+        panelInfoPatient.setBackground(GREY);
+        panelInfoPatientDMA.setBackground(GREY);
+        panelListeDMA.setBackground(GREY);
+        panelDetailDMA.setBackground(GREY);
+
+        t.setBackground(LIGHT_BLUE); //Tour des tableaux (scrollbar)
         tDMA.setBackground(LIGHT_BLUE);
-        tableau.setBackground(LIGHT_BLUE);
-        tableauDMA.setBackground(LIGHT_BLUE);
-        tableauDM.setBackground(LIGHT_BLUE);
-          tableauActeDm.setBackground(LIGHT_BLUE);
-        tDM.setBackground(LIGHT_BLUE);
+        ScrollDM.setBackground(LIGHT_BLUE);
+        tActeDM.setBackground(LIGHT_BLUE);
 
-       
+        tableau.setBackground(GREY); //Cases des tableaux
+        tableauDMA.setBackground(GREY);
+        tableauDM.setBackground(GREY);
+        tableauActeDm.setBackground(GREY);
+
     }
 
     public JFrame getAccueil() {
@@ -894,12 +948,12 @@ panelInfoPatient.setBackground(LIGHT_BLUE);
         this.panelListe = panelListe;
     }
 
-    public JScrollPane gettDM() {
-        return tDM;
+    public JScrollPane gettActeDM() {
+        return tActeDM;
     }
 
-    public void settDM(JScrollPane tDM) {
-        this.tDM = tDM;
+    public void settActeDM(JScrollPane tActeDM) {
+        this.tActeDM = tActeDM;
     }
 
     public JPanel getPanelDetail() {
