@@ -103,7 +103,7 @@ public class ActeGUI {
 
         date = new JLabel("Date : ");
         jour = new JTextField("JJ");
-        jour.setForeground(Color.gray);
+        jour.setForeground(Color.gray); 
         slash = new JLabel("/");
         mois = new JTextField("MM");
         mois.setForeground(Color.gray);

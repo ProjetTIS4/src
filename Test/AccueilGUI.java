@@ -38,8 +38,12 @@ import javax.swing.border.TitledBorder;
 public class AccueilGUI {
 
 //// Variable pour la couleur des fenêtres
-    private static final Color LIGHT_BLUE = new Color(100, 180, 200);
+    private static final Color LIGHT_BLUE = new Color(100, 180, 200); 
+    //private static final Color LIGHT_BLUE = new Color(183, 204, 205);
+   // private static final Color LIGHT_BLUE = new Color(213, 240, 240);
+    private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 150);
     private static final Color BLUE = new Color(225, 248, 255);
+    private static final Color BLUE2 = new Color(87, 139, 141);
 
 //// Panel
     private JFrame accueil;
@@ -677,42 +681,46 @@ public class AccueilGUI {
 
         accueil.add(panelFin);
 
+        ///////////////////// On rend le fond des éléments transparents ///////////////////// 
+        prez.setOpaque(false);
+        //
+        patientNom.setOpaque(false);
+        patientSexe.setOpaque(false);
+        patientDate.setOpaque(false);
+        patientAdresse.setOpaque(false);
+        pPrenom.setOpaque(false);
+   panelTest.setOpaque(false); // Panel contenant les infos du patient pour que ce soit centré dans le panel info patient
+        ficheObservations.setOpaque(false);
+        fichePrescription.setOpaque(false);
+        ficheOperation.setOpaque(false);
+        ficheResultat.setOpaque(false);
+        //
+        patientNomDMA.setOpaque(false);
+        pPrenomDMA.setOpaque(false);
+        patientSexeDMA.setOpaque(false);
+        patientDateDMA.setOpaque(false);
+        patientAdresseDMA.setOpaque(false);
+        panelTestDMA.setOpaque(false); // Panel contenant les infos du patient pour que ce soit centré dans le panel info patient
+        //
+        panelPlus.setOpaque(false);
+        panelRechercheDroit.setOpaque(false);
+        
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
-        panelHaut.setBackground(LIGHT_BLUE);
-        prez.setBackground(LIGHT_BLUE);
-        panelDroit.setBackground(LIGHT_BLUE);
-        panPatients.setBackground(LIGHT_BLUE);
-        patientNom.setBackground(LIGHT_BLUE);
-        panelInfoPatient.setBackground(LIGHT_BLUE);
+        
+       panelHaut.setBackground(LIGHT_BLUE);
+panelDroit.setBackground(LIGHT_BLUE);
+panPatients.setBackground(LIGHT_BLUE); // Panel de gauche
+panelInfoPatient.setBackground(LIGHT_BLUE);
         panelMessage.setBackground(LIGHT_BLUE);
-        panelDMHaut.setBackground(LIGHT_BLUE);
-        pPrenom.setBackground(LIGHT_BLUE);
-        patientSexe.setBackground(LIGHT_BLUE);
-        patientDate.setBackground(LIGHT_BLUE);
-        patientAdresse.setBackground(LIGHT_BLUE);
-        panelTest.setBackground(LIGHT_BLUE);
-        panelListe.setBackground(LIGHT_BLUE);
-        tableauActeDm.setBackground(LIGHT_BLUE);
-        tDM.setBackground(LIGHT_BLUE);
-        panelDetail.setBackground(LIGHT_BLUE);
-        ficheObservations.setBackground(LIGHT_BLUE);
-        fichePrescription.setBackground(LIGHT_BLUE);
-        ficheOperation.setBackground(LIGHT_BLUE);
-        DM.setBackground(LIGHT_BLUE);
-        panelDMAHaut.setBackground(LIGHT_BLUE);
-        panelInfoPatientDMA.setBackground(LIGHT_BLUE);
-        patientNomDMA.setBackground(LIGHT_BLUE);
-        pPrenomDMA.setBackground(LIGHT_BLUE);
-        patientSexeDMA.setBackground(LIGHT_BLUE);
-        patientDateDMA.setBackground(LIGHT_BLUE);
-        patientAdresseDMA.setBackground(LIGHT_BLUE);
-        panelTestDMA.setBackground(LIGHT_BLUE);
-        panelListeDMA.setBackground(LIGHT_BLUE);
+       panelListe.setBackground(LIGHT_BLUE);
+      panelDetail.setBackground(LIGHT_BLUE);
+  panelInfoPatientDMA.setBackground(LIGHT_BLUE);
+       panelListeDMA.setBackground(LIGHT_BLUE);
         panelDetailDMA.setBackground(LIGHT_BLUE);
-        DMA.setBackground(LIGHT_BLUE);
-        panelPlus.setBackground(LIGHT_BLUE);
+        
+ 
+
         panelRecherche.setBackground(LIGHT_BLUE);
-        panelRechercheDroit.setBackground(LIGHT_BLUE);
         panelDM.setBackground(LIGHT_BLUE);
 
         t.setBackground(LIGHT_BLUE);
@@ -720,8 +728,10 @@ public class AccueilGUI {
         tableau.setBackground(LIGHT_BLUE);
         tableauDMA.setBackground(LIGHT_BLUE);
         tableauDM.setBackground(LIGHT_BLUE);
+          tableauActeDm.setBackground(LIGHT_BLUE);
+        tDM.setBackground(LIGHT_BLUE);
 
-        ficheResultat.setBackground(LIGHT_BLUE);
+       
     }
 
     public JFrame getAccueil() {

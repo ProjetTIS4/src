@@ -19,6 +19,7 @@ import java.sql.Statement;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+ 
 /**
  *
  * @author lenal
@@ -63,6 +64,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getJour().setText("");
+                a.getJour().setSize(28,28);
                 a.getJour().setForeground(Color.black);
             }
         });
@@ -82,6 +84,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getMois().setText("");
+                 a.getMois().setSize(28,28);
                 a.getMois().setForeground(Color.black);
             }
         });
@@ -100,6 +103,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getAnnee().setText("");
+                 a.getAnnee().setSize(50,28);
                 a.getAnnee().setForeground(Color.black);
             }
         });
@@ -119,6 +123,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getHeure().setText("");
+                a.getHeure().setSize(28,28);
             }
         });
 
@@ -136,6 +141,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getMinute().setText("");
+                 a.getMinute().setSize(28,28);
 
             }
         });
@@ -161,6 +167,9 @@ public class ActeCtrl implements Runnable {
                     String password = "SIH-mmlh2022";
 
                     Connection con = DriverManager.getConnection(url, user, password);
+                    
+                    String obs = a.getObservations2().getText();
+                    
 
                     String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('"
                             + ipp
@@ -245,4 +254,22 @@ public class ActeCtrl implements Runnable {
 
     }
 
+//    public String escaping(String s){
+//    String es=s;
+// 
+//    for (int i=0;i<s.length();i++){
+//    switch(es.charAt(i)){
+//        
+//        case '\'':
+//            es.charAt(i)=
+//        
+//        
+//    }
+//    }    
+//    
+//    return es;
+//    
+//    
+//    }
+//    
 }

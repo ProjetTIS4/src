@@ -83,7 +83,20 @@ public class Patient extends Personne {
 
     public String stringDate() {
 
-        return ("" + dateNaissance.getJour() + "/" + dateNaissance.getMois() + "/" + dateNaissance.getAnnee());
+        if (dateNaissance.getMois() < 10) {
+            if (dateNaissance.getJour() < 10) {
+                return ("0" + dateNaissance.getJour() + "/0" + dateNaissance.getMois() + "/" + dateNaissance.getAnnee());
+            } else {
+                return ("" + dateNaissance.getJour() + "/0" + dateNaissance.getMois() + "/" + dateNaissance.getAnnee());
+            }
+        } else {
+            if (dateNaissance.getJour() < 10) {
+                return ("0" + dateNaissance.getJour() + "/" + dateNaissance.getMois() + "/" + dateNaissance.getAnnee());
+            } else {
+                return ("" + dateNaissance.getJour() + "/" + dateNaissance.getMois() + "/" + dateNaissance.getAnnee());
+            }
+        }
+
     }
 
     public String getIPP() {
@@ -114,8 +127,6 @@ public class Patient extends Personne {
         }
     }
 
-
-
     public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
@@ -129,8 +140,6 @@ public class Patient extends Personne {
         dateNaissance = new Date(jour, mois, annee);
 
     }
-
-
 
     public void setIPP(String IPP) {
         this.IPP = IPP;

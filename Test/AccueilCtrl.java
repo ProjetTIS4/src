@@ -213,8 +213,8 @@ public class AccueilCtrl implements Runnable {
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    String[] choix ={"Oui","Non"};
-                    int input = JOptionPane.showConfirmDialog(a.getAccueil(), "Etes vous sûr ?","Confirmation",YES_NO_OPTION,WARNING_MESSAGE);
+                     
+                    int input = JOptionPane.showConfirmDialog(a.getAccueil(), "Voulez-vous vraiment vous déconnecter ?","Confirmation",YES_NO_OPTION,WARNING_MESSAGE);
                    if (input==0){
                     a.getAccueil().setVisible(false);
                     SwingUtilities.invokeLater(new ConnexionCtrl());}
