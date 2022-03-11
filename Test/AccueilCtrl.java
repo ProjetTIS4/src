@@ -14,6 +14,8 @@ import NF.Personnel.Poste;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_ENTER;
 import java.awt.event.KeyListener;
@@ -47,6 +49,8 @@ public class AccueilCtrl implements Runnable {
     private String s;
     private String dataDMHide[][];
     private String sej;
+    private String dataActeDM[][];
+    private int ligne;
 
     private DefaultTableModel model;
 
@@ -58,6 +62,7 @@ public class AccueilCtrl implements Runnable {
     @Override
     public void run() {
         s = "";
+        ligne = 0;
 
         /// Récupération de la table Patient ///
         try {
@@ -73,7 +78,10 @@ public class AccueilCtrl implements Runnable {
 
                 case PHService:
                     query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
-
+                    a.getObservations2().setEditable(true);
+                    a.getPrescription2().setEditable(true);
+                    a.getOperationInfo().setEditable(true);
+                    a.getResultatInfo().setEditable(true);
                     break;
 
                 case PHAnesthesiste:
@@ -107,7 +115,7 @@ public class AccueilCtrl implements Runnable {
             }
 
             String data[][] = new String[taille][9];
-            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre","Service de localisation"};
+            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre", "Service de localisation"};
 
             dataTable = new String[taille][7];
 
@@ -213,11 +221,12 @@ public class AccueilCtrl implements Runnable {
             a.getDeconnexion().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                     
-                    int input = JOptionPane.showConfirmDialog(a.getAccueil(), "Voulez-vous vraiment vous déconnecter ?","Confirmation",YES_NO_OPTION,WARNING_MESSAGE);
-                   if (input==0){
-                    a.getAccueil().setVisible(false);
-                    SwingUtilities.invokeLater(new ConnexionCtrl());}
+
+                    int input = JOptionPane.showConfirmDialog(a.getAccueil(), "Voulez-vous vraiment vous déconnecter ?", "Confirmation", YES_NO_OPTION, WARNING_MESSAGE);
+                    if (input == 0) {
+                        a.getAccueil().setVisible(false);
+                        SwingUtilities.invokeLater(new ConnexionCtrl());
+                    }
                 }
             });
 
@@ -321,7 +330,7 @@ public class AccueilCtrl implements Runnable {
 
                             String dataDM[][] = new String[taille][2];
                             dataDMHide = new String[taille][3];
-                            String columnsDM[] = {"Date ", "Date de fin"};
+                            String columnsDM[] = {"Date d'entrée", "Date de sortie"};
 
                             query = "SELECT * FROM DM WHERE IPPatient=" + s;
 
@@ -390,7 +399,7 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
-                            String dataActeDM[][] = new String[taille][8];
+                            dataActeDM = new String[taille][8];
 
                             String columns[] = {"Date", "CR", "lettre sortie"};
 
@@ -407,12 +416,14 @@ public class AccueilCtrl implements Runnable {
                                 if (sejour.equals(dataDMHide[ligne][2])) {
 
                                     dataActeDM[i][0] = num;
-                                    if (resul != "") {
+                                    if (resul.equals("") == false) {
                                         dataActeDM[i][1] = "true";
+
                                     } else {
                                         dataActeDM[i][1] = "VIDE";
+
                                     }
-                                    if (lettre != "") {
+                                    if (lettre.equals("") == false) {
                                         dataActeDM[i][2] = "true";
                                     } else {
                                         dataActeDM[i][2] = "VIDE";
@@ -513,10 +524,27 @@ public class AccueilCtrl implements Runnable {
 
                 public void mouseClicked(MouseEvent me) {
                     if (me.getClickCount() == 1) {
-                        int ligne = a.getTableauActeDm().getSelectedRow();
+                        a.getButtonSaveObs().setVisible(false);
+                        a.getButtonSavePres().setVisible(false);
+                        a.getButtonSaveOp().setVisible(false);
+                        a.getButtonSaveRes().setVisible(false);
+                        ligne = a.getTableauActeDm().getSelectedRow();
                         Object cellule = a.getTableauActeDm().getValueAt(ligne, 0);
 
                         String s = "" + cellule;
+
+                        if (dataActeDM[ligne][2].equals("VIDE") && p.getPoste()==Poste.PHService) {
+                            a.getObservations2().setEditable(true);
+                            a.getPrescription2().setEditable(true);
+                            a.getOperationInfo().setEditable(true);
+                            a.getResultatInfo().setEditable(true);
+                        } else {
+                              a.getObservations2().setEditable(false);
+                            a.getPrescription2().setEditable(false);
+                            a.getOperationInfo().setEditable(false);
+                            a.getResultatInfo().setEditable(false);
+                          
+                        }
 
                         try {
                             String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
@@ -579,6 +607,176 @@ public class AccueilCtrl implements Runnable {
                 }
             }
             );
+
+            a.getObservations2().addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyTyped(KeyEvent arg0) {
+                    if (a.getObservations2().isEditable()) {
+
+                        a.getButtonSaveObs().setVisible(true);
+                    }
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent arg0) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent arg0) {
+                }
+            });
+
+            a.getPrescription2().addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyTyped(KeyEvent arg0) {
+                    if (a.getPrescription2().isEditable()) {
+                        a.getButtonSavePres().setVisible(true);
+                    }
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent arg0) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent arg0) {
+                }
+            });
+
+            a.getOperationInfo().addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyTyped(KeyEvent arg0) {
+                    if (a.getOperationInfo().isEditable()) {
+                        a.getButtonSaveOp().setVisible(true);
+                    }
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent arg0) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent arg0) {
+                }
+            });
+
+            a.getResultatInfo().addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyTyped(KeyEvent arg0) {
+                    if (a.getResultatInfo().isEditable()) {
+                        a.getButtonSaveRes().setVisible(true);
+                    }
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent arg0) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent arg0) {
+                }
+            });
+
+            a.getButtonSaveObs().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
+                        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                        String user = "DEV";
+                        String password = "SIH-mmlh2022";
+
+                        Connection con = DriverManager.getConnection(url, user, password);
+
+                        String requete = "UPDATE fichesDM SET observations ='" + (a.getObservations2().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+
+                        //   StringEscapeUtils.escapeJava
+                        Statement stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        a.getButtonSaveObs().setVisible(false);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            });
+
+            a.getButtonSavePres().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
+                        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                        String user = "DEV";
+                        String password = "SIH-mmlh2022";
+
+                        Connection con = DriverManager.getConnection(url, user, password);
+
+                        String requete = "UPDATE fichesDM SET prescriptions ='" + (a.getPrescription2().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+
+                        //   StringEscapeUtils.escapeJava
+                        Statement stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        a.getButtonSavePres().setVisible(false);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+            a.getButtonSaveOp().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
+                        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                        String user = "DEV";
+                        String password = "SIH-mmlh2022";
+
+                        Connection con = DriverManager.getConnection(url, user, password);
+
+                        String requete = "UPDATE fichesDM SET operations ='" + (a.getOperationInfo().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+
+                        //   StringEscapeUtils.escapeJava
+                        Statement stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        a.getButtonSaveOp().setVisible(false);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
+            a.getButtonSaveRes().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
+                        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                        String user = "DEV";
+                        String password = "SIH-mmlh2022";
+
+                        Connection con = DriverManager.getConnection(url, user, password);
+
+                        String requete = "UPDATE fichesDM SET resultats ='" + (a.getResultatInfo().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+
+                        //   StringEscapeUtils.escapeJava
+                        Statement stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        a.getButtonSaveRes().setVisible(false);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -719,19 +917,17 @@ public class AccueilCtrl implements Runnable {
 
         return b;
     }
-     public String affichageLoc(String s) {
-      String l=s.substring(1,5);
-     
-      
-     return(l);       
+
+    public String affichageLoc(String s) {
+        String l = s.substring(1, 5);
+
+        return (l);
     }
-      
-       
-      public String affichageSpe(String s) {
-      String l=s.substring(5);
-     
-      
-     return(l);       
+
+    public String affichageSpe(String s) {
+        String l = s.substring(5);
+
+        return (l);
     }
 
 }

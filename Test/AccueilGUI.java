@@ -40,10 +40,9 @@ import javax.swing.border.TitledBorder;
 public class AccueilGUI {
 
 //// Variable pour la couleur des fenêtres
-   // private static final Color LIGHT_BLUE = new Color(100, 180, 200);
+    // private static final Color LIGHT_BLUE = new Color(100, 180, 200);
     //    private static final Color LIGHT_BLUE = new Color(132, 195, 201);
-    
-      private static final Color LIGHT_BLUE = new Color(152, 208, 223);
+    private static final Color LIGHT_BLUE = new Color(152, 208, 223);
     //private static final Color LIGHT_BLUE = new Color(183, 204, 205);
     // private static final Color LIGHT_BLUE = new Color(213, 240, 240);
     private static final Color LIGHT_BLUE2 = new Color(100, 180, 200, 150);
@@ -88,6 +87,10 @@ public class AccueilGUI {
     private JScrollPane tActeDM;
     private JPanel panelDetail;
     private JPanel panelFiche;
+    private JPanel panelSaveObs;
+    private JPanel panelSavePres;
+    private JPanel panelSaveOp;
+    private JPanel panelSaveRes;
     private JScrollPane obs;
     private JPanel ficheObservations;
     private JScrollPane pres;
@@ -180,17 +183,33 @@ public class AccueilGUI {
     private Image plusImFin;
 
     //Détails des DMs
+    private ImageIcon saveObs;
+    private Image saveImObs;
+    private Image saveImFinObs;
+    private JButton buttonSaveObs;
     private Border LoweredBevelBorderDetail;
     private TitledBorder titleDetail;
     private JTextArea observations2;
     private Border LoweredBevelBorderObs;
     private TitledBorder titleObs;
+    private ImageIcon savePres;
+    private Image saveImPres;
+    private Image saveImFinPres;
+    private JButton buttonSavePres;
     private JTextArea prescription2;
     private Border LoweredBevelBorderPres;
     private TitledBorder titlePresc;
+    private ImageIcon saveOp;
+    private Image saveImOp;
+    private Image saveImFinOp;
+    private JButton buttonSaveOp;
     private JTextArea operationInfo;
     private Border LoweredBevelBorderOp;
     private TitledBorder titleOp;
+    private ImageIcon saveRes;
+    private Image saveImRes;
+    private Image saveImFinRes;
+    private JButton buttonSaveRes;
     private JTextArea resultatInfo;
     private Border LoweredBevelBorderRes;
     private TitledBorder titleRes;
@@ -266,6 +285,10 @@ public class AccueilGUI {
         ///
         panelListe = new JPanel(new BorderLayout());
         panelPlus = new JPanel(new BorderLayout());
+        panelSaveObs = new JPanel(new BorderLayout());
+        panelSavePres = new JPanel(new BorderLayout());
+        panelSaveOp = new JPanel(new BorderLayout());
+        panelSaveRes = new JPanel(new BorderLayout());
         ///
         panelDetail = new JPanel(new BorderLayout());
         detailsDM = new JTabbedPane();
@@ -454,6 +477,13 @@ public class AccueilGUI {
         panelDetail.setBorder(titleDetail);
 
 // Observations
+        saveObs = new ImageIcon("src/Annexes/save.png");
+        saveImObs = saveObs.getImage(); // Convertissemnt pour pouvoir redimensionner
+        saveImFinObs = saveImObs.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        saveObs = new ImageIcon(saveImFinObs); // On reconvertit
+        buttonSaveObs = new JButton(saveObs);
+        buttonSaveObs.setVisible(false);
+
         observations2 = new JTextArea();
         observations2.setMargin(new Insets(6, 6, 6, 6));
         observations2.setLineWrap(true);
@@ -467,6 +497,13 @@ public class AccueilGUI {
         ficheObservations.setBorder(titleObs);
 
 // Prescription
+        savePres = new ImageIcon("src/Annexes/save.png");
+        saveImPres = savePres.getImage(); // Convertissemnt pour pouvoir redimensionner
+        saveImFinPres = saveImPres.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        savePres = new ImageIcon(saveImFinPres); // On reconvertit
+        buttonSavePres = new JButton(savePres);
+        buttonSavePres.setVisible(false);
+
         prescription2 = new JTextArea();
         prescription2.setMargin(new Insets(6, 6, 6, 6));
         prescription2.setLineWrap(true);
@@ -480,6 +517,13 @@ public class AccueilGUI {
         fichePrescription.setBorder(titlePresc);
 
 //Opération
+        saveOp = new ImageIcon("src/Annexes/save.png");
+        saveImOp = saveOp.getImage(); // Convertissemnt pour pouvoir redimensionner
+        saveImFinOp = saveImOp.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        saveOp = new ImageIcon(saveImFinOp); // On reconvertit
+        buttonSaveOp = new JButton(saveOp);
+        buttonSaveOp.setVisible(false);
+
         operationInfo = new JTextArea();
         operationInfo.setMargin(new Insets(6, 6, 6, 6));
         operationInfo.setLineWrap(true);
@@ -492,6 +536,13 @@ public class AccueilGUI {
         ficheOperation.setBorder(titleOp);
 
 //Résultats
+        saveRes = new ImageIcon("src/Annexes/save.png");
+        saveImRes = saveRes.getImage(); // Convertissemnt pour pouvoir redimensionner
+        saveImFinRes = saveImRes.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        saveRes = new ImageIcon(saveImFinRes); // On reconvertit
+        buttonSaveRes = new JButton(saveRes);
+        buttonSaveRes.setVisible(false);
+
         resultatInfo = new JTextArea();
         resultatInfo.setMargin(new Insets(6, 6, 6, 6));
         resultatInfo.setLineWrap(true);
@@ -657,16 +708,24 @@ public class AccueilGUI {
         panelSouthDM.add(panelListe, BorderLayout.WEST);
         panelSouthDM.add(panelDetail, BorderLayout.CENTER);
 
-        ficheObservations.add(obs);
+        panelSaveObs.add(buttonSaveObs, BorderLayout.EAST);
+        ficheObservations.add(obs, BorderLayout.CENTER);
+        ficheObservations.add(panelSaveObs, BorderLayout.SOUTH);
         detailsDM.add("Observations", ficheObservations);
 
-        fichePrescription.add(pres);
+        panelSavePres.add(buttonSavePres, BorderLayout.EAST);
+        fichePrescription.add(pres, BorderLayout.CENTER);
+        fichePrescription.add(panelSavePres, BorderLayout.SOUTH);
         detailsDM.add("Prescriptions", fichePrescription);
 
-        ficheOperation.add(op);
+        panelSaveOp.add(buttonSaveOp, BorderLayout.EAST);
+        ficheOperation.add(op, BorderLayout.CENTER);
+        ficheOperation.add(panelSaveOp, BorderLayout.SOUTH);
         detailsDM.add("Opérations", ficheOperation);
 
-        ficheResultat.add(result);
+        panelSaveRes.add(buttonSaveRes, BorderLayout.EAST);
+        ficheResultat.add(result, BorderLayout.CENTER);
+        ficheResultat.add(panelSaveRes, BorderLayout.SOUTH);
         detailsDM.add("Résultats", ficheResultat);
 
         gbc.gridx = 0;
@@ -765,11 +824,13 @@ public class AccueilGUI {
         fichePrescription.setBackground(LIGHT_BLUE);
         ficheOperation.setBackground(LIGHT_BLUE);
         ficheResultat.setBackground(LIGHT_BLUE);
-        //panelPlus.setBackground(GREY);
+        panelSaveObs.setBackground(LIGHT_BLUE);
+        panelSavePres.setBackground(LIGHT_BLUE);
+        panelSaveOp.setBackground(LIGHT_BLUE);
+        panelSaveRes.setBackground(LIGHT_BLUE);
 
         panelListe.setBackground(GREY);
         panelDetail.setBackground(GREY);
-
         panelDM.setBackground(GREY);
         panelInfoPatient.setBackground(GREY);
         panelInfoPatientDMA.setBackground(GREY);
@@ -1858,6 +1919,238 @@ public class AccueilGUI {
 
     public void setAjoutDMA(JButton ajoutActeDMA) {
         this.ajoutActeDMA = ajoutActeDMA;
+    }
+
+    public JPanel getPanelSave() {
+        return panelSaveObs;
+    }
+
+    public void setPanelSave(JPanel panelSaveObs) {
+        this.panelSaveObs = panelSaveObs;
+    }
+
+    public Border getLoweredBevelBorderInfo() {
+        return LoweredBevelBorderInfo;
+    }
+
+    public void setLoweredBevelBorderInfo(Border LoweredBevelBorderInfo) {
+        this.LoweredBevelBorderInfo = LoweredBevelBorderInfo;
+    }
+
+    public Border getLoweredBevelBorderDM() {
+        return LoweredBevelBorderDM;
+    }
+
+    public void setLoweredBevelBorderDM(Border LoweredBevelBorderDM) {
+        this.LoweredBevelBorderDM = LoweredBevelBorderDM;
+    }
+
+    public Border getLoweredBevelBorderListe() {
+        return LoweredBevelBorderListe;
+    }
+
+    public void setLoweredBevelBorderListe(Border LoweredBevelBorderListe) {
+        this.LoweredBevelBorderListe = LoweredBevelBorderListe;
+    }
+
+    public Border getLoweredBevelBorderDetail() {
+        return LoweredBevelBorderDetail;
+    }
+
+    public void setLoweredBevelBorderDetail(Border LoweredBevelBorderDetail) {
+        this.LoweredBevelBorderDetail = LoweredBevelBorderDetail;
+    }
+
+    public Border getLoweredBevelBorderObs() {
+        return LoweredBevelBorderObs;
+    }
+
+    public void setLoweredBevelBorderObs(Border LoweredBevelBorderObs) {
+        this.LoweredBevelBorderObs = LoweredBevelBorderObs;
+    }
+
+    public Border getLoweredBevelBorderPres() {
+        return LoweredBevelBorderPres;
+    }
+
+    public void setLoweredBevelBorderPres(Border LoweredBevelBorderPres) {
+        this.LoweredBevelBorderPres = LoweredBevelBorderPres;
+    }
+
+    public Border getLoweredBevelBorderOp() {
+        return LoweredBevelBorderOp;
+    }
+
+    public void setLoweredBevelBorderOp(Border LoweredBevelBorderOp) {
+        this.LoweredBevelBorderOp = LoweredBevelBorderOp;
+    }
+
+    public Border getLoweredBevelBorderRes() {
+        return LoweredBevelBorderRes;
+    }
+
+    public void setLoweredBevelBorderRes(Border LoweredBevelBorderRes) {
+        this.LoweredBevelBorderRes = LoweredBevelBorderRes;
+    }
+
+    public JPanel getPanelSaveObs() {
+        return panelSaveObs;
+    }
+
+    public void setPanelSaveObs(JPanel panelSaveObs) {
+        this.panelSaveObs = panelSaveObs;
+    }
+
+    public JPanel getPanelSavePres() {
+        return panelSavePres;
+    }
+
+    public void setPanelSavePres(JPanel panelSavePres) {
+        this.panelSavePres = panelSavePres;
+    }
+
+    public JPanel getPanelSaveOp() {
+        return panelSaveOp;
+    }
+
+    public void setPanelSaveOp(JPanel panelSaveOp) {
+        this.panelSaveOp = panelSaveOp;
+    }
+
+    public JPanel getPanelSaveRes() {
+        return panelSaveRes;
+    }
+
+    public void setPanelSaveRes(JPanel panelSaveRes) {
+        this.panelSaveRes = panelSaveRes;
+    }
+
+    public ImageIcon getSaveObs() {
+        return saveObs;
+    }
+
+    public void setSaveObs(ImageIcon saveObs) {
+        this.saveObs = saveObs;
+    }
+
+    public Image getSaveImObs() {
+        return saveImObs;
+    }
+
+    public void setSaveImObs(Image saveImObs) {
+        this.saveImObs = saveImObs;
+    }
+
+    public Image getSaveImFinObs() {
+        return saveImFinObs;
+    }
+
+    public void setSaveImFinObs(Image saveImFinObs) {
+        this.saveImFinObs = saveImFinObs;
+    }
+
+    public JButton getButtonSaveObs() {
+        return buttonSaveObs;
+    }
+
+    public void setButtonSaveObs(JButton buttonSaveObs) {
+        this.buttonSaveObs = buttonSaveObs;
+    }
+
+    public ImageIcon getSavePres() {
+        return savePres;
+    }
+
+    public void setSavePres(ImageIcon savePres) {
+        this.savePres = savePres;
+    }
+
+    public Image getSaveImPres() {
+        return saveImPres;
+    }
+
+    public void setSaveImPres(Image saveImPres) {
+        this.saveImPres = saveImPres;
+    }
+
+    public Image getSaveImFinPres() {
+        return saveImFinPres;
+    }
+
+    public void setSaveImFinPres(Image saveImFinPres) {
+        this.saveImFinPres = saveImFinPres;
+    }
+
+    public JButton getButtonSavePres() {
+        return buttonSavePres;
+    }
+
+    public void setButtonSavePres(JButton buttonSavePres) {
+        this.buttonSavePres = buttonSavePres;
+    }
+
+    public ImageIcon getSaveOp() {
+        return saveOp;
+    }
+
+    public void setSaveOp(ImageIcon saveOp) {
+        this.saveOp = saveOp;
+    }
+
+    public Image getSaveImOp() {
+        return saveImOp;
+    }
+
+    public void setSaveImOp(Image saveImOp) {
+        this.saveImOp = saveImOp;
+    }
+
+    public Image getSaveImFinOp() {
+        return saveImFinOp;
+    }
+
+    public void setSaveImFinOp(Image saveImFinOp) {
+        this.saveImFinOp = saveImFinOp;
+    }
+
+    public JButton getButtonSaveOp() {
+        return buttonSaveOp;
+    }
+
+    public void setButtonSaveOp(JButton buttonSaveOp) {
+        this.buttonSaveOp = buttonSaveOp;
+    }
+
+    public ImageIcon getSaveRes() {
+        return saveRes;
+    }
+
+    public void setSaveRes(ImageIcon saveRes) {
+        this.saveRes = saveRes;
+    }
+
+    public Image getSaveImRes() {
+        return saveImRes;
+    }
+
+    public void setSaveImRes(Image saveImRes) {
+        this.saveImRes = saveImRes;
+    }
+
+    public Image getSaveImFinRes() {
+        return saveImFinRes;
+    }
+
+    public void setSaveImFinRes(Image saveImFinRes) {
+        this.saveImFinRes = saveImFinRes;
+    }
+
+    public JButton getButtonSaveRes() {
+        return buttonSaveRes;
+    }
+
+    public void setButtonSaveRes(JButton buttonSaveRes) {
+        this.buttonSaveRes = buttonSaveRes;
     }
 
 }

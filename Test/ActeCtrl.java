@@ -168,8 +168,7 @@ public class ActeCtrl implements Runnable {
 
                     Connection con = DriverManager.getConnection(url, user, password);
                     
-                    String obs = a.getObservations2().getText();
-                    
+                                       
 
                     String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('"
                             + ipp
