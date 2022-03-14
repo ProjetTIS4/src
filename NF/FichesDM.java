@@ -19,16 +19,16 @@ public class FichesDM {
     private String prescriptions;
     private String operations;
     private String resultats;
-    private boolean lettreDeSortie;
+    private String lettreDeSortie;
 
 
-    public FichesDM(Patient patient, String observation, String prescriptions, String operations, String resultats) {
+    public FichesDM(Patient patient, String observation, String prescriptions, String operations, String resultats, String lettre) {
         this.patient = patient;
         this.observations = observation;
         this.prescriptions = prescriptions;
         this.operations = operations;
         this.resultats = resultats;
-        this.lettreDeSortie = false;
+        this.lettreDeSortie = lettre;
 
     }
 
@@ -56,7 +56,7 @@ public class FichesDM {
         return resultats;
     }
 
-    public boolean isLettreDeSortie() {
+    public String getLettreDeSortie() {
         return lettreDeSortie;
     }
 
@@ -91,8 +91,8 @@ public class FichesDM {
         this.resultats=res;
     }
 
-    public void isLettreDeSortie(Boolean b) {
-        this.lettreDeSortie=b;
+    public void setLettreDeSortie(String lettre) {
+        this.lettreDeSortie=lettre;
     }
 
 

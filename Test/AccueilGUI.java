@@ -8,6 +8,7 @@ package Test;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -91,6 +92,7 @@ public class AccueilGUI {
     private JPanel panelSavePres;
     private JPanel panelSaveOp;
     private JPanel panelSaveRes;
+    private JPanel panelSaveSortie;
     private JScrollPane obs;
     private JPanel ficheObservations;
     private JScrollPane pres;
@@ -102,6 +104,8 @@ public class AccueilGUI {
     private JSplitPane DM;
     private JTabbedPane detailsDM; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
     private JPanel panelSouthDM;
+    private JPanel panelSortie;
+    private JPanel sortieHaut;
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
@@ -214,6 +218,18 @@ public class AccueilGUI {
     private Border LoweredBevelBorderRes;
     private TitledBorder titleRes;
 
+    private JTextArea lettreSortie;
+    private JButton buttonSortie;
+    private JTextArea ajoutLettreSortie;
+    private Border LoweredBevelBorderSortie;
+    private TitledBorder titleSortie;
+    private JLabel informationsSortie;
+    private ImageIcon saveSortie;
+    private Image saveImSortie;
+    private Image saveImFinSortie;
+    private JButton buttonSaveSortie;
+    private JScrollPane scrollSortie;
+
     private TitledBorder title;
 
 //// Droite DMA
@@ -289,6 +305,7 @@ public class AccueilGUI {
         panelSavePres = new JPanel(new BorderLayout());
         panelSaveOp = new JPanel(new BorderLayout());
         panelSaveRes = new JPanel(new BorderLayout());
+        panelSaveSortie = new JPanel(new BorderLayout());
         ///
         panelDetail = new JPanel(new BorderLayout());
         detailsDM = new JTabbedPane();
@@ -302,7 +319,10 @@ public class AccueilGUI {
         op = new JScrollPane();
         ficheOperation = new JPanel(new BorderLayout());
         result = new JScrollPane();
+        scrollSortie = new JScrollPane();
         ficheResultat = new JPanel(new BorderLayout());
+        panelSortie = new JPanel(new BorderLayout());
+        sortieHaut = new JPanel(new FlowLayout());
         //
         DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelSouthDM);   //Création du Panel DM
         //
@@ -554,6 +574,29 @@ public class AccueilGUI {
         );
         ficheResultat.setBorder(titleRes);
 
+        // Lettre de sortie 
+        saveSortie = new ImageIcon("src/Annexes/save.png");
+        saveImSortie = saveSortie.getImage(); // Convertissemnt pour pouvoir redimensionner
+        saveImFinSortie = saveImSortie.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        saveSortie = new ImageIcon(saveImFinSortie); // On reconvertit
+        buttonSaveSortie = new JButton(saveSortie);
+        buttonSaveSortie.setVisible(false);
+
+        informationsSortie = new JLabel("Cliquez ici pour ajouter une lettre de sortie ou ajoutez la dans le cadre ci-dessous : ");
+
+        buttonSortie = new JButton("+");
+        //ajoutLettreSortie = new JTextArea();
+        lettreSortie = new JTextArea();
+        lettreSortie.setMargin(new Insets(6, 6, 6, 6));
+        lettreSortie.setLineWrap(true);
+        // lettreSortie.setEditable(false);
+        scrollSortie.setViewportView(lettreSortie);
+        LoweredBevelBorderSortie = BorderFactory.createLoweredBevelBorder();
+        titleSortie = BorderFactory.createTitledBorder(LoweredBevelBorderSortie, "Lettre de sortie",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+        panelSortie.setBorder(titleSortie);
+
 //Création du Panel DM
         title = BorderFactory.createTitledBorder("informations générales");
         DM.setBorder(title);
@@ -728,6 +771,16 @@ public class AccueilGUI {
         ficheResultat.add(panelSaveRes, BorderLayout.SOUTH);
         detailsDM.add("Résultats", ficheResultat);
 
+        panelSaveSortie.add(buttonSaveSortie, BorderLayout.EAST);
+        sortieHaut.add(informationsSortie);
+        sortieHaut.add(buttonSortie);
+        panelSortie.add(sortieHaut, BorderLayout.NORTH);
+        panelSortie.add(scrollSortie, BorderLayout.CENTER);
+        panelSortie.add(panelSaveSortie, BorderLayout.SOUTH);
+        
+
+        detailsDM.add("Lettre de sortie", panelSortie);
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 0);
@@ -812,6 +865,7 @@ public class AccueilGUI {
         //
         panelPlus.setOpaque(false);
         panelRechercheDroit.setOpaque(false);
+        sortieHaut.setOpaque(false);
 
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
         panelHaut.setBackground(LIGHT_BLUE);
@@ -824,10 +878,13 @@ public class AccueilGUI {
         fichePrescription.setBackground(LIGHT_BLUE);
         ficheOperation.setBackground(LIGHT_BLUE);
         ficheResultat.setBackground(LIGHT_BLUE);
+        panelSortie.setBackground(LIGHT_BLUE);
         panelSaveObs.setBackground(LIGHT_BLUE);
         panelSavePres.setBackground(LIGHT_BLUE);
         panelSaveOp.setBackground(LIGHT_BLUE);
         panelSaveRes.setBackground(LIGHT_BLUE);
+        panelSaveSortie.setBackground(LIGHT_BLUE);
+         
 
         panelListe.setBackground(GREY);
         panelDetail.setBackground(GREY);
@@ -2151,6 +2208,118 @@ public class AccueilGUI {
 
     public void setButtonSaveRes(JButton buttonSaveRes) {
         this.buttonSaveRes = buttonSaveRes;
+    }
+
+    public JPanel getPanelSaveSortie() {
+        return panelSaveSortie;
+    }
+
+    public void setPanelSaveSortie(JPanel panelSaveSortie) {
+        this.panelSaveSortie = panelSaveSortie;
+    }
+
+    public JPanel getPanelSortie() {
+        return panelSortie;
+    }
+
+    public void setPanelSortie(JPanel panelSortie) {
+        this.panelSortie = panelSortie;
+    }
+
+    public JPanel getSortieHaut() {
+        return sortieHaut;
+    }
+
+    public void setSortieHaut(JPanel sortieHaut) {
+        this.sortieHaut = sortieHaut;
+    }
+
+    public JTextArea getLettreSortie() {
+        return lettreSortie;
+    }
+
+    public void setLettreSortie(JTextArea lettreSortie) {
+        this.lettreSortie = lettreSortie;
+    }
+
+    public JButton getButtonSortie() {
+        return buttonSortie;
+    }
+
+    public void setButtonSortie(JButton buttonSortie) {
+        this.buttonSortie = buttonSortie;
+    }
+
+    public JTextArea getAjoutLettreSortie() {
+        return ajoutLettreSortie;
+    }
+
+    public void setAjoutLettreSortie(JTextArea ajoutLettreSortie) {
+        this.ajoutLettreSortie = ajoutLettreSortie;
+    }
+
+    public Border getLoweredBevelBorderSortie() {
+        return LoweredBevelBorderSortie;
+    }
+
+    public void setLoweredBevelBorderSortie(Border LoweredBevelBorderSortie) {
+        this.LoweredBevelBorderSortie = LoweredBevelBorderSortie;
+    }
+
+    public TitledBorder getTitleSortie() {
+        return titleSortie;
+    }
+
+    public void setTitleSortie(TitledBorder titleSortie) {
+        this.titleSortie = titleSortie;
+    }
+
+    public JLabel getInformationsSortie() {
+        return informationsSortie;
+    }
+
+    public void setInformationsSortie(JLabel informationsSortie) {
+        this.informationsSortie = informationsSortie;
+    }
+
+    public ImageIcon getSaveSortie() {
+        return saveSortie;
+    }
+
+    public void setSaveSortie(ImageIcon saveSortie) {
+        this.saveSortie = saveSortie;
+    }
+
+    public Image getSaveImSortie() {
+        return saveImSortie;
+    }
+
+    public void setSaveImSortie(Image saveImSortie) {
+        this.saveImSortie = saveImSortie;
+    }
+
+    public Image getSaveImFinSortie() {
+        return saveImFinSortie;
+    }
+
+    public void setSaveImFinSortie(Image saveImFinSortie) {
+        this.saveImFinSortie = saveImFinSortie;
+    }
+
+    public JButton getButtonSaveSortie() {
+        return buttonSaveSortie;
+    }
+
+    public void setButtonSaveSortie(JButton buttonSaveSortie) {
+        this.buttonSaveSortie = buttonSaveSortie;
+    }
+
+    public JScrollPane getScrollSortie() {
+        return scrollSortie;
+    }
+
+    public void setScrollSortie(JScrollPane scrollSortie) {
+        this.scrollSortie = scrollSortie;
     }
 
 }

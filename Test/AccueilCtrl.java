@@ -21,11 +21,15 @@ import static java.awt.event.KeyEvent.VK_ENTER;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
@@ -401,7 +405,7 @@ public class AccueilCtrl implements Runnable {
 
                             dataActeDM = new String[taille][8];
 
-                            String columns[] = {"Date", "CR", "lettre sortie"};
+                            String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
 
                             query = "SELECT * FROM fichesDM WHERE IPPatient=" + s;
                             res = stm.executeQuery(query);
@@ -434,7 +438,7 @@ public class AccueilCtrl implements Runnable {
                             }
 
                             ipp = s;
-                            a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columns) {
+                            a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columnsActeDM) {
 
                                 @Override
                                 public boolean isCellEditable(int row, int column) {
@@ -533,17 +537,21 @@ public class AccueilCtrl implements Runnable {
 
                         String s = "" + cellule;
 
-                        if (dataActeDM[ligne][2].equals("VIDE") && p.getPoste()==Poste.PHService) {
+                        if (dataActeDM[ligne][2].equals("VIDE") && p.getPoste() == Poste.PHService) {
                             a.getObservations2().setEditable(true);
                             a.getPrescription2().setEditable(true);
                             a.getOperationInfo().setEditable(true);
                             a.getResultatInfo().setEditable(true);
+                            a.getLettreSortie().setEditable(true);
+                            a.getSortieHaut().setVisible(true);
                         } else {
-                              a.getObservations2().setEditable(false);
+                            a.getObservations2().setEditable(false);
                             a.getPrescription2().setEditable(false);
                             a.getOperationInfo().setEditable(false);
                             a.getResultatInfo().setEditable(false);
-                          
+                            a.getLettreSortie().setEditable(false);
+                            a.getSortieHaut().setVisible(false);
+
                         }
 
                         try {
@@ -557,7 +565,7 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
-                            String dataDMF[][] = new String[taille][4];
+                            String dataDMF[][] = new String[taille][5];
                             //           String columns[] = {"observations", "prescription", "operations", "resultats"};
 
                             query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
@@ -569,11 +577,13 @@ public class AccueilCtrl implements Runnable {
                                 String pres2 = res.getString("prescriptions");
                                 String op2 = res.getString("operations");
                                 String resul2 = res.getString("resultats");
+                                String lettre = res.getString("lettreDeSortie");
 
                                 dataDMF[i][0] = obs2;
                                 dataDMF[i][1] = pres2;
                                 dataDMF[i][2] = op2;
                                 dataDMF[i][3] = resul2;
+                                dataDMF[i][4] = lettre;
 
                                 i++;
                             }
@@ -582,17 +592,20 @@ public class AccueilCtrl implements Runnable {
                             String prescriptions = dataDMF[0][1];
                             String operations = dataDMF[0][2];
                             String resultats = dataDMF[0][3];
+                            String lettre = dataDMF[0][4];
 
-                            fiche = new FichesDM(patient, observations, prescriptions, operations, resultats);
+                            fiche = new FichesDM(patient, observations, prescriptions, operations, resultats, lettre);
                             fiche.setObservations(dataDMF[0][0]);
                             fiche.setPrescriptions(dataDMF[0][1]);
                             fiche.setOperations(dataDMF[0][2]);
                             fiche.setResultats(dataDMF[0][3]);
+                            fiche.setLettreDeSortie(dataDMF[0][4]);
 
                             a.getObservations2().setText(fiche.getObservations());
                             a.getPrescription2().setText(fiche.getPrescriptions());
                             a.getOperationInfo().setText(fiche.getOperations());
                             a.getResultatInfo().setText(fiche.getResultats());
+                            a.getLettreSortie().setText(fiche.getLettreDeSortie());
 
                             a.getPanelDetail().add(a.getDetailsDM());
                             a.getDetailsDM().setVisible(true);
@@ -685,6 +698,86 @@ public class AccueilCtrl implements Runnable {
                 }
             });
 
+            a.getLettreSortie().addKeyListener(new KeyListener() {
+
+                @Override
+                public void keyTyped(KeyEvent arg0) {
+                    if (a.getLettreSortie().isEditable()) {
+                        a.getButtonSaveSortie().setVisible(true);
+                    }
+
+                }
+
+                @Override
+                public void keyReleased(KeyEvent arg0) {
+                }
+
+                @Override
+                public void keyPressed(KeyEvent arg0) {
+                }
+            });
+
+            a.getButtonSortie().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
+                        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                        String user = "DEV";
+                        String password = "SIH-mmlh2022";
+
+                        Connection con = DriverManager.getConnection(url, user, password);
+
+                        try {
+                            JFileChooser choose = new JFileChooser();
+
+                            // Ouvrez le fichier
+                            int res = choose.showOpenDialog(null);
+                            // Enregistrez le fichier
+                            // int res = choose.showSaveDialog(null);
+
+                            if (res == JFileChooser.APPROVE_OPTION) {
+                                File file = choose.getSelectedFile();
+                                choose.getFileView();
+                                System.out.println(file.getAbsolutePath());
+                                Scanner obj = new Scanner(file);
+
+                                String lettre = "";
+                                while (obj.hasNextLine()) {
+                                    lettre = lettre + obj.nextLine();
+                                    System.out.println(lettre);
+
+                                }
+                                System.out.println(lettre);
+                                a.getLettreSortie().setText(lettre);
+                                String requete = "UPDATE fichesDM SET lettreDeSortie ='" + (a.getLettreSortie().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+
+                                //   StringEscapeUtils.escapeJava
+                                Statement stm = con.createStatement();
+                                stm.executeUpdate(requete);
+                                a.getSortieHaut().setVisible(false);
+                                dataActeDM[ligne][1] = "true";
+                                String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
+                                a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columnsActeDM) {
+
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                        //Only the third column
+                                        return false;
+                                    }
+                                });
+                                a.getAccueil().validate();
+                                a.getAccueil().repaint();
+                            }
+
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+
             a.getButtonSaveObs().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
@@ -709,7 +802,7 @@ public class AccueilCtrl implements Runnable {
                 }
             });
 
-            a.getButtonSavePres().addMouseListener(new MouseAdapter() {
+            a.getButtonSaveObs().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     try {
@@ -719,13 +812,47 @@ public class AccueilCtrl implements Runnable {
 
                         Connection con = DriverManager.getConnection(url, user, password);
 
-                        String requete = "UPDATE fichesDM SET prescriptions ='" + (a.getPrescription2().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+                        String requete = "UPDATE fichesDM SET observations ='" + (a.getObservations2().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
                         //   StringEscapeUtils.escapeJava
                         Statement stm = con.createStatement();
                         stm.executeUpdate(requete);
 
-                        a.getButtonSavePres().setVisible(false);
+                        a.getButtonSaveObs().setVisible(false);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+            });
+
+            a.getButtonSaveSortie().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
+                        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                        String user = "DEV";
+                        String password = "SIH-mmlh2022";
+
+                        Connection con = DriverManager.getConnection(url, user, password);
+
+                        String requete = "UPDATE fichesDM SET lettreDeSortie ='" + (a.getLettreSortie().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+
+                        //   StringEscapeUtils.escapeJava
+                        Statement stm = con.createStatement();
+                        stm.executeUpdate(requete);
+                        a.getSortieHaut().setVisible(false);
+                        dataActeDM[ligne][1] = "true";
+                        String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
+                        a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columnsActeDM) {
+
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                //Only the third column
+                                return false;
+                            }
+                        });
+                        a.getButtonSaveSortie().setVisible(false);
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
