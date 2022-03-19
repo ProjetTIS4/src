@@ -5,10 +5,7 @@
  */
 package NF;
 
-import NF.Patient.Sexe;
-import NF.Personnel.Poste;
-import java.util.Calendar;
-import NF.Service.NomService;
+ 
  
 
 /**
@@ -22,13 +19,23 @@ public class test {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-//        Date date = new Date (1998,12,25);
+        Date date = new Date (1998,12,25);
 //       Calendar rightNow = Calendar.getInstance();
 //       Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
 //       System.out.println(patient.getIPP());
 //       System.out.println(patient.getEntreeServie());
 //   System.out.println(rightNow.getTime());
-       System.out.println("184689653".equals("184689653"));
+  
+       Personnel p = new Personnel("eee", "eee","cardio", "PHS", "gbois", "gbois");
+       FichesDMA dma1= new FichesDMA(date, p);
+       FichesDMA dma2= new FichesDMA(date, p);
+       System.out.println(dma1.getNumeroSejour());
+       System.out.println(dma2.getNumeroSejour());
+       int c=dma2.getCompteur();
+       FichesDMA dma3= new FichesDMA(date, p,c);
+       System.out.println(dma3.getNumeroSejour());
+       
+        
        
        
      //  Personnel p=new Personnel("ttt","fff","cardiologie",Poste.PHService,"lll","yyy");

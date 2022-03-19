@@ -30,7 +30,7 @@ public class Date {
     }
 
 
-    public Date(int jour, int mois, int annee) {
+    public Date(int annee, int mois, int jour) {
         this.jour = jour;
         this.mois = mois;
         this.annee = annee;
@@ -74,6 +74,7 @@ public class Date {
 
 
     public String anneeToString() {
+        this.dateDuJour= LocalDate.now();
         String annee = "" + dateDuJour.getYear();
         annee = "" + annee.charAt(2) + annee.charAt(3);
         return annee;

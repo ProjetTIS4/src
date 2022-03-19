@@ -122,6 +122,9 @@ public class AccueilGUI {
     private JPanel panelDetailDMA;
     private JPanel panelFicheDMA;
     private JSplitPane DMA;
+    
+//Côté SIR
+    private JPanel panelSIR;
 
     private GridBagConstraints gbc;
 
@@ -263,6 +266,10 @@ public class AccueilGUI {
     //Détails des DMAs
     private TitledBorder titleDetailDMA;
     private TitledBorder titleDMA;
+    
+    //// Droite SIR
+    private JLabel labelSIR;
+    private JTextArea crSIR;
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
@@ -351,6 +358,10 @@ public class AccueilGUI {
         splitPan.setResizeWeight(0.2);
 
         gbc = new GridBagConstraints();
+        
+////Côté SIR
+        
+        panelSIR = new JPanel(new BorderLayout());
 
 // Panel Haut //
         image = new ImageIcon("src/Annexes/deco.jpg");
@@ -685,6 +696,11 @@ public class AccueilGUI {
 //Création du Panel DMA
         titleDMA = BorderFactory.createTitledBorder("informations générales");
         DMA.setBorder(titleDMA);
+        
+ ///////////////// Panel SIR /////////////////
+ 
+ labelSIR =new JLabel("Compte rendu ");
+ 
 
 ///////////////////// On ajoute les éléments les uns dans les autres ///////////////////// 
         prez.add(presentation);

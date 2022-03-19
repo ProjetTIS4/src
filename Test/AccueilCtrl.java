@@ -90,12 +90,18 @@ public class AccueilCtrl implements Runnable {
 
                 case PHAnesthesiste:
                     query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
-
+                    a.getObservations2().setEditable(true);
+                    a.getPrescription2().setEditable(true);
+                    a.getFicheOperation().setVisible(false);
+                    a.getResultatInfo().setEditable(true);
                     break;
 
                 case PHMedicoTechnique:
                     query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
-
+                    a.getObservations2().setEditable(true);
+                    a.getResultatInfo().setEditable(true);
+                    a.getFichePrescription().setVisible(false);
+                    a.getFicheOperation().setVisible(false);
                     break;
 
                 case SecretaireAdministrative:
@@ -390,7 +396,8 @@ public class AccueilCtrl implements Runnable {
                         try {
 
                             // REMPLIR LE TABLEAU DES ACTES DMs   
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + sej;
+                           
+                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s +" AND numeroSejour=" + sej+ " AND PHreferent= '"+p.getLogin()+"'" ;
 
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
@@ -407,7 +414,8 @@ public class AccueilCtrl implements Runnable {
 
                             String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
 
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + s;
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + s +" AND numeroSejour=" + sej+ " AND PHreferent= '"+p.getLogin()+"'" ;
+
                             res = stm.executeQuery(query);
                             int i = 0;
                             while (res.next()) {
@@ -755,6 +763,7 @@ public class AccueilCtrl implements Runnable {
                                 Statement stm = con.createStatement();
                                 stm.executeUpdate(requete);
                                 a.getSortieHaut().setVisible(false);
+                                 a.getButtonSaveSortie().setVisible(false);
                                 dataActeDM[ligne][1] = "true";
                                 String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
                                 a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columnsActeDM) {
@@ -937,7 +946,7 @@ public class AccueilCtrl implements Runnable {
         int mois = Integer.parseInt("" + date.charAt(3) + date.charAt(4));
         int annee = Integer.parseInt("" + date.charAt(6) + date.charAt(7) + date.charAt(8) + date.charAt(9));
 
-        d = new Date(jour, mois, annee);
+        d = new Date(annee, mois, jour);
         return d;
     }
 

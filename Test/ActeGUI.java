@@ -16,6 +16,7 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class ActeGUI {
 
     private JPanel panelDate;
     private JPanel panelHeure;
+    private JPanel panelPH ;
     private JPanel panelObs;
     private JPanel panelPres;
     private JPanel panelOp;
@@ -60,6 +62,11 @@ public class ActeGUI {
     private JTextField heure;
     private JLabel pts;
     private JTextField minute;
+    
+    ////////////Panel PHRéférent ///////////////
+    private JLabel phLabel;
+    private JComboBox choixPH;
+    
 
     ////////////Panel Observations ///////////////
     private JLabel observations;
@@ -93,6 +100,7 @@ public class ActeGUI {
 
         panelDate = new JPanel(new FlowLayout());
         panelHeure = new JPanel(new FlowLayout());
+        panelPH = new JPanel(new FlowLayout());
         panelObs = new JPanel(new FlowLayout());
         panelPres = new JPanel(new FlowLayout());
         panelOp = new JPanel(new FlowLayout());
@@ -115,6 +123,10 @@ public class ActeGUI {
         heure = new JTextField("   ");
         pts = new JLabel(":");
         minute = new JTextField("   ");
+        
+        phLabel = new JLabel("PH référent : ");
+       choixPH = new JComboBox();
+        
 
         observations = new JLabel("Observations : ");
         observations2 = new JTextArea(5, 20);
@@ -159,6 +171,9 @@ public class ActeGUI {
         panelHeure.add(heure);
         panelHeure.add(pts);
         panelHeure.add(minute);
+        
+        panelPH.add(phLabel);
+        panelPH.add(choixPH);
 
         panelObs.add(observations);
         panelObs.add(obs);
