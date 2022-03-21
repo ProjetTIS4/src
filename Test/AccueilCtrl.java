@@ -286,7 +286,7 @@ public class AccueilCtrl implements Runnable {
                         } else {
                             a.getTp().add("DM", a.getDM());
                             a.getTp().add("DMA", a.getDMA());
-                             a.getTp().add("SIR", a.getSIR());
+                             
                         }
 
                         a.getPanelDroit().add(a.getTp());
@@ -305,19 +305,7 @@ public class AccueilCtrl implements Runnable {
 
                         }
                         
-                         a.getNom2SIR().setText(patient.getNom());
-                        a.getPrenom2SIR().setText(patient.getPrenom());
-                        a.getSexeInfoSIR().setText("" + patient.getSexe());
-                        a.getDateInfoSIR().setText(patient.stringDate());
-                        a.getAdresseInfoSIR().setText(patient.getAdresse());
-
-                        if (patient.getSexe() == Patient.Sexe.HOMME) {
-                            a.getImage2SIR().setIcon(a.getIconeHSIR());
-                        } else {
-
-                            a.getImage2SIR().setIcon(a.getIconeFSIR());
-
-                        }
+                        
 
 
 ////Pour le DMA////
@@ -391,6 +379,8 @@ public class AccueilCtrl implements Runnable {
                             a.getOperationInfo().setText("");
                             a.getResultatInfo().setText("");
                             a.getDetailsDM().setVisible(false);
+                            
+                             
 
                         } catch (SQLException ex) {
                             ex.printStackTrace();
@@ -478,7 +468,17 @@ public class AccueilCtrl implements Runnable {
             }
             );
             // Listener sur le bouton "+" pour ajouter un acte      
-
+ a.getButtonRadio().addMouseListener(new MouseAdapter() {
+  public void mouseClicked(MouseEvent me) {
+  
+      FrameClient client = new FrameClient();
+       new FrameClient().setVisible(true);
+  }
+ 
+ 
+ 
+ });
+ 
             a.getAjoutActe().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {

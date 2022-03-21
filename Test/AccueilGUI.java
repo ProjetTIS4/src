@@ -41,10 +41,8 @@ import javax.swing.border.TitledBorder;
 public class AccueilGUI {
 
 //// Variable pour la couleur des fenêtres
-
     private static final Color LIGHT_BLUE = new Color(152, 208, 223);
     private static final Color GREY = new Color(241, 244, 244);
-
 
 //// Panel
     private JFrame accueil;
@@ -98,6 +96,7 @@ public class AccueilGUI {
     private JPanel panelSouthDM;
     private JPanel panelSortie;
     private JPanel sortieHaut;
+        private JPanel prescriptionHaut;
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
@@ -114,26 +113,6 @@ public class AccueilGUI {
     private JPanel panelDetailDMA;
     private JPanel panelFicheDMA;
     private JSplitPane DMA;
-    
-//Côté SIR
-    private JPanel panelSIRHaut;
-    private JPanel panelInfoPatientSIR;
-    private JPanel panelTestSIR;
-    private JPanel patientNomSIR;
-    private JPanel pPrenomSIR;
-    private JPanel patientSexeSIR;
-    private JPanel patientDateSIR;
-    private JPanel patientAdresseSIR;
-    private JPanel panelListeSIR;
-    private JPanel panelPlusSIR;
-    private JScrollPane ScrollSIR;
-    private JScrollPane ScrollSIRCR;
-    private JPanel panelSIR;
-    private JPanel panelDetailSIR;
-     private JSplitPane SIR;
-     private JPanel panelSouthSIR;
-    
-    
 
     private GridBagConstraints gbc;
 
@@ -209,6 +188,8 @@ public class AccueilGUI {
     private Border LoweredBevelBorderObs;
     private TitledBorder titleObs;
     private ImageIcon savePres;
+    private JLabel prescriptionRadio;
+    private JButton buttonRadio;
     private Image saveImPres;
     private Image saveImFinPres;
     private JButton buttonSavePres;
@@ -275,44 +256,6 @@ public class AccueilGUI {
     //Détails des DMAs
     private TitledBorder titleDetailDMA;
     private TitledBorder titleDMA;
-    
-    //// Droite SIR
-    
-    private Border LoweredBevelBorderInfoSIR;
-    private TitledBorder titleInfoSIR;
-    
-    private ImageIcon iconeFSIR;
-    private ImageIcon iconeHSIR;
-
-    // Informations du patient 
-    private Image img2SIR;
-    private Image newimg2SIR;
-    private JLabel image2SIR;
-    private Image imgFSIR;
-    private Image newimgFSIR;
-    private JLabel nomSIR;
-    private JLabel nom2SIR;
-    private JLabel prenomSIR;
-    private JLabel prenom2SIR;
-    private JLabel sexeSIR;
-    private JLabel sexeInfoSIR;
-    private JLabel dateSIR;
-    private JLabel dateInfoSIR;
-    private JLabel adresseSIR;
-    private JLabel adresseInfoSIR;
-
-    // Tableau des  SIR
-    private Border LoweredBevelBorderSIR;
-    private TitledBorder titleSIR;
-    private JTable tableauSIR;
-    private JButton ajoutSIR;
-    private ImageIcon plusSIR;
-    private Image plusImSIR;
-    private Image plusImFinSIR;
-
-    
-    private JLabel labelSIR;
-    private JTextArea crSIR;
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
@@ -324,7 +267,7 @@ public class AccueilGUI {
         prez = new JPanel(new GridLayout(2, 1));
         tp = new JTabbedPane();
         panelTest = new JPanel(new GridBagLayout());
-        panelTestSIR = new JPanel(new GridBagLayout());
+
         panelTestDMA = new JPanel(new GridBagLayout());
         panPatients = new JPanel(new BorderLayout());
         panelMessage = new JPanel(new GridBagLayout());
@@ -374,6 +317,7 @@ public class AccueilGUI {
         ficheResultat = new JPanel(new BorderLayout());
         panelSortie = new JPanel(new BorderLayout());
         sortieHaut = new JPanel(new FlowLayout());
+       prescriptionHaut = new JPanel(new FlowLayout());
         //
         DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelSouthDM);   //Création du Panel DM
         //
@@ -402,31 +346,6 @@ public class AccueilGUI {
         splitPan.setResizeWeight(0.2);
 
         gbc = new GridBagConstraints();
-        
-////Côté SIR
-        panelSIRHaut = new JPanel((new GridLayout(1, 2)));
-        panelSIR = new JPanel(new BorderLayout());
-        
-        // 
-        panelInfoPatientSIR= new JPanel(); //Création du Panel contenant les informations du Patient
-        //
-        patientNomSIR = new JPanel();
-        pPrenomSIR = new JPanel();
-        patientSexeSIR = new JPanel();
-        patientDateSIR = new JPanel();
-        patientAdresseSIR = new JPanel();
-         ///
-          panelListeSIR = new JPanel(new BorderLayout());
-        panelPlusSIR = new JPanel(new BorderLayout());
-        ScrollSIR = new JScrollPane();
-        ScrollSIRCR = new JScrollPane();
-        panelDetailSIR=new JPanel(new BorderLayout());
-         panelSouthSIR = new JPanel(new BorderLayout());
-        
-       SIR = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelSIRHaut, panelSouthSIR);   //Création du Panel SIR
-        //
-
-        
 
 // Panel Haut //
         image = new ImageIcon("src/Annexes/deco.jpg");
@@ -467,7 +386,6 @@ public class AccueilGUI {
 ///////////////// Panel DM /////////////////
         //Création du Panel du haut de la partie DM
         //Création du Panel contenant les informations du Patient
-      
         LoweredBevelBorderInfo = BorderFactory.createLoweredBevelBorder();
         titleInfo = BorderFactory.createTitledBorder(LoweredBevelBorderInfo, "informations du patient",
                 TitledBorder.LEFT, TitledBorder.TOP
@@ -592,6 +510,9 @@ public class AccueilGUI {
         ficheObservations.setBorder(titleObs);
 
 // Prescription
+       prescriptionRadio = new JLabel("Cliquez ici pour prescrire une radiographie : ");
+        buttonRadio = new JButton("+");
+
         savePres = new ImageIcon("src/Annexes/save.png");
         saveImPres = savePres.getImage(); // Convertissemnt pour pouvoir redimensionner
         saveImFinPres = saveImPres.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
@@ -760,109 +681,13 @@ public class AccueilGUI {
 //Création du Panel DMA
         titleDMA = BorderFactory.createTitledBorder("informations générales");
         DMA.setBorder(titleDMA);
-        
- ///////////////// Panel SIR /////////////////
- //Création du Panel du haut de la partie SIR
-        //Création du Panel contenant les informations du Patient
-        
 
-      //  panelInfoPatientSIR.setBorder(titleInfo);
-      
-        LoweredBevelBorderInfoSIR = BorderFactory.createLoweredBevelBorder();
-        titleInfoSIR = BorderFactory.createTitledBorder(LoweredBevelBorderInfoSIR, "informations du patient",
-                TitledBorder.LEFT, TitledBorder.TOP
-        );
-
-        panelInfoPatientSIR.setBorder(titleInfoSIR);
-
-        iconeHSIR = new ImageIcon("src/Annexes/homme.png");
-
-        img2SIR = iconeHSIR.getImage(); // Convertissemnt pour pouvoir redimensionner
-        newimg2SIR = img2SIR.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
-        iconeHSIR = new ImageIcon(newimg2SIR); // On reconvertit
-        image2SIR = new JLabel(iconeHSIR);
-
-        iconeFSIR = new ImageIcon("src/Annexes/femme.png");
-        imgFSIR = iconeFSIR.getImage(); // Convertissemnt pour pouvoir redimensionner
-        newimgFSIR = imgFSIR.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image     
-        iconeFSIR = new ImageIcon(newimgFSIR); // On reconvertit
-        
-        
-        // Nom
-        nomSIR = new JLabel("Nom : ");
-        nomSIR.setFont(new Font("Cambria", Font.PLAIN, 18));
-        nom2SIR = new JLabel();
-        patientNomSIR.setLayout(new BoxLayout(patientNomSIR, BoxLayout.X_AXIS));
-
-// Prénom
-        prenomSIR = new JLabel("Prénom :");
-        prenomSIR.setFont(new Font("Cambria", Font.PLAIN, 18));
-        prenom2SIR = new JLabel();
-        pPrenomSIR.setLayout(new BoxLayout(pPrenomSIR, BoxLayout.X_AXIS));
-
-//Sexe
-        sexeSIR = new JLabel("Sexe : ");
-        sexeSIR.setFont(new Font("Cambria", Font.PLAIN, 18));
-        sexeInfoSIR = new JLabel();
-        patientSexeSIR.setLayout(new BoxLayout(patientSexeSIR, BoxLayout.X_AXIS));
-
-//Date de naissance
-        dateSIR = new JLabel("Date de naissance :");
-        dateSIR.setFont(new Font("Cambria", Font.PLAIN, 18));
-        dateInfoSIR = new JLabel();
-        patientDateSIR.setLayout(new BoxLayout(patientDateSIR, BoxLayout.X_AXIS));
-
-//Adresse
-        adresseSIR = new JLabel("Adresse :");
-        adresseSIR.setFont(new Font("Cambria", Font.PLAIN, 18));
-        adresseInfoSIR = new JLabel();
-        patientAdresseSIR.setLayout(new BoxLayout(patientAdresseSIR, BoxLayout.X_AXIS));
-
-          //Création du Panel contenant la liste des DMs du patient 
-        LoweredBevelBorderSIR = BorderFactory.createLoweredBevelBorder();
-        titleSIR = BorderFactory.createTitledBorder(LoweredBevelBorderSIR, "Dossier médicaux",
-                TitledBorder.LEFT, TitledBorder.TOP
-        );
-        panelSIR.setBorder(titleSIR);
-
-        tableauSIR = new JTable();
-        tableauSIR.setAutoCreateRowSorter(true);
-        tableauSIR.getTableHeader().setReorderingAllowed(false);
-        ScrollSIR = new JScrollPane(tableauSIR);
-        ScrollSIR.setOpaque(true);
-
-        plusSIR = new ImageIcon("src/Annexes/plus.png");
-        plusImSIR = plusSIR.getImage(); // Convertissemnt pour pouvoir redimensionner
-        plusImFinSIR = plusImSIR.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
-        plusSIR = new ImageIcon(plusImFinSIR); // On reconvertit
-
-        ajoutSIR = new JButton(plusSIR);
-        ajoutSIR.setContentAreaFilled(false);
-        ajoutSIR.setBorderPainted(true);
-        ajoutSIR.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
- 
-        
-        
-        labelSIR =new JLabel("Compte rendu ");
-        crSIR = new JTextArea();
-          crSIR.setMargin(new Insets(6, 6, 6, 6));
-        crSIR.setLineWrap(true);
-        crSIR.setEditable(false);
-        ScrollSIRCR.setViewportView(crSIR);
- 
-        //Création du Panel DM
-        titleSIR = BorderFactory.createTitledBorder("informations générales");
-        SIR.setBorder(titleSIR);
-        
         //Création du Panel avec les détails du DM sur lequel on a cliqué
 //        LoweredBevelBorderDetail = BorderFactory.createLoweredBevelBorder();
 //        titleDetail = BorderFactory.createTitledBorder(LoweredBevelBorderDetail, "Détails de cet acte",
 //                TitledBorder.LEFT, TitledBorder.TOP
 //        );
-
 //        panelDetail.setBorder(titleDetail);
-
-
 ///////////////////// On ajoute les éléments les uns dans les autres ///////////////////// 
         prez.add(presentation);
         prez.add(presentation2); // Pourquoi y'en a deux ?
@@ -934,6 +759,9 @@ public class AccueilGUI {
         detailsDM.add("Observations", ficheObservations);
 
         panelSavePres.add(buttonSavePres, BorderLayout.EAST);
+        prescriptionHaut.add(prescriptionRadio);
+        prescriptionHaut.add(buttonRadio);
+        fichePrescription.add(prescriptionHaut, BorderLayout.NORTH);
         fichePrescription.add(pres, BorderLayout.CENTER);
         fichePrescription.add(panelSavePres, BorderLayout.SOUTH);
         detailsDM.add("Prescriptions", fichePrescription);
@@ -954,7 +782,6 @@ public class AccueilGUI {
         panelSortie.add(sortieHaut, BorderLayout.NORTH);
         panelSortie.add(scrollSortie, BorderLayout.CENTER);
         panelSortie.add(panelSaveSortie, BorderLayout.SOUTH);
-        
 
         detailsDM.add("Lettre de sortie", panelSortie);
 
@@ -1002,57 +829,6 @@ public class AccueilGUI {
         panelDMAHaut.add(panelInfoPatientDMA);
         panelDMAHaut.add(panelListeDMA);
         panelDMAHaut.setPreferredSize(new Dimension(200, 300));
-        
-         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 0, 0);
-        gbc.anchor = GridBagConstraints.CENTER;
-
-        panelTestSIR.add(image2SIR, gbc);
-
-        gbc.gridy = 1;
-        gbc.ipadx = 0;
-        gbc.insets = new Insets(20, 20, 0, 0);
-        gbc.anchor = GridBagConstraints.WEST;
-
-        patientNomSIR.add(nomSIR); //ajoute le label "Nom:"
-        patientNomSIR.add(nom2SIR); //ajoute le contenu du nom
-        panelTestSIR.add(patientNomSIR, gbc);
-
-        pPrenomSIR.add(prenomSIR);
-        pPrenomSIR.add(prenom2SIR);
-        gbc.insets = new Insets(0, 20, 0, 0);
-        gbc.gridy = 2;
-        panelTestSIR.add(pPrenomSIR, gbc);
-
-        patientSexeSIR.add(sexeSIR);
-        patientSexeSIR.add(sexeInfoSIR);
-        gbc.gridy = 3;
-        panelTestSIR.add(patientSexeSIR, gbc);
-
-        patientDateSIR.add(dateSIR);
-        patientDateSIR.add(dateInfoSIR);
-        gbc.gridy = 4;
-        panelTestSIR.add(patientDateSIR, gbc);
-
-        patientAdresseSIR.add(adresseSIR);
-        patientAdresseSIR.add(adresseInfoSIR);
-        gbc.gridy = 5;
-        panelTestSIR.add(patientAdresseSIR, gbc);
-
-        panelInfoPatientSIR.add(panelTestSIR);
-    //    panelListeSIR.add(tActeSIR);
-        panelSIR.add(ScrollSIR);
-       // panelDM.setBorder(titleDM);
-
-      
-        panelListeSIR.add(panelPlusSIR, BorderLayout.NORTH);
-
-        panelSIRHaut.add(panelInfoPatientSIR);
-        panelSIRHaut.add(panelSIR);
-        panelSIRHaut.setPreferredSize(new Dimension(200, 300));
-        panelSouthSIR.add(panelListeSIR, BorderLayout.WEST);
-        panelSouthSIR.add(panelDetailSIR, BorderLayout.CENTER);
 
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
@@ -1079,15 +855,7 @@ public class AccueilGUI {
         patientAdresse.setOpaque(false);
         pPrenom.setOpaque(false);
         panelTest.setOpaque(false); // Panel contenant les infos du patient pour que ce soit centré dans le panel info patient
-      
-        
-         patientNomSIR.setOpaque(false);
-        patientSexeSIR.setOpaque(false);
-        patientDateSIR.setOpaque(false);
-        patientAdresseSIR.setOpaque(false);
-        pPrenomSIR.setOpaque(false);
-        panelTestSIR.setOpaque(false);
-           panelPlusSIR.setOpaque(false);
+
 //        ficheObservations.setOpaque(false);
 //        fichePrescription.setOpaque(false);
 //        ficheOperation.setOpaque(false);
@@ -1103,6 +871,7 @@ public class AccueilGUI {
         panelPlus.setOpaque(false);
         panelRechercheDroit.setOpaque(false);
         sortieHaut.setOpaque(false);
+        prescriptionHaut.setOpaque(false);
 
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
         panelHaut.setBackground(LIGHT_BLUE);
@@ -1121,16 +890,12 @@ public class AccueilGUI {
         panelSaveOp.setBackground(LIGHT_BLUE);
         panelSaveRes.setBackground(LIGHT_BLUE);
         panelSaveSortie.setBackground(LIGHT_BLUE);
-         
 
         panelListe.setBackground(GREY);
         panelDetail.setBackground(GREY);
         panelDM.setBackground(GREY);
         panelInfoPatient.setBackground(GREY);
-         panelListeSIR.setBackground(GREY);
-        panelDetailSIR.setBackground(GREY);
-        panelSIR.setBackground(GREY);
-        panelInfoPatientSIR.setBackground(GREY);
+
         panelInfoPatientDMA.setBackground(GREY);
         panelListeDMA.setBackground(GREY);
         panelDetailDMA.setBackground(GREY);
@@ -1138,7 +903,7 @@ public class AccueilGUI {
         t.setBackground(LIGHT_BLUE); //Tour des tableaux (scrollbar)
         tDMA.setBackground(LIGHT_BLUE);
         ScrollDM.setBackground(LIGHT_BLUE);
-        ScrollSIR.setBackground(LIGHT_BLUE);
+
         tActeDM.setBackground(LIGHT_BLUE);
 
         tableau.setBackground(GREY); //Cases des tableaux
@@ -2564,332 +2329,28 @@ public class AccueilGUI {
         this.scrollSortie = scrollSortie;
     }
 
-    public JPanel getPanelSIRHaut() {
-        return panelSIRHaut;
+    public JPanel getPrescriptionHaut() {
+        return prescriptionHaut;
     }
 
-    public void setPanelSIRHaut(JPanel panelSIRHaut) {
-        this.panelSIRHaut = panelSIRHaut;
+    public void setPrescriptionHaut(JPanel prescriptionHaut) {
+        this.prescriptionHaut = prescriptionHaut;
     }
 
-    public JPanel getPanelInfoPatientSIR() {
-        return panelInfoPatientSIR;
+    public JLabel getPrescriptionRadio() {
+        return prescriptionRadio;
     }
 
-    public void setPanelInfoPatientSIR(JPanel panelInfoPatientSIR) {
-        this.panelInfoPatientSIR = panelInfoPatientSIR;
+    public void setPrescriptionRadio(JLabel prescriptionRadio) {
+        this.prescriptionRadio = prescriptionRadio;
     }
 
-    public JPanel getPanelTestSIR() {
-        return panelTestSIR;
+    public JButton getButtonRadio() {
+        return buttonRadio;
     }
 
-    public void setPanelTestSIR(JPanel panelTestSIR) {
-        this.panelTestSIR = panelTestSIR;
-    }
-
-    public JPanel getPatientNomSIR() {
-        return patientNomSIR;
-    }
-
-    public void setPatientNomSIR(JPanel patientNomSIR) {
-        this.patientNomSIR = patientNomSIR;
-    }
-
-    public JPanel getpPrenomSIR() {
-        return pPrenomSIR;
-    }
-
-    public void setpPrenomSIR(JPanel pPrenomSIR) {
-        this.pPrenomSIR = pPrenomSIR;
-    }
-
-    public JPanel getPatientSexeSIR() {
-        return patientSexeSIR;
-    }
-
-    public void setPatientSexeSIR(JPanel patientSexeSIR) {
-        this.patientSexeSIR = patientSexeSIR;
-    }
-
-    public JPanel getPatientDateSIR() {
-        return patientDateSIR;
-    }
-
-    public void setPatientDateSIR(JPanel patientDateSIR) {
-        this.patientDateSIR = patientDateSIR;
-    }
-
-    public JPanel getPatientAdresseSIR() {
-        return patientAdresseSIR;
-    }
-
-    public void setPatientAdresseSIR(JPanel patientAdresseSIR) {
-        this.patientAdresseSIR = patientAdresseSIR;
-    }
-
-    public JPanel getPanelListeSIR() {
-        return panelListeSIR;
-    }
-
-    public void setPanelListeSIR(JPanel panelListeSIR) {
-        this.panelListeSIR = panelListeSIR;
-    }
-
-    public JPanel getPanelPlusSIR() {
-        return panelPlusSIR;
-    }
-
-    public void setPanelPlusSIR(JPanel panelPlusSIR) {
-        this.panelPlusSIR = panelPlusSIR;
-    }
-
-    public JScrollPane getScrollSIR() {
-        return ScrollSIR;
-    }
-
-    public void setScrollSIR(JScrollPane ScrollSIR) {
-        this.ScrollSIR = ScrollSIR;
-    }
-
-    public JPanel getPanelSIR() {
-        return panelSIR;
-    }
-
-    public void setPanelSIR(JPanel panelSIR) {
-        this.panelSIR = panelSIR;
-    }
-
-    public JPanel getPanelDetailSIR() {
-        return panelDetailSIR;
-    }
-
-    public void setPanelDetailSIR(JPanel panelDetailSIR) {
-        this.panelDetailSIR = panelDetailSIR;
-    }
-
-    public JSplitPane getSIR() {
-        return SIR;
-    }
-
-    public void setSIR(JSplitPane SIR) {
-        this.SIR = SIR;
-    }
-
-    public JPanel getPanelSouthSIR() {
-        return panelSouthSIR;
-    }
-
-    public void setPanelSouthSIR(JPanel panelSouthSIR) {
-        this.panelSouthSIR = panelSouthSIR;
-    }
-
-    public ImageIcon getIconeFSIR() {
-        return iconeFSIR;
-    }
-
-    public void setIconeFSIR(ImageIcon iconeFSIR) {
-        this.iconeFSIR = iconeFSIR;
-    }
-
-    public ImageIcon getIconeHSIR() {
-        return iconeHSIR;
-    }
-
-    public void setIconeHSIR(ImageIcon iconeHSIR) {
-        this.iconeHSIR = iconeHSIR;
-    }
-
-    public Image getImg2SIR() {
-        return img2SIR;
-    }
-
-    public void setImg2SIR(Image img2SIR) {
-        this.img2SIR = img2SIR;
-    }
-
-    public Image getNewimg2SIR() {
-        return newimg2SIR;
-    }
-
-    public void setNewimg2SIR(Image newimg2SIR) {
-        this.newimg2SIR = newimg2SIR;
-    }
-
-    public JLabel getImage2SIR() {
-        return image2SIR;
-    }
-
-    public void setImage2SIR(JLabel image2SIR) {
-        this.image2SIR = image2SIR;
-    }
-
-    public Image getImgFSIR() {
-        return imgFSIR;
-    }
-
-    public void setImgFSIR(Image imgFSIR) {
-        this.imgFSIR = imgFSIR;
-    }
-
-    public Image getNewimgFSIR() {
-        return newimgFSIR;
-    }
-
-    public void setNewimgFSIR(Image newimgFSIR) {
-        this.newimgFSIR = newimgFSIR;
-    }
-
-    public JLabel getNomSIR() {
-        return nomSIR;
-    }
-
-    public void setNomSIR(JLabel nomSIR) {
-        this.nomSIR = nomSIR;
-    }
-
-    public JLabel getNom2SIR() {
-        return nom2SIR;
-    }
-
-    public void setNom2SIR(JLabel nom2SIR) {
-        this.nom2SIR = nom2SIR;
-    }
-
-    public JLabel getPrenomSIR() {
-        return prenomSIR;
-    }
-
-    public void setPrenomSIR(JLabel prenomSIR) {
-        this.prenomSIR = prenomSIR;
-    }
-
-    public JLabel getPrenom2SIR() {
-        return prenom2SIR;
-    }
-
-    public void setPrenom2SIR(JLabel prenom2SIR) {
-        this.prenom2SIR = prenom2SIR;
-    }
-
-    public JLabel getSexeSIR() {
-        return sexeSIR;
-    }
-
-    public void setSexeSIR(JLabel sexeSIR) {
-        this.sexeSIR = sexeSIR;
-    }
-
-    public JLabel getSexeInfoSIR() {
-        return sexeInfoSIR;
-    }
-
-    public void setSexeInfoSIR(JLabel sexeInfoSIR) {
-        this.sexeInfoSIR = sexeInfoSIR;
-    }
-
-    public JLabel getDateSIR() {
-        return dateSIR;
-    }
-
-    public void setDateSIR(JLabel dateSIR) {
-        this.dateSIR = dateSIR;
-    }
-
-    public JLabel getDateInfoSIR() {
-        return dateInfoSIR;
-    }
-
-    public void setDateInfoSIR(JLabel dateInfoSIR) {
-        this.dateInfoSIR = dateInfoSIR;
-    }
-
-    public JLabel getAdresseSIR() {
-        return adresseSIR;
-    }
-
-    public void setAdresseSIR(JLabel adresseSIR) {
-        this.adresseSIR = adresseSIR;
-    }
-
-    public JLabel getAdresseInfoSIR() {
-        return adresseInfoSIR;
-    }
-
-    public void setAdresseInfoSIR(JLabel adresseInfoSIR) {
-        this.adresseInfoSIR = adresseInfoSIR;
-    }
-
-    public Border getLoweredBevelBorderSIR() {
-        return LoweredBevelBorderSIR;
-    }
-
-    public void setLoweredBevelBorderSIR(Border LoweredBevelBorderSIR) {
-        this.LoweredBevelBorderSIR = LoweredBevelBorderSIR;
-    }
-
-    public TitledBorder getTitleSIR() {
-        return titleSIR;
-    }
-
-    public void setTitleSIR(TitledBorder titleSIR) {
-        this.titleSIR = titleSIR;
-    }
-
-    public JTable getTableauSIR() {
-        return tableauSIR;
-    }
-
-    public void setTableauSIR(JTable tableauSIR) {
-        this.tableauSIR = tableauSIR;
-    }
-
-    public JButton getAjoutSIR() {
-        return ajoutSIR;
-    }
-
-    public void setAjoutSIR(JButton ajoutSIR) {
-        this.ajoutSIR = ajoutSIR;
-    }
-
-    public ImageIcon getPlusSIR() {
-        return plusSIR;
-    }
-
-    public void setPlusSIR(ImageIcon plusSIR) {
-        this.plusSIR = plusSIR;
-    }
-
-    public Image getPlusImSIR() {
-        return plusImSIR;
-    }
-
-    public void setPlusImSIR(Image plusImSIR) {
-        this.plusImSIR = plusImSIR;
-    }
-
-    public Image getPlusImFinSIR() {
-        return plusImFinSIR;
-    }
-
-    public void setPlusImFinSIR(Image plusImFinSIR) {
-        this.plusImFinSIR = plusImFinSIR;
-    }
-
-    public JLabel getLabelSIR() {
-        return labelSIR;
-    }
-
-    public void setLabelSIR(JLabel labelSIR) {
-        this.labelSIR = labelSIR;
-    }
-
-    public JTextArea getCrSIR() {
-        return crSIR;
-    }
-
-    public void setCrSIR(JTextArea crSIR) {
-        this.crSIR = crSIR;
+    public void setButtonRadio(JButton buttonRadio) {
+        this.buttonRadio = buttonRadio;
     }
 
 }
