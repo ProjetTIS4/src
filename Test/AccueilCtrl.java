@@ -7,6 +7,7 @@ package Test;
 
 import NF.Date;
 import NF.FichesDM;
+import NF.Hash;
 import NF.Patient;
 import NF.Patient.Sexe;
 import NF.Personnel;
@@ -69,6 +70,7 @@ public class AccueilCtrl implements Runnable {
     public void run() {
         s = "";
         ligne = 0;
+        Hash h=new Hash();
 
         /// Récupération de la table Patient ///
         try {
@@ -841,7 +843,7 @@ public class AccueilCtrl implements Runnable {
 
                         Connection con = DriverManager.getConnection(url, user, password);
 
-                        String requete = "UPDATE fichesDM SET observations ='" + (a.getObservations2().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+                        String requete = "UPDATE fichesDM SET observations ='" + (h.expect(a.getObservations2().getText())) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
                         //   StringEscapeUtils.escapeJava
                         Statement stm = con.createStatement();
@@ -855,7 +857,7 @@ public class AccueilCtrl implements Runnable {
                 }
             });
 
-            a.getButtonSaveObs().addMouseListener(new MouseAdapter() {
+            a.getButtonSavePres().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
                     try {
@@ -865,7 +867,7 @@ public class AccueilCtrl implements Runnable {
 
                         Connection con = DriverManager.getConnection(url, user, password);
 
-                        String requete = "UPDATE fichesDM SET observations ='" + (a.getObservations2().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+                        String requete = "UPDATE fichesDM SET prescriptions ='" + (h.expect(a.getPrescription2().getText())) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
                         //   StringEscapeUtils.escapeJava
                         Statement stm = con.createStatement();
@@ -889,7 +891,7 @@ public class AccueilCtrl implements Runnable {
 
                         Connection con = DriverManager.getConnection(url, user, password);
 
-                        String requete = "UPDATE fichesDM SET lettreDeSortie ='" + (a.getLettreSortie().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+                        String requete = "UPDATE fichesDM SET lettreDeSortie ='" + (h.expect(a.getLettreSortie().getText())) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
                         //   StringEscapeUtils.escapeJava
                         Statement stm = con.createStatement();
@@ -957,7 +959,7 @@ public class AccueilCtrl implements Runnable {
 
                         Connection con = DriverManager.getConnection(url, user, password);
 
-                        String requete = "UPDATE fichesDM SET operations ='" + (a.getOperationInfo().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+                        String requete = "UPDATE fichesDM SET operations ='" + (h.expect(a.getOperationInfo().getText())) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
                         //   StringEscapeUtils.escapeJava
                         Statement stm = con.createStatement();
@@ -980,7 +982,7 @@ public class AccueilCtrl implements Runnable {
 
                         Connection con = DriverManager.getConnection(url, user, password);
 
-                        String requete = "UPDATE fichesDM SET resultats ='" + (a.getResultatInfo().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
+                        String requete = "UPDATE fichesDM SET resultats ='" + (h.expect(a.getResultatInfo().getText())) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
                         //   StringEscapeUtils.escapeJava
                         Statement stm = con.createStatement();

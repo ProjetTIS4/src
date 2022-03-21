@@ -5,6 +5,7 @@
  */
 package Test;
 
+import NF.Hash;
 import NF.Personnel;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -19,7 +20,6 @@ import java.sql.Statement;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
- 
 /**
  *
  * @author lenal
@@ -36,8 +36,8 @@ public class ActeCtrl implements Runnable {
         a = new ActeGUI();
         this.ipp = ipp;
         this.ac = ac;
-        this.p =p;
-        this.s=s;
+        this.p = p;
+        this.s = s;
 
     }
 
@@ -64,7 +64,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getJour().setText("");
-                a.getJour().setSize(28,28);
+                a.getJour().setSize(28, 28);
                 a.getJour().setForeground(Color.black);
             }
         });
@@ -84,7 +84,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getMois().setText("");
-                 a.getMois().setSize(28,28);
+                a.getMois().setSize(28, 28);
                 a.getMois().setForeground(Color.black);
             }
         });
@@ -103,7 +103,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getAnnee().setText("");
-                 a.getAnnee().setSize(50,28);
+                a.getAnnee().setSize(50, 28);
                 a.getAnnee().setForeground(Color.black);
             }
         });
@@ -123,7 +123,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getHeure().setText("");
-                a.getHeure().setSize(28,28);
+                a.getHeure().setSize(28, 28);
             }
         });
 
@@ -141,7 +141,7 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getMinute().setText("");
-                 a.getMinute().setSize(28,28);
+                a.getMinute().setSize(28, 28);
 
             }
         });
@@ -161,31 +161,29 @@ public class ActeCtrl implements Runnable {
             @Override
             public void mouseClicked(MouseEvent me) {
                 try {
-
+                    Hash h = new Hash();
                     String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
                     String user = "DEV";
                     String password = "SIH-mmlh2022";
 
                     Connection con = DriverManager.getConnection(url, user, password);
-                    
-                                       
 
                     String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, numeroFiche,PHreferent,observations,prescriptions,operations,resultats,lettreDeSortie) VALUES ('"
                             + ipp
                             + "','"
                             + s
                             + "','"
-                            + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() 
+                            + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText()
                             + "','"
                             + p.getLogin()
                             + "','"
-                            + (a.getObservations2().getText())
+                            + (h.expect(a.getObservations2().getText()))
                             + "','"
-                            + a.getPrestations2().getText()
+                            + h.expect(a.getPrestations2().getText())
                             + "','"
-                            + a.getOperations2().getText()
+                            + h.expect(a.getOperations2().getText())
                             + "','"
-                            + a.getResultat2().getText()
+                            + h.expect(a.getResultat2().getText())
                             + "','')";
 
                     //   StringEscapeUtils.escapeJava
@@ -195,7 +193,8 @@ public class ActeCtrl implements Runnable {
 
                     a.getAjouterActe().dispose();
 
-                    String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
+                    String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + s + " AND PHreferent= '" + p.getLogin() + "'";
+
                     ResultSet res = stm.executeQuery(query);
 
                     int taille = 0;
@@ -208,7 +207,9 @@ public class ActeCtrl implements Runnable {
                     String columns[] = {"Date", "CR", "lettre sortie"};
 //            res2.close();
 
-                    query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp;
+                   
+                    query = "SELECT * FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + s + " AND PHreferent= '" + p.getLogin() + "'";
+
                     res = stm.executeQuery(query);
                     int i = 0;
                     while (res.next()) {

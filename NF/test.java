@@ -35,6 +35,9 @@ public class test {
         System.out.println(dma3.getNumeroSejour());
 
         
+        
+        
+        
         //  Personnel p=new Personnel("ttt","fff","cardiologie",Poste.PHService,"lll","yyy");
         //     System.out.println(p.getNomService());
         //     LocalDate current_date = LocalDate.now();
