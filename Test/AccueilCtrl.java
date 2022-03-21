@@ -139,11 +139,11 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case PHAnesthesiste:
-                    query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
                     break;
 
                 case PHMedicoTechnique:
-                    query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
                     break;
 
                 case SecretaireAdministrative:

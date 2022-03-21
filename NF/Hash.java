@@ -12,13 +12,30 @@ package NF;
 import java.security.MessageDigest;
 
 public class Hash
-{
+        
+        {
+    
+    
+    public void expect(String s){
+    
+    int l = s.length();
+    for (int i=0; i<l;i++){
+    
+    
+    }
+    
+    }
+    
+    
+    
     public static void main(String[] args)throws Exception
     {
      String password = "123456789";
+     String password2 = "gbois";
 
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(password.getBytes());
+        md.update(password2.getBytes());
 
         byte byteData[] = md.digest();
 
