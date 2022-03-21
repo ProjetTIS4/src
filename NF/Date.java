@@ -30,7 +30,7 @@ public class Date {
     }
 
 
-    public Date(int annee, int mois, int jour) {
+    public Date(int jour, int mois, int annee) {
         this.jour = jour;
         this.mois = mois;
         this.annee = annee;

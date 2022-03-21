@@ -286,6 +286,7 @@ public class AccueilCtrl implements Runnable {
                         } else {
                             a.getTp().add("DM", a.getDM());
                             a.getTp().add("DMA", a.getDMA());
+                             a.getTp().add("SIR", a.getSIR());
                         }
 
                         a.getPanelDroit().add(a.getTp());
@@ -303,6 +304,21 @@ public class AccueilCtrl implements Runnable {
                             a.getImage2().setIcon(a.getIconeF());
 
                         }
+                        
+                         a.getNom2SIR().setText(patient.getNom());
+                        a.getPrenom2SIR().setText(patient.getPrenom());
+                        a.getSexeInfoSIR().setText("" + patient.getSexe());
+                        a.getDateInfoSIR().setText(patient.stringDate());
+                        a.getAdresseInfoSIR().setText(patient.getAdresse());
+
+                        if (patient.getSexe() == Patient.Sexe.HOMME) {
+                            a.getImage2SIR().setIcon(a.getIconeHSIR());
+                        } else {
+
+                            a.getImage2SIR().setIcon(a.getIconeFSIR());
+
+                        }
+
 
 ////Pour le DMA////
                         a.getNom2DMA().setText(patient.getNom());
