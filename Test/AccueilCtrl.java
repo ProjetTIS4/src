@@ -28,6 +28,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -55,6 +56,7 @@ public class AccueilCtrl implements Runnable {
     private String sej;
     private String dataActeDM[][];
     private int ligne;
+    private String dataDM[][];
 
     private DefaultTableModel model;
 
@@ -86,6 +88,7 @@ public class AccueilCtrl implements Runnable {
                     a.getPrescription2().setEditable(true);
                     a.getOperationInfo().setEditable(true);
                     a.getResultatInfo().setEditable(true);
+
                     break;
 
                 case PHAnesthesiste:
@@ -286,7 +289,7 @@ public class AccueilCtrl implements Runnable {
                         } else {
                             a.getTp().add("DM", a.getDM());
                             a.getTp().add("DMA", a.getDMA());
-                             
+
                         }
 
                         a.getPanelDroit().add(a.getTp());
@@ -304,9 +307,6 @@ public class AccueilCtrl implements Runnable {
                             a.getImage2().setIcon(a.getIconeF());
 
                         }
-                        
-                        
-
 
 ////Pour le DMA////
                         a.getNom2DMA().setText(patient.getNom());
@@ -342,7 +342,7 @@ public class AccueilCtrl implements Runnable {
                                 taille = res.getInt("COUNT(*)");
                             }
 
-                            String dataDM[][] = new String[taille][2];
+                            dataDM = new String[taille][2];
                             dataDMHide = new String[taille][3];
                             String columnsDM[] = {"Date d'entrée", "Date de sortie"};
 
@@ -379,8 +379,6 @@ public class AccueilCtrl implements Runnable {
                             a.getOperationInfo().setText("");
                             a.getResultatInfo().setText("");
                             a.getDetailsDM().setVisible(false);
-                            
-                             
 
                         } catch (SQLException ex) {
                             ex.printStackTrace();
@@ -402,8 +400,7 @@ public class AccueilCtrl implements Runnable {
                         try {
 
                             // REMPLIR LE TABLEAU DES ACTES DMs   
-                           
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s +" AND numeroSejour=" + sej+ " AND PHreferent= '"+p.getLogin()+"'" ;
+                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + sej + " AND PHreferent= '" + p.getLogin() + "'";
 
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
@@ -420,7 +417,7 @@ public class AccueilCtrl implements Runnable {
 
                             String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
 
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + s +" AND numeroSejour=" + sej+ " AND PHreferent= '"+p.getLogin()+"'" ;
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + s + " AND numeroSejour=" + sej + " AND PHreferent= '" + p.getLogin() + "'";
 
                             res = stm.executeQuery(query);
                             int i = 0;
@@ -468,17 +465,15 @@ public class AccueilCtrl implements Runnable {
             }
             );
             // Listener sur le bouton "+" pour ajouter un acte      
- a.getButtonRadio().addMouseListener(new MouseAdapter() {
-  public void mouseClicked(MouseEvent me) {
-  
-      FrameClient client = new FrameClient();
-       new FrameClient().setVisible(true);
-  }
- 
- 
- 
- });
- 
+            a.getButtonRadio().addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent me) {
+
+                    // FrameClient client = new FrameClient();
+                    new FrameClient().setVisible(true);
+                }
+
+            });
+
             a.getAjoutActe().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
@@ -573,7 +568,7 @@ public class AccueilCtrl implements Runnable {
                             a.getPrescription2().setEditable(false);
                             a.getOperationInfo().setEditable(false);
                             a.getResultatInfo().setEditable(false);
-                            a.getLettreSortie().setEditable(false);
+                           // a.getLettreSortie().setEditable(false);
                             a.getSortieHaut().setVisible(false);
 
                         }
@@ -779,8 +774,8 @@ public class AccueilCtrl implements Runnable {
                                 Statement stm = con.createStatement();
                                 stm.executeUpdate(requete);
                                 a.getSortieHaut().setVisible(false);
-                                 a.getButtonSaveSortie().setVisible(false);
-                                dataActeDM[ligne][1] = "true";
+                                a.getButtonSaveSortie().setVisible(false);
+                                dataActeDM[ligne][2] = "true";
                                 String columnsActeDM[] = {"Date", "CR", "lettre sortie"};
                                 a.getTableauActeDm().setModel(new DefaultTableModel(dataActeDM, columnsActeDM) {
 
@@ -790,8 +785,41 @@ public class AccueilCtrl implements Runnable {
                                         return false;
                                     }
                                 });
+
+                                LocalDate sortieService = LocalDate.now();
+                                String sortie = "";
+
+                                if (sortieService.getMonthValue() < 10) {
+                                    if (sortieService.getDayOfMonth() < 10) {
+                                        sortie = "0" + sortieService.getDayOfMonth() + "/0" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                                    } else {
+                                        sortie = "" + sortieService.getDayOfMonth() + "/0" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                                    }
+                                } else {
+                                    if (sortieService.getDayOfMonth() < 10) {
+                                        sortie = "0" + sortieService.getDayOfMonth() + "/" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                                    } else {
+                                        sortie = "" + sortieService.getDayOfMonth() + "/" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                                    }
+                                }
+
+                                requete = "UPDATE DM SET dateSortie ='" + sortie + "' WHERE numeroSejour='" + dataDMHide[ligne][2] + "'";
+                                stm.executeUpdate(requete);
+                                System.out.println(requete);
+                                dataDM[ligne][1] = sortie;
+                                String columnsDM[] = {"Date d'entrée", "Date de sortie"};
+                                a.getTableauDM().setModel(new DefaultTableModel(dataDM, columnsDM) {
+
+                                    @Override
+                                    public boolean isCellEditable(int row, int column) {
+                                        //Only the third column
+                                        return false;
+                                    }
+                                });
+
                                 a.getAccueil().validate();
                                 a.getAccueil().repaint();
+
                             }
 
                         } catch (FileNotFoundException ex) {
@@ -876,7 +904,42 @@ public class AccueilCtrl implements Runnable {
                                 //Only the third column
                                 return false;
                             }
+
                         });
+
+                        LocalDate sortieService = LocalDate.now();
+                        String sortie = "";
+
+                        if (sortieService.getMonthValue() < 10) {
+                            if (sortieService.getDayOfMonth() < 10) {
+                                sortie = "0" + sortieService.getDayOfMonth() + "/0" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                            } else {
+                                sortie = "" + sortieService.getDayOfMonth() + "/0" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                            }
+                        } else {
+                            if (sortieService.getDayOfMonth() < 10) {
+                                sortie = "0" + sortieService.getDayOfMonth() + "/" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                            } else {
+                                sortie = "" + sortieService.getDayOfMonth() + "/" + sortieService.getMonthValue() + "/" + sortieService.getYear();
+                            }
+                        }
+
+                        requete = "UPDATE DM SET dateSortie ='" + sortie + "' WHERE numeroSejour='" + dataDMHide[ligne][2] + "'";
+                        stm.executeUpdate(requete);
+                        System.out.println(requete);
+                        dataDM[ligne][1] = sortie;
+                        String columnsDM[] = {"Date d'entrée", "Date de sortie"};
+                        a.getTableauDM().setModel(new DefaultTableModel(dataDM, columnsDM) {
+
+                            @Override
+                            public boolean isCellEditable(int row, int column) {
+                                //Only the third column
+                                return false;
+                            }
+                        });
+
+                        a.getAccueil().validate();
+                        a.getAccueil().repaint();
                         a.getButtonSaveSortie().setVisible(false);
                     } catch (SQLException ex) {
                         ex.printStackTrace();
@@ -962,7 +1025,7 @@ public class AccueilCtrl implements Runnable {
         int mois = Integer.parseInt("" + date.charAt(3) + date.charAt(4));
         int annee = Integer.parseInt("" + date.charAt(6) + date.charAt(7) + date.charAt(8) + date.charAt(9));
 
-        d = new Date(annee, mois, jour);
+        d = new Date(jour, mois, annee);
         return d;
     }
 
