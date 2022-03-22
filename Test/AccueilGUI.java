@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -96,23 +95,31 @@ public class AccueilGUI {
     private JPanel panelSouthDM;
     private JPanel panelSortie;
     private JPanel sortieHaut;
-        private JPanel prescriptionHaut;
+    private JPanel prescriptionHaut;
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
     private JPanel panelInfoPatientDMA; //Création du Panel contenant les informations du Patient
     private JPanel panelTestDMA;
     private JPanel patientNomDMA;
+    private JPanel panelDMA;
     private JPanel pPrenomDMA;
     private JPanel patientSexeDMA;
     private JPanel patientDateDMA;
     private JPanel patientAdresseDMA;
     private JPanel panelListeDMA;
+    private JScrollPane tActeDMA;
     private JPanel panelPlusDMA;
     private JScrollPane tDMA;
     private JPanel panelDetailDMA;
     private JPanel panelFicheDMA;
     private JSplitPane DMA;
+    private JPanel panelSouthDMA;
+    private JScrollPane presDMA;
+    private JPanel fichePrescriptionDMA;
+    private JPanel panelSortieDMA;
+    private JScrollPane scrollSortieDMA;
+    private JTabbedPane detailsDMA; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
 
     private GridBagConstraints gbc;
 
@@ -248,6 +255,11 @@ public class AccueilGUI {
     // Tableau des DMAs
     private TitledBorder titleListeDMA;
     private JTable tableauDMA;
+
+    // Tableau des Actes du DMA
+    private Border LoweredBevelBorderListeDMA;
+    private TitledBorder titleListeActeDMA;
+    private JTable tableauActeDMA;
     private JButton ajoutActeDMA;
     private ImageIcon plusDMA;
     private Image plusImDMA;
@@ -256,6 +268,12 @@ public class AccueilGUI {
     //Détails des DMAs
     private TitledBorder titleDetailDMA;
     private TitledBorder titleDMA;
+    private JTextArea prescriptionDMA;
+    private Border LoweredBevelBorderPresDMA;
+    private TitledBorder titlePrescDMA;
+    private JTextArea lettreSortieDMA;
+    private Border LoweredBevelBorderSortieDMA;
+    private TitledBorder titleSortieDMA;
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
@@ -317,14 +335,15 @@ public class AccueilGUI {
         ficheResultat = new JPanel(new BorderLayout());
         panelSortie = new JPanel(new BorderLayout());
         sortieHaut = new JPanel(new FlowLayout());
-       prescriptionHaut = new JPanel(new FlowLayout());
+        prescriptionHaut = new JPanel(new FlowLayout());
         //
         DM = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMHaut, panelSouthDM);   //Création du Panel DM
         //
 
 ////Côté DMA
         panelDMAHaut = new JPanel((new GridLayout(1, 2)));  //Création du Panel du haut de la partie DMA
-
+        panelDMA = new JPanel(new BorderLayout());
+        panelSouthDMA = new JPanel(new BorderLayout());
         panelInfoPatientDMA = new JPanel(); //Création du Panel contenant les informations du Patient
 
         //panelTest2 = new JPanel(new GridBagLayout());
@@ -340,8 +359,10 @@ public class AccueilGUI {
         panelListeDMA = new JPanel(new BorderLayout()); //Création du Panel contenant la liste des DMAs du patient 
         tDMA = new JScrollPane(tableauDMA);
         panelDetailDMA = new JPanel(new BorderLayout()); //Création du Panel avec les détails du DMA sur lequel on a cliqué
+        detailsDMA = new JTabbedPane();
         panelFicheDMA = new JPanel(new GridLayout(2, 2));
-        DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelDetailDMA);
+        DMA = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panelDMAHaut, panelSouthDMA);
+        detailsDMA.setVisible(false);
 
         splitPan.setResizeWeight(0.2);
 
@@ -510,7 +531,7 @@ public class AccueilGUI {
         ficheObservations.setBorder(titleObs);
 
 // Prescription
-       prescriptionRadio = new JLabel("Cliquez ici pour prescrire une radiographie : ");
+        prescriptionRadio = new JLabel("Cliquez ici pour prescrire une radiographie : ");
         buttonRadio = new JButton("+");
 
         savePres = new ImageIcon("src/Annexes/save.png");
@@ -570,7 +591,7 @@ public class AccueilGUI {
         );
         ficheResultat.setBorder(titleRes);
 
-        // Lettre de sortie 
+// Lettre de sortie 
         saveSortie = new ImageIcon("src/Annexes/save.png");
         saveImSortie = saveSortie.getImage(); // Convertissemnt pour pouvoir redimensionner
         saveImFinSortie = saveImSortie.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
@@ -661,23 +682,47 @@ public class AccueilGUI {
         ajoutActeDMA.setContentAreaFilled(false);
         ajoutActeDMA.setBorderPainted(true);
         ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        ajoutActeDMA.setVisible(false);
+
+        tableauActeDMA = new JTable();
+        tActeDMA = new JScrollPane(tableauActeDMA);
+        tActeDMA.setOpaque(true);
 
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
         titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
         panelDetailDMA.setBorder(titleDetailDMA);
 
 //Nature des Résultats
-//            JTextArea resultatInfoDMA = new JTextArea(ficheDMA.getPrestations());
-//            resultatInfoDMA.setLineWrap(true);
-//            resultatInfoDMA.setEditable(false);
-//            JScrollPane resultDMA = new JScrollPane();
-//            resultDMA.setViewportView(resultatInfoDMA);
-//            JPanel ficheResultatDMA = new JPanel(new BorderLayout());
-//            TitledBorder titleResDMA = BorderFactory.createTitledBorder("Nature des résultats");
-//            ficheResultatDMA.setBorder(titleResDMA);
-//            ficheResultatDMA.add(resultDMA);
-//            panelFicheDMA.add(ficheResultatDMA);
-//            ficheResultatDMA.setBackground(LIGHT_BLUE);
+// Prescription
+
+  presDMA = new JScrollPane();
+        fichePrescriptionDMA = new JPanel(new BorderLayout());
+        prescriptionDMA = new JTextArea();
+        prescriptionDMA.setMargin(new Insets(6, 6, 6, 6));
+        prescriptionDMA.setLineWrap(true);
+        prescriptionDMA.setEditable(false);
+        presDMA.setViewportView(prescriptionDMA);
+
+        LoweredBevelBorderPresDMA = BorderFactory.createLoweredBevelBorder();
+        titlePrescDMA = BorderFactory.createTitledBorder(LoweredBevelBorderPresDMA, "Prescriptions",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+        fichePrescriptionDMA.setBorder(titlePrescDMA);
+
+        // Lettre de sortie 
+        
+         scrollSortieDMA = new JScrollPane();
+        panelSortieDMA = new JPanel(new BorderLayout());
+        lettreSortieDMA = new JTextArea();
+        lettreSortieDMA.setMargin(new Insets(6, 6, 6, 6));
+        lettreSortieDMA.setLineWrap(true);
+        scrollSortieDMA.setViewportView(lettreSortieDMA);
+        LoweredBevelBorderSortieDMA = BorderFactory.createLoweredBevelBorder();
+        titleSortieDMA = BorderFactory.createTitledBorder(LoweredBevelBorderSortieDMA, "Lettre de sortie",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+        panelSortieDMA.setBorder(titleSortieDMA);
+
 //Création du Panel DMA
         titleDMA = BorderFactory.createTitledBorder("informations générales");
         DMA.setBorder(titleDMA);
@@ -782,7 +827,6 @@ public class AccueilGUI {
         panelSortie.add(sortieHaut, BorderLayout.NORTH);
         panelSortie.add(scrollSortie, BorderLayout.CENTER);
         panelSortie.add(panelSaveSortie, BorderLayout.SOUTH);
-
         detailsDM.add("Lettre de sortie", panelSortie);
 
         gbc.gridx = 0;
@@ -822,13 +866,22 @@ public class AccueilGUI {
         panelTestDMA.add(patientAdresseDMA, gbc);
 
         panelInfoPatientDMA.add(panelTestDMA);
-        panelListeDMA.add(tDMA);
+        panelDMA.add(tDMA);
         panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
         panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
+        panelListeDMA.add(tActeDMA);
 
         panelDMAHaut.add(panelInfoPatientDMA);
-        panelDMAHaut.add(panelListeDMA);
+        panelDMAHaut.add(panelDMA);
         panelDMAHaut.setPreferredSize(new Dimension(200, 300));
+        panelSouthDMA.add(panelListeDMA, BorderLayout.WEST);
+        panelSouthDMA.add(panelDetailDMA, BorderLayout.CENTER);
+
+        fichePrescriptionDMA.add(presDMA, BorderLayout.CENTER);
+        detailsDMA.add("Prescriptions", fichePrescriptionDMA);
+
+        panelSortieDMA.add(scrollSortieDMA, BorderLayout.CENTER);
+        detailsDMA.add("Lettre de sortie", panelSortieDMA);
 
         panelHaut.add(deconnexion, BorderLayout.WEST);
         panelHaut.add(prez, BorderLayout.CENTER);
@@ -869,6 +922,7 @@ public class AccueilGUI {
         panelTestDMA.setOpaque(false); // Panel contenant les infos du patient pour que ce soit centré dans le panel info patient
         //
         panelPlus.setOpaque(false);
+        panelPlusDMA.setOpaque(false);
         panelRechercheDroit.setOpaque(false);
         sortieHaut.setOpaque(false);
         prescriptionHaut.setOpaque(false);
@@ -882,14 +936,17 @@ public class AccueilGUI {
 
         ficheObservations.setBackground(LIGHT_BLUE);
         fichePrescription.setBackground(LIGHT_BLUE);
+        fichePrescriptionDMA.setBackground(LIGHT_BLUE);
         ficheOperation.setBackground(LIGHT_BLUE);
         ficheResultat.setBackground(LIGHT_BLUE);
         panelSortie.setBackground(LIGHT_BLUE);
+        panelSortieDMA.setBackground(LIGHT_BLUE);
         panelSaveObs.setBackground(LIGHT_BLUE);
         panelSavePres.setBackground(LIGHT_BLUE);
         panelSaveOp.setBackground(LIGHT_BLUE);
         panelSaveRes.setBackground(LIGHT_BLUE);
         panelSaveSortie.setBackground(LIGHT_BLUE);
+        
 
         panelListe.setBackground(GREY);
         panelDetail.setBackground(GREY);
@@ -899,17 +956,21 @@ public class AccueilGUI {
         panelInfoPatientDMA.setBackground(GREY);
         panelListeDMA.setBackground(GREY);
         panelDetailDMA.setBackground(GREY);
+         panelDMA.setBackground(GREY);
 
         t.setBackground(LIGHT_BLUE); //Tour des tableaux (scrollbar)
         tDMA.setBackground(LIGHT_BLUE);
         ScrollDM.setBackground(LIGHT_BLUE);
+        
 
         tActeDM.setBackground(LIGHT_BLUE);
+        tActeDMA.setBackground(LIGHT_BLUE);
 
         tableau.setBackground(GREY); //Cases des tableaux
         tableauDMA.setBackground(GREY);
         tableauDM.setBackground(GREY);
         tableauActeDm.setBackground(GREY);
+        tableauActeDMA.setBackground(GREY);
 
     }
 
@@ -2351,6 +2412,142 @@ public class AccueilGUI {
 
     public void setButtonRadio(JButton buttonRadio) {
         this.buttonRadio = buttonRadio;
+    }
+
+    public JPanel getPanelDMA() {
+        return panelDMA;
+    }
+
+    public void setPanelDMA(JPanel panelDMA) {
+        this.panelDMA = panelDMA;
+    }
+
+    public JScrollPane gettActeDMA() {
+        return tActeDMA;
+    }
+
+    public void settActeDMA(JScrollPane tActeDMA) {
+        this.tActeDMA = tActeDMA;
+    }
+
+    public Border getLoweredBevelBorderListeDMA() {
+        return LoweredBevelBorderListeDMA;
+    }
+
+    public void setLoweredBevelBorderListeDMA(Border LoweredBevelBorderListeDMA) {
+        this.LoweredBevelBorderListeDMA = LoweredBevelBorderListeDMA;
+    }
+
+    public TitledBorder getTitleListeActeDMA() {
+        return titleListeActeDMA;
+    }
+
+    public void setTitleListeActeDMA(TitledBorder titleListeActeDMA) {
+        this.titleListeActeDMA = titleListeActeDMA;
+    }
+
+    public JTable getTableauActeDMA() {
+        return tableauActeDMA;
+    }
+
+    public void setTableauActeDMA(JTable tableauActeDMA) {
+        this.tableauActeDMA = tableauActeDMA;
+    }
+
+    public JPanel getPanelSouthDMA() {
+        return panelSouthDMA;
+    }
+
+    public void setPanelSouthDMA(JPanel panelSouthDMA) {
+        this.panelSouthDMA = panelSouthDMA;
+    }
+
+    public JScrollPane getPresDMA() {
+        return presDMA;
+    }
+
+    public void setPresDMA(JScrollPane presDMA) {
+        this.presDMA = presDMA;
+    }
+
+    public JPanel getFichePrescriptionDMA() {
+        return fichePrescriptionDMA;
+    }
+
+    public void setFichePrescriptionDMA(JPanel fichePrescriptionDMA) {
+        this.fichePrescriptionDMA = fichePrescriptionDMA;
+    }
+
+    public JPanel getPanelSortieDMA() {
+        return panelSortieDMA;
+    }
+
+    public void setPanelSortieDMA(JPanel panelSortieDMA) {
+        this.panelSortieDMA = panelSortieDMA;
+    }
+
+    public JScrollPane getScrollSortieDMA() {
+        return scrollSortieDMA;
+    }
+
+    public void setScrollSortieDMA(JScrollPane scrollSortieDMA) {
+        this.scrollSortieDMA = scrollSortieDMA;
+    }
+
+    public JTabbedPane getDetailsDMA() {
+        return detailsDMA;
+    }
+
+    public void setDetailsDMA(JTabbedPane detailsDMA) {
+        this.detailsDMA = detailsDMA;
+    }
+
+    public JTextArea getPrescriptionDMA() {
+        return prescriptionDMA;
+    }
+
+    public void setPrescriptionDMA(JTextArea prescriptionDMA) {
+        this.prescriptionDMA = prescriptionDMA;
+    }
+
+    public Border getLoweredBevelBorderPresDMA() {
+        return LoweredBevelBorderPresDMA;
+    }
+
+    public void setLoweredBevelBorderPresDMA(Border LoweredBevelBorderPresDMA) {
+        this.LoweredBevelBorderPresDMA = LoweredBevelBorderPresDMA;
+    }
+
+    public TitledBorder getTitlePrescDMA() {
+        return titlePrescDMA;
+    }
+
+    public void setTitlePrescDMA(TitledBorder titlePrescDMA) {
+        this.titlePrescDMA = titlePrescDMA;
+    }
+
+    public JTextArea getLettreSortieDMA() {
+        return lettreSortieDMA;
+    }
+
+    public void setLettreSortieDMA(JTextArea lettreSortieDMA) {
+        this.lettreSortieDMA = lettreSortieDMA;
+    }
+
+    public Border getLoweredBevelBorderSortieDMA() {
+        return LoweredBevelBorderSortieDMA;
+    }
+
+    public void setLoweredBevelBorderSortieDMA(Border LoweredBevelBorderSortieDMA) {
+        this.LoweredBevelBorderSortieDMA = LoweredBevelBorderSortieDMA;
+    }
+
+    public TitledBorder getTitleSortieDMA() {
+        return titleSortieDMA;
+    }
+
+    public void setTitleSortieDMA(TitledBorder titleSortieDMA) {
+        this.titleSortieDMA = titleSortieDMA;
     }
 
 }

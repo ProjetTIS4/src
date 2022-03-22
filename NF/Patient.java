@@ -19,6 +19,8 @@ public class Patient extends Personne {
     private LocalDate entreeService;
     private String medecinGeneraliste;
     private Sexe sexe;
+    private static int compteur;
+    private String annee;
 
     public enum Sexe {
         HOMME,
@@ -32,10 +34,23 @@ public class Patient extends Personne {
         this.sexe = sexe;
         this.entreeService = LocalDate.now();
         this.medecinGeneraliste = "Inconnu";
+        this.annee = "" + entreeService.getYear();
+        this.annee = "" + annee.charAt(2) + annee.charAt(3);
 
-        String annee = "" + entreeService.getYear();
-        annee = "" + annee.charAt(2) + annee.charAt(3);
-        this.IPP = "" + annee + "XXXXX";  //Il faudrait mettre un compteur ici pour les 7 caractères restants pour que tout les IPP soient différents. 
+        compteur(this.compteur);
+    }
+    
+    public Patient(String nom, String prenom, Sexe sexe, String adresse, Date dateNaissance, int compteur) {
+        super(nom, prenom);
+        this.adresse = adresse;
+        this.dateNaissance = dateNaissance;
+        this.sexe = sexe;
+        this.entreeService = LocalDate.now();
+        this.medecinGeneraliste = "Inconnu";
+        this.annee = "" + entreeService.getYear();
+        this.annee = "" + annee.charAt(2) + annee.charAt(3);
+
+        compteur(compteur);
     }
 
     public Patient(String nom, String prenom, Sexe sexe, String adresse, Date dateNaissance, String medGen) {
@@ -45,10 +60,32 @@ public class Patient extends Personne {
         this.sexe = sexe;
         this.entreeService = LocalDate.now();
         this.medecinGeneraliste = medGen;
+        this.annee = "" + entreeService.getYear();
+        this.annee = "" + annee.charAt(2) + annee.charAt(3);
 
-        String annee = "" + entreeService.getYear();
-        annee = "" + annee.charAt(2) + annee.charAt(3);
-        this.IPP = "" + annee + "XXXXX";  //Il faudrait mettre un compteur ici pour les 7 caractères restants pour que tout les IPP soient différents. 
+        compteur(this.compteur);
+    }
+
+    public void compteur(int compteur) {
+
+        if (compteur < 10) {
+            this.IPP = "" + annee + "000000" + compteur; //Compteur au format YYxxxxxxx (xxxxxx est un compteur)
+
+        } else if (10 <= compteur && compteur < 100) {
+            this.IPP = "" + annee + "00000" + compteur; //Compteur au format YYxxxxxxx (xxxxxx est un compteur)
+        } else if (100 <= compteur && compteur < 1000) {
+            this.IPP = "" + annee + "0000" + compteur; //Compteur au format YYxxxxxxx (xxxxxx est un compteur)
+        } else if (1000 <= compteur && compteur < 10000) {
+            this.IPP = "" + annee + "000" + compteur; //Compteur au format YYxxxxxxx (xxxxxxxx est un compteur)
+        } else if (compteur >= 10000) {
+            this.IPP = "" + annee + "00" + compteur; //Compteur au format YYxxxxxxx (xxxxxxxx est un compteur)
+        } else if (compteur >= 100000) {
+            this.IPP = "" + annee + "0" + compteur; //Compteur au format YYxxxxxxx (xxxxxxxx est un compteur)
+        } else if (compteur >= 1000000) {
+            this.IPP = "" + annee + "" + compteur; //Compteur au format YYxxxxxxx (xxxxxxxx est un compteur)
+        }
+        this.compteur++;
+
     }
 
     public String toString() {

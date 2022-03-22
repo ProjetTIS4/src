@@ -5,6 +5,7 @@
  */
 package NF;
 
+import NF.Patient.Sexe;
 import java.time.LocalDate;
 
 /**
@@ -20,19 +21,21 @@ public class test {
         // TODO code application logic here
         Date date = new Date(23, 02, 2022);
 //       Calendar rightNow = Calendar.getInstance();
-//       Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
-//       System.out.println(patient.getIPP());
+    Patient patient= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
+    Patient patient2= new Patient("Duches", "Lola", Sexe.FEMME, "5 rue liber", date,"dr truc");
+      System.out.println(patient.getIPP());
+      System.out.println(patient2.getIPP());
 //       System.out.println(patient.getEntreeServie());
 //   System.out.println(rightNow.getTime());
-
+//
         Personnel p = new Personnel("eee", "eee", "cardio", "PHS", "gbois", "gbois");
         FichesDMA dma1 = new FichesDMA(date, p);
         FichesDMA dma2 = new FichesDMA(date, p);
         System.out.println(dma1.getNumeroSejour());
         System.out.println(dma2.getNumeroSejour());
-        int c = dma2.getCompteur();
-        FichesDMA dma3 = new FichesDMA(date, p, c);
-        System.out.println(dma3.getNumeroSejour());
+      //  int c = dma2.getCompteur();
+      //  FichesDMA dma3 = new FichesDMA(date, p, c);
+     //   System.out.println(dma3.getNumeroSejour());
 
         
         
