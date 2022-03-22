@@ -140,6 +140,12 @@ public class AccueilGUI {
     // Tableau patients
     private TitledBorder titre3;
     private JTable tableau;
+    //Ajouter un patient
+    private JButton ajoutPat;
+    private ImageIcon plusPat;
+    private Image plusImPat;
+    private Image plusImFinPat;
+    
 
 //// Droite DM
     private ImageIcon iconeF;
@@ -297,6 +303,18 @@ public class AccueilGUI {
         rechercher = new JButton("🔍");
         choix = new JComboBox();
         retour = new JButton("↶");
+        
+        plusPat = new ImageIcon("src/Annexes/plus.png");
+        plusImPat = plusPat.getImage(); // Convertissemnt pour pouvoir redimensionner
+        plusImFinPat = plusImPat.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        plusPat = new ImageIcon(plusImFinPat); // On reconvertit
+
+
+        ajoutPat = new JButton(plusPat);
+        ajoutPat.setContentAreaFilled(false);
+        ajoutPat.setBorderPainted(true);
+        ajoutPat.setToolTipText("Cliquez ici pour ajouter un nouveau patient");
+        ajoutPat.setVisible(false);
 
 ////Côté DM
         panelDMHaut = new JPanel((new GridLayout(1, 2)));
@@ -477,7 +495,7 @@ public class AccueilGUI {
         ajoutDM = new JButton(plusDM);
         ajoutDM.setContentAreaFilled(false);
         ajoutDM.setBorderPainted(true);
-        ajoutDM.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        ajoutDM.setToolTipText("Cliquez ici pour ajouter un nouveau DM");
 
 //Création du Panel contenant la liste des actes dans un DM du patient 
         LoweredBevelBorderListe = BorderFactory.createLoweredBevelBorder();
@@ -737,9 +755,11 @@ public class AccueilGUI {
         prez.add(presentation);
         prez.add(presentation2); // Pourquoi y'en a deux ?
         panPatients.add(t, BorderLayout.CENTER);
+        panPatients.add(ajoutPat, BorderLayout.SOUTH);
 
         panelMessage.add(messageArrive);
         panelDroit.add(panelMessage, BorderLayout.CENTER);
+        
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -2549,5 +2569,38 @@ public class AccueilGUI {
     public void setTitleSortieDMA(TitledBorder titleSortieDMA) {
         this.titleSortieDMA = titleSortieDMA;
     }
+
+    public JButton getAjoutPat() {
+        return ajoutPat;
+    }
+
+    public void setAjoutPat(JButton ajoutPat) {
+        this.ajoutPat = ajoutPat;
+    }
+
+    public ImageIcon getPlusPat() {
+        return plusPat;
+    }
+
+    public void setPlusPat(ImageIcon plusPat) {
+        this.plusPat = plusPat;
+    }
+
+    public Image getPlusImPat() {
+        return plusImPat;
+    }
+
+    public void setPlusImPat(Image plusImPat) {
+        this.plusImPat = plusImPat;
+    }
+
+    public Image getPlusImFinPat() {
+        return plusImFinPat;
+    }
+
+    public void setPlusImFinPat(Image plusImFinPat) {
+        this.plusImFinPat = plusImFinPat;
+    }
+    
 
 }

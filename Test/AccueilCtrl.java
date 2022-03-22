@@ -90,6 +90,7 @@ public class AccueilCtrl implements Runnable {
                     a.getPrescription2().setEditable(true);
                     a.getOperationInfo().setEditable(true);
                     a.getResultatInfo().setEditable(true);
+                    a.getAjoutPat().setVisible(false);
 
                     break;
 
@@ -99,6 +100,7 @@ public class AccueilCtrl implements Runnable {
                     a.getPrescription2().setEditable(true);
                     a.getFicheOperation().setVisible(false);
                     a.getResultatInfo().setEditable(true);
+                    a.getAjoutPat().setVisible(false);
                     break;
 
                 case PHMedicoTechnique:
@@ -107,16 +109,17 @@ public class AccueilCtrl implements Runnable {
                     a.getResultatInfo().setEditable(true);
                     a.getFichePrescription().setVisible(false);
                     a.getFicheOperation().setVisible(false);
+                    a.getAjoutPat().setVisible(false);
                     break;
 
                 case SecretaireAdministrative:
                     query = "SELECT COUNT(DISTINCT IPP) FROM patient";
-
+                    a.getAjoutPat().setVisible(true);
                     break;
 
                 case SecretaireMedicale:
                     query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
-
+                    a.getAjoutPat().setVisible(false);
                     break;
 
             }
@@ -649,6 +652,15 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     SwingUtilities.invokeLater(new AjoutDMACtrl(ipp, a));
+                }
+            });
+
+            //Listener sur le bouton "+" pour ajouter un Patient
+            a.getAjoutPat().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                    SwingUtilities.invokeLater(new AjoutPatCtrl(a));
                 }
             });
 
