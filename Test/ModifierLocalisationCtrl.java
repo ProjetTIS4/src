@@ -30,15 +30,16 @@ public class ModifierLocalisationCtrl implements Runnable {
     private ModifierLocalisationGUI a;
     private String ipp;
     private AccueilGUI ac;
+    private AccueilCtrl acc;
 
     private String loc;
 
-    public ModifierLocalisationCtrl(String ipp, AccueilGUI ac, String loc) {
+    public ModifierLocalisationCtrl(String ipp, AccueilGUI ac, AccueilCtrl acc, String loc) {
         a = new ModifierLocalisationGUI();
         this.ipp = ipp;
         this.ac = ac;
         this.loc=loc;
-        
+        this.acc=acc;
 
     }
 
@@ -96,7 +97,7 @@ public class ModifierLocalisationCtrl implements Runnable {
                     a.getModifierLoc().dispose();
 
                     
-                    
+                    acc.MAJTableauPatient();
                     
                     ac.getAccueil().validate();
                     ac.getAccueil().repaint();

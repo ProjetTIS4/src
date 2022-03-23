@@ -66,7 +66,6 @@ public class AccueilCtrl implements Runnable {
 
     private String loc;
 
-
     private DefaultTableModel model;
 
     public AccueilCtrl(Personnel p) {
@@ -79,6 +78,7 @@ public class AccueilCtrl implements Runnable {
     public void run() {
         s = "";
         ligne = 0;
+        AccueilCtrl acc = this;
         Hash h = new Hash();
 
         /// Récupération de la table Patient ///
@@ -207,7 +207,6 @@ public class AccueilCtrl implements Runnable {
                     dataTable[i][5] = affichageLoc(localisation);
                     dataTable[i][6] = affichageSpe(localisation);
                     data[i][8] = medGen;
-                    
 
                     i++;
                 }
@@ -501,6 +500,18 @@ public class AccueilCtrl implements Runnable {
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
+                    } else if (me.getClickCount() == 2) {
+                        if (p.getPoste() == Personnel.Poste.SecretaireMedicale) {
+                            if (a.getTableau().getSelectedColumn() == 5 || a.getTableau().getSelectedColumn() == 6) {
+
+                                int ligne = a.getTableau().getSelectedRow();
+                                ipp = dataTable[ligne][0];
+                                loc = data[ligne][7];
+
+                                SwingUtilities.invokeLater(new ModifierLocalisationCtrl(ipp, a, acc, loc));
+
+                            }
+                        }
                     }
                 }
             }
@@ -694,33 +705,27 @@ public class AccueilCtrl implements Runnable {
             //Listener sur le bouton "+" pour ajouter un DMA
 //            ajout DMA
             a.getButtonNouveauDMA().addMouseListener(new MouseAdapter() {
-            
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                try {
-                    
-                    String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
-                    String user = "DEV";
-                    String password = "SIH-mmlh2022";
 
-                    Connection con = DriverManager.getConnection(url, user, password);
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    try {
 
-                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
-                            + ipp
-                            + "','"
-                            + s
-                            + "','"
-                            + dateDuJour
-                            + "','')";
+                        String requete = "INSERT INTO DMA (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
+                                + ipp
+                                + "','"
+                                + sej
+                                + "','"
+                                + dateDuJour
+                                + "','')";
 
-                    System.out.println(requete);
-                    Statement stm = con.createStatement();
-                    stm.executeUpdate(requete);
+                        System.out.println(requete);
+                        Statement stm = con.createStatement();
+                        stm.executeUpdate(requete);
 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            }
             });
 
             //Listener sur le bouton "+" pour ajouter un Patient
@@ -1292,19 +1297,18 @@ public class AccueilCtrl implements Runnable {
                     }
                 }
             });
-             a.getModifLoc().addMouseListener(new MouseAdapter() {
+
+            a.getModifLoc().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    
-                    SwingUtilities.invokeLater(new ModifierLocalisationCtrl(s, a, loc));
+
+                    SwingUtilities.invokeLater(new ModifierLocalisationCtrl(s, a, acc, loc));
                 }
             });
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        
 
     }
 //    
@@ -1341,8 +1345,8 @@ public class AccueilCtrl implements Runnable {
     public void recherche() {
 
         String s = a.getBarreRecherche().getText();
-        String dataRecherche[][] = new String[taille][5];
-        String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe"};
+        String dataRecherche[][] = new String[taille][7];
+        String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre", "Service de localisation"};
         int k = 0;
         for (int i = 0; i < taille; i++) {
             if (a.getChoix().getSelectedItem().equals("Nom")) {
@@ -1354,6 +1358,9 @@ public class AccueilCtrl implements Runnable {
                     dataRecherche[k][2] = dataTable[i][2];
                     dataRecherche[k][3] = dataTable[i][3];
                     dataRecherche[k][4] = dataTable[i][4];
+                    dataRecherche[k][5] = dataTable[i][5];
+                    dataRecherche[k][6] = dataTable[i][6];
+
                     k++;
 
                     model = new DefaultTableModel(dataRecherche, columns) {
@@ -1460,6 +1467,152 @@ public class AccueilCtrl implements Runnable {
 
             return (l);
         }
+    }
+
+    public void MAJTableauPatient() {
+        try {
+            String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+            String user = "DEV";
+            String password = "SIH-mmlh2022";
+
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement stm = con.createStatement();
+            String query = "";
+
+            switch (p.getPoste()) {
+
+                case PHService:
+                    query = "SELECT COUNT(DISTINCT IPP)  FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                    a.getObservations2().setEditable(true);
+                    a.getPrescription2().setEditable(true);
+                    a.getOperationInfo().setEditable(true);
+                    a.getResultatInfo().setEditable(true);
+                    a.getAjoutPat().setVisible(false);
+
+                    break;
+
+                case PHAnesthesiste:
+                    query = "SELECT COUNT(DISTINCT IPP)  FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                    a.getObservations2().setEditable(true);
+                    a.getPrescription2().setEditable(true);
+                    a.getFicheOperation().setVisible(false);
+                    a.getResultatInfo().setEditable(true);
+                    a.getAjoutPat().setVisible(false);
+                    break;
+
+                case PHMedicoTechnique:
+                    query = "SELECT COUNT(DISTINCT IPP) F FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                    a.getObservations2().setEditable(true);
+                    a.getResultatInfo().setEditable(true);
+                    a.getFichePrescription().setVisible(false);
+                    a.getFicheOperation().setVisible(false);
+                    a.getAjoutPat().setVisible(false);
+                    break;
+
+                case SecretaireAdministrative:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient";
+                    a.getAjoutPat().setVisible(true);
+                    break;
+
+                case SecretaireMedicale:
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                    a.getAjoutPat().setVisible(false);
+                    break;
+
+            }
+
+            ResultSet res = stm.executeQuery(query);
+
+            taille = 0;
+
+            if (res.next()) {
+                taille = res.getInt("COUNT(DISTINCT IPP)");
+            }
+
+            String data[][] = new String[taille][9];
+            String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre", "Service de localisation"};
+
+            dataTable = new String[taille][7];
+
+            switch (p.getPoste()) {
+
+                case PHService:
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+
+// query = "SELECT * FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "'";
+                    break;
+
+                case PHAnesthesiste:
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+                    break;
+
+                case PHMedicoTechnique:
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+                    break;
+
+                case SecretaireAdministrative:
+                    query = "SELECT * FROM patient ";
+
+                    break;
+
+                case SecretaireMedicale:
+                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+
+                    break;
+
+            }
+
+            res = stm.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
+                String IPP = res.getString("IPP");
+                String nom_marital = res.getString("nom_marital");
+                String nom_usuel = res.getString("nom_usuel");
+                String prenom = res.getString("prenom");
+                String dateNaissance = res.getString("DDN");
+                String sexe = res.getString("sexe");
+                String adresse = res.getString("adresse");
+                String localisation = res.getString("localisation");
+                String medGen = res.getString("medGen");
+
+                if (contains(dataTable, IPP, 0)) {
+
+                    continue;
+                } else {
+                    data[i][0] = IPP;
+                    dataTable[i][0] = IPP;
+                    data[i][1] = nom_marital;
+                    dataTable[i][1] = nom_marital;
+                    data[i][2] = nom_usuel;
+                    data[i][3] = prenom;
+                    dataTable[i][2] = prenom;
+                    data[i][4] = dateNaissance;
+                    dataTable[i][3] = dateNaissance;
+                    data[i][5] = sexe;
+                    dataTable[i][4] = sexe;
+                    data[i][6] = adresse;
+                    data[i][7] = localisation;
+                    dataTable[i][5] = affichageLoc(localisation);
+                    dataTable[i][6] = affichageSpe(localisation);
+                    data[i][8] = medGen;
+
+                    i++;
+                }
+
+                a.getTableau().setModel(new DefaultTableModel(dataTable, columns) {
+
+                    @Override
+                    public boolean isCellEditable(int row, int column) {
+                        //Only the third column
+                        return false;
+                    }
+                });
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
     }
 
 }

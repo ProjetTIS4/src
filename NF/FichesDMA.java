@@ -60,7 +60,7 @@ public class FichesDMA {
         this.compteur++;
     }
 
-    public void compteur(int compteur) {
+     public void compteur(int compteur) {
         
         if (compteur < 10) {
             this.numeroSejour = date.anneeToString() + date.moisToString() + "0000" + compteur; //Compteur au format YYMMxxxxx (xxxx est un compteur)

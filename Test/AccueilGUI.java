@@ -812,6 +812,8 @@ public class AccueilGUI {
         gbc.anchor = GridBagConstraints.CENTER;
         panelMessage.add(messageArrive, gbc); //A revoir le gbc n'est peut-être plus nécessaire. 
 
+
+        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 0);
@@ -857,9 +859,9 @@ public class AccueilGUI {
         panelPlus.add(ajoutActe, BorderLayout.EAST);
         panelListe.add(panelPlus, BorderLayout.NORTH);
         
-        modificationLoc.add(modifLoc, BorderLayout.NORTH);
-       // modificationLoc2.add(modificationLoc, BorderLayout.WEST);
-        panelInfoPatient.add(modificationLoc,BorderLayout.WEST);
+      
+        //modificationLoc2.add(modificationLoc, BorderLayout.WEST);
+        //panelInfoPatient.add(modificationLoc2,BorderLayout.WEST);
 
         panelDMHaut.add(panelInfoPatient);
         panelDMHaut.add(panelDM);
