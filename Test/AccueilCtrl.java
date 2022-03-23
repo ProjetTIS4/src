@@ -60,12 +60,14 @@ public class AccueilCtrl implements Runnable {
     private int ligne;
     private String dataDM[][];
     private String dataDMA[][];
+    private LocalDate dateDuJour;
 
     private DefaultTableModel model;
 
     public AccueilCtrl(Personnel p) {
         this.a = new AccueilGUI();
         this.p = p;
+        this.dateDuJour = LocalDate.now();
     }
 
     @Override
@@ -312,8 +314,8 @@ public class AccueilCtrl implements Runnable {
                                 } else {
                                     a.getPanelDMA().add(a.gettDMA());
                                     a.getPanelNouveauDMA().setVisible(false);
-                                     a.gettDMA().setVisible(true);
-                                     a.getPanelListeDMA().setVisible(true);
+                                    a.gettDMA().setVisible(true);
+                                    a.getPanelListeDMA().setVisible(true);
                                     a.getPanelDetailDMA().setVisible(true);
                                 }
                             } catch (SQLException ex) {
@@ -683,12 +685,35 @@ public class AccueilCtrl implements Runnable {
             });
 
             //Listener sur le bouton "+" pour ajouter un DMA
+            ajout DMA
             a.getButtonNouveauDMA().addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent me) {
+            
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                try {
+                    
+                    String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                    String user = "DEV";
+                    String password = "SIH-mmlh2022";
 
-                    SwingUtilities.invokeLater(new AjoutDMACtrl(ipp, a));
+                    Connection con = DriverManager.getConnection(url, user, password);
+
+                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
+                            + ipp
+                            + "','"
+                            + s
+                            + "','"
+                            + dateDuJour
+                            + "','')";
+
+                    System.out.println(requete);
+                    Statement stm = con.createStatement();
+                    stm.executeUpdate(requete);
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
+            }
             });
 
             //Listener sur le bouton "+" pour ajouter un Patient

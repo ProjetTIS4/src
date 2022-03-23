@@ -42,11 +42,6 @@ public class AjoutDMAGUI {
 
     private JPanel panelDate;
     private JPanel panelHeure;
-    private JPanel panelNom;
-    private JPanel panelPrenom;
-    private JPanel panelSexe;
-    private JPanel panelAdresse;
-    private JPanel panelDateN;
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JPanel jPanel4;
@@ -64,35 +59,7 @@ public class AjoutDMAGUI {
     private JTextField heure;
     private JLabel pts;
     private JTextField minute;
-////////////////////////////////////////////////////Panel patient////////////////////////////
-    private JLabel patient;
-    
-    ////////////Panel Nom ///////////////
-    private JLabel nom;
-    private JTextField nom2;
 
-    ////////////Panel Prénom ///////////////
-    private JLabel prenom;
-    private JTextField prenom2;
-    
-    ////////////Panel Sexe ///////////////
-    private JLabel sexe;
-    private JComboBox choix;
-    private Vector<String> S;
-    
-    
-    
-    ////////////Panel Adresse ///////////////
-    private JLabel adresse;
-    private JTextField adresse2;
-    
-    ////////////Panel Date de Naissance ///////////////
-    private JLabel dateN;
-    private JTextField jourN;
-    private JLabel slashN;
-    private JTextField moisN;
-    private JLabel slashN2;
-    private JTextField anneeN;
 
     ////////////Bouton Valider ///////////////
     private JButton valider;
@@ -105,12 +72,6 @@ public class AjoutDMAGUI {
 
         panelDate = new JPanel(new FlowLayout());
         panelHeure = new JPanel(new FlowLayout());
-
-        panelNom = new JPanel(new FlowLayout());
-        panelPrenom = new JPanel(new FlowLayout());
-        panelAdresse = new JPanel(new FlowLayout());
-        panelSexe = new JPanel(new FlowLayout());
-        panelDateN = new JPanel(new FlowLayout());
         jPanel2 = new JPanel(new GridBagLayout());
         jPanel3 = new JPanel(new GridBagLayout());
         jPanel4 = new JPanel(new GridBagLayout());
@@ -130,37 +91,7 @@ public class AjoutDMAGUI {
         pts = new JLabel(":");
         minute = new JTextField("   ");
 
-        patient=new JLabel("Patient :");
         
-        nom = new JLabel("Nom : ");
-        nom2 = new JTextField("    Nom    ");
-        nom2.setForeground(Color.gray);
-
-
-        prenom = new JLabel("Prénom : ");
-        prenom2 = new JTextField("   Prénom    ");
-        prenom2.setForeground(Color.gray);
-        
-        adresse = new JLabel("Adresse : ");
-        adresse2 = new JTextField("   Adresse    ");
-        adresse2.setForeground(Color.gray);
-        
-        sexe= new JLabel("Sexe : ");
-        S= new Vector<>();
-        S.add("F");
-        S.add("M");
-        choix= new JComboBox(S);
-        
-        dateN = new JLabel("Date de naissance : ");
-        jourN = new JTextField("JJ");
-        jourN.setForeground(Color.gray);
-        slashN = new JLabel("/");
-        moisN = new JTextField("MM");
-        moisN.setForeground(Color.gray);
-        slashN2 = new JLabel("/");
-        anneeN = new JTextField("AAAA");
-        anneeN.setForeground(Color.gray);
-
         validerImgIcon = new ImageIcon("src/Annexes/valider.png");
 
         valider = new JButton(validerImgIcon);
@@ -179,25 +110,6 @@ public class AjoutDMAGUI {
         panelHeure.add(pts);
         panelHeure.add(minute);
 
-        panelNom.add(nom);
-        panelNom.add(nom2);
-
-        panelPrenom.add(prenom);
-        panelPrenom.add(prenom2);
-        
-        panelAdresse.add(adresse);
-        panelAdresse.add(adresse2);
-        
-        panelSexe.add(sexe);
-        panelSexe.add(choix);
-        
-        panelDateN.add(dateN);
-        panelDateN.add(jourN);
-        panelDateN.add(slashN);
-        panelDateN.add(moisN);
-        panelDateN.add(slashN2);
-        panelDateN.add(anneeN);
-
         
         title2 = BorderFactory.createTitledBorder("");
         jPanel2.setBorder(title2);
@@ -215,30 +127,6 @@ public class AjoutDMAGUI {
         gbc.insets = new Insets(0, 15, 0, 15);
         jPanel2.add(panelHeure, gbc);
         
-        gbc.gridy=2;
-        gbc.insets= new Insets(0,15,0,15);
-        jPanel2.add(patient, gbc);
-
-        gbc.gridy = 3;
-        gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelNom, gbc);
-
-        gbc.gridy = 4;
-        gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelPrenom, gbc);
-        
-        gbc.gridy = 5;
-        gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelAdresse, gbc);
-        
-        gbc.gridy = 6;
-        gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelSexe, gbc);
-
-        gbc.gridy = 7;
-        gbc.insets = new Insets(0, 15, 0, 15);
-        gbc.anchor = GridBagConstraints.WEST;
-        jPanel2.add(panelDateN, gbc);
 
         gbc.gridy = 8;
         gbc.insets = new Insets(0, 15, 15, 15);
@@ -254,20 +142,12 @@ public class AjoutDMAGUI {
         jPanel3.add(jPanel4);
 
         ajouterDMA.add(jPanel3, BorderLayout.CENTER); // On ajoute le panel final au centre de la fenêtre
-        panelAdresse.setBackground(LIGHT_BLUE);
-        panelSexe.setBackground(LIGHT_BLUE);
-        panelDateN.setBackground(LIGHT_BLUE);
         jPanel3.setBackground(LIGHT_BLUE2);
         jPanel2.setBackground(LIGHT_BLUE);
         jPanel4.setBackground(LIGHT_BLUE);
 
         panelDate.setOpaque(false);
         panelHeure.setOpaque(false);
-        panelNom.setOpaque(false);
-        panelPrenom.setOpaque(false);
-        panelAdresse.setOpaque(false);
-        panelSexe.setOpaque(false);
-        panelDateN.setOpaque(false);
 
     }
 
@@ -293,38 +173,6 @@ public class AjoutDMAGUI {
 
     public void setPanelHeure(JPanel panelHeure) {
         this.panelHeure = panelHeure;
-    }
-
-    public JPanel getPanelNom() {
-        return panelNom;
-    }
-
-    public void setPanelNom(JPanel panelNom) {
-        this.panelNom = panelNom;
-    }
-
-    public JPanel getPanelPrenom() {
-        return panelPrenom;
-    }
-
-    public void setPanelPrenom(JPanel panelPrenom) {
-        this.panelPrenom = panelPrenom;
-    }
-
-    public JLabel getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(JLabel prenom) {
-        this.prenom = prenom;
-    }
-
-    public JTextField getPrenom2() {
-        return prenom2;
-    }
-
-    public void setPrenom2(JTextField prenom2) {
-        this.prenom2 = prenom2;
     }
 
 
@@ -408,21 +256,6 @@ public class AjoutDMAGUI {
         this.minute = minute;
     }
 
-    public JLabel getNom() {
-        return nom;
-    }
-
-    public void setNom(JLabel nom) {
-        this.nom = nom;
-    }
-
-    public JTextField getNom2() {
-        return nom2;
-    }
-
-    public void setField2(JTextField nom2) {
-        this.nom2 = nom2;
-    }
 
     public TitledBorder getTitle2() {
         return title2;

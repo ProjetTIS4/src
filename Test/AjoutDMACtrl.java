@@ -157,8 +157,14 @@ public class AjoutDMACtrl implements Runnable {
 
                     Connection con = DriverManager.getConnection(url, user, password);
 
-                    String requete = "INSERT INTO DMA (IPPatient,numeroSejour,dateEntree,dateSortie) VALUES ('" + ipp
-                            + "','" + "compteur" + "','" + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() + "','test"
+                    String requete = "INSERT INTO DMA (IPPatient,numeroSejour,dateEntree,dateSortie) VALUES ('" 
+                            + ipp
+                            + "','" 
+                            + "compteur" 
+                            + "','" 
+                            + a.getAnnee().getText() + a.getMois().getText() + a.getJour().getText() + a.getHeure().getText() + a.getMinute().getText() 
+                            + "','"
+                            + "test"
                             + "','"
                             + (a.getNom2().getText());
 
