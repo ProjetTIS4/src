@@ -120,6 +120,7 @@ public class AccueilGUI {
     private JPanel panelSortieDMA;
     private JScrollPane scrollSortieDMA;
     private JTabbedPane detailsDMA; // Panel qui sépare les observations, prescriptions, opérations et résultats du DM en onglet
+    private JPanel panelNouveauDMA;
 
     private GridBagConstraints gbc;
 
@@ -145,7 +146,6 @@ public class AccueilGUI {
     private ImageIcon plusPat;
     private Image plusImPat;
     private Image plusImFinPat;
-    
 
 //// Droite DM
     private ImageIcon iconeF;
@@ -259,16 +259,20 @@ public class AccueilGUI {
     private JLabel adresseDMA;
     private JLabel adresseInfoDMA;
 
+    //Nouveau DMA   
+    private JLabel nouveauDMA;
+    private JButton buttonNouveauDMA;
+
     // Tableau des DMAs
-      private Border LoweredBevelBorderListeDMA;
-      private Border LoweredBevelBorderDetailDMA;
+    private Border LoweredBevelBorderListeDMA;
+    private Border LoweredBevelBorderDetailDMA;
     private TitledBorder titleListeActeDMA;
     private TitledBorder titleListeDMA;
     private JTable tableauDMA;
 
     // Tableau des Actes du DMA
     private Border LoweredBevelBorderDMA;
-     private Border LoweredBevelBorderListeActeDMA;
+    private Border LoweredBevelBorderListeActeDMA;
 
     private JTable tableauActeDMA;
     private JButton ajoutActeDMA;
@@ -308,12 +312,11 @@ public class AccueilGUI {
         rechercher = new JButton("🔍");
         choix = new JComboBox();
         retour = new JButton("↶");
-        
+
         plusPat = new ImageIcon("src/Annexes/plus.png");
         plusImPat = plusPat.getImage(); // Convertissemnt pour pouvoir redimensionner
         plusImFinPat = plusImPat.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
         plusPat = new ImageIcon(plusImFinPat); // On reconvertit
-
 
         ajoutPat = new JButton(plusPat);
         ajoutPat.setContentAreaFilled(false);
@@ -364,6 +367,7 @@ public class AccueilGUI {
         //
 
 ////Côté DMA
+        panelNouveauDMA = new JPanel(new FlowLayout());
         panelDMAHaut = new JPanel((new GridLayout(1, 2)));  //Création du Panel du haut de la partie DMA
         panelDMA = new JPanel(new BorderLayout());
         panelSouthDMA = new JPanel(new BorderLayout());
@@ -416,7 +420,6 @@ public class AccueilGUI {
         choix.addItem("Prénom");
 
         ///////////////// Panel liste de patients /////////////////
-        
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
         tableau = new JTable();
@@ -648,7 +651,7 @@ public class AccueilGUI {
         titleInfoDMA = BorderFactory.createTitledBorder(LoweredBevelBorderPatientDMA, "informations du patient",
                 TitledBorder.LEFT, TitledBorder.TOP
         );
-               panelInfoPatientDMA.setBorder(titleInfoDMA);
+        panelInfoPatientDMA.setBorder(titleInfoDMA);
 
 //Image
         iconeH = new ImageIcon("src/Annexes/homme.png");
@@ -691,21 +694,24 @@ public class AccueilGUI {
         adresseDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
         adresseInfoDMA = new JLabel();
         patientAdresseDMA.setLayout(new BoxLayout(patientAdresseDMA, BoxLayout.X_AXIS));
-        
-         //Création du Panel contenant la liste des DMs du patient 
+
+        // Création d'un nouveau DMA
+        nouveauDMA = new JLabel("Cliquez ici pour ouvrir un nouveau DMA : ");
+        buttonNouveauDMA = new JButton("Nouveau DMA");
+
+//Création du Panel contenant la liste des DMAs du patient 
         LoweredBevelBorderDMA = BorderFactory.createLoweredBevelBorder();
         titleListeDMA = BorderFactory.createTitledBorder(LoweredBevelBorderDMA, "Dossier médical administratif",
                 TitledBorder.LEFT, TitledBorder.TOP
         );
         panelDMA.setBorder(titleListeDMA);
 
-
 //Création du Panel contenant la liste des DMAs du patient 
-LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
-       titleListeActeDMA = BorderFactory.createTitledBorder(LoweredBevelBorderListeActeDMA, "Liste des actes",
+        LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
+        titleListeActeDMA = BorderFactory.createTitledBorder(LoweredBevelBorderListeActeDMA, "Liste des actes",
                 TitledBorder.LEFT, TitledBorder.TOP
         );
-        
+
         panelListeDMA.setBorder(titleListeActeDMA);
 
         tableauDMA = new JTable();
@@ -728,17 +734,16 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
         tActeDMA.setOpaque(true);
 
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
- LoweredBevelBorderDetailDMA = BorderFactory.createLoweredBevelBorder();
-        titleDetailDMA = BorderFactory.createTitledBorder(LoweredBevelBorderDetailDMA , "Détails de cet acte",
+        LoweredBevelBorderDetailDMA = BorderFactory.createLoweredBevelBorder();
+        titleDetailDMA = BorderFactory.createTitledBorder(LoweredBevelBorderDetailDMA, "Détails de cet acte",
                 TitledBorder.LEFT, TitledBorder.TOP
         );
-       
+
         panelDetailDMA.setBorder(titleDetailDMA);
 
 //Nature des Résultats
 // Prescription
-
-  presDMA = new JScrollPane();
+        presDMA = new JScrollPane();
         fichePrescriptionDMA = new JPanel(new BorderLayout());
         prescriptionDMA = new JTextArea();
         prescriptionDMA.setMargin(new Insets(6, 6, 6, 6));
@@ -753,8 +758,7 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
         fichePrescriptionDMA.setBorder(titlePrescDMA);
 
         // Lettre de sortie 
-        
-         scrollSortieDMA = new JScrollPane();
+        scrollSortieDMA = new JScrollPane();
         panelSortieDMA = new JPanel(new BorderLayout());
         lettreSortieDMA = new JTextArea();
         lettreSortieDMA.setMargin(new Insets(6, 6, 6, 6));
@@ -784,7 +788,6 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
 
         panelMessage.add(messageArrive);
         panelDroit.add(panelMessage, BorderLayout.CENTER);
-        
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -909,9 +912,15 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
         patientAdresseDMA.add(adresseInfoDMA);
         gbc.gridy = 5;
         panelTestDMA.add(patientAdresseDMA, gbc);
+        
+        panelNouveauDMA.add(nouveauDMA);
+        panelNouveauDMA.add(buttonNouveauDMA);
+        
+        
+        
 
         panelInfoPatientDMA.add(panelTestDMA);
-        panelDMA.add(tDMA);
+        //panelDMA.add(tDMA);
         panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
         panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
         panelListeDMA.add(tActeDMA);
@@ -971,6 +980,7 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
         panelRechercheDroit.setOpaque(false);
         sortieHaut.setOpaque(false);
         prescriptionHaut.setOpaque(false);
+        nouveauDMA.setOpaque(false);
 
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
         panelHaut.setBackground(LIGHT_BLUE);
@@ -991,22 +1001,21 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
         panelSaveOp.setBackground(LIGHT_BLUE);
         panelSaveRes.setBackground(LIGHT_BLUE);
         panelSaveSortie.setBackground(LIGHT_BLUE);
-        
 
         panelListe.setBackground(GREY);
         panelDetail.setBackground(GREY);
         panelDM.setBackground(GREY);
         panelInfoPatient.setBackground(GREY);
+        panelNouveauDMA.setBackground(GREY);
 
         panelInfoPatientDMA.setBackground(GREY);
         panelListeDMA.setBackground(GREY);
         panelDetailDMA.setBackground(GREY);
-         panelDMA.setBackground(GREY);
+        panelDMA.setBackground(GREY);
 
         t.setBackground(LIGHT_BLUE); //Tour des tableaux (scrollbar)
         tDMA.setBackground(LIGHT_BLUE);
         ScrollDM.setBackground(LIGHT_BLUE);
-        
 
         tActeDM.setBackground(LIGHT_BLUE);
         tActeDMA.setBackground(LIGHT_BLUE);
@@ -2083,14 +2092,6 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
         this.plusImFinDMA = plusImFinDMA;
     }
 
-    public JButton getAjoutDMA() {
-        return ajoutActeDMA;
-    }
-
-    public void setAjoutDMA(JButton ajoutActeDMA) {
-        this.ajoutActeDMA = ajoutActeDMA;
-    }
-
     public JPanel getPanelSave() {
         return panelSaveObs;
     }
@@ -2626,6 +2627,21 @@ LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
     public void setPlusImFinPat(Image plusImFinPat) {
         this.plusImFinPat = plusImFinPat;
     }
-    
+
+    public JPanel getPanelNouveauDMA() {
+        return panelNouveauDMA;
+    }
+
+    public void setPanelNouveauDMA(JPanel panelNouveauDMA) {
+        this.panelNouveauDMA = panelNouveauDMA;
+    }
+
+    public JButton getButtonNouveauDMA() {
+        return buttonNouveauDMA;
+    }
+
+    public void setButtonNouveauDMA(JButton buttonNouveauDMA) {
+        this.buttonNouveauDMA = buttonNouveauDMA;
+    }
 
 }

@@ -12,6 +12,10 @@ package Test;
  */
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,6 +26,7 @@ import library.interfaces.ClientHL7;
 import library.interfaces.MessageInterface;
 import library.interfaces.Patient;
 import library.interfaces.PatientLocation;
+import java.sql.ResultSet;
 
 /**
  *
@@ -35,10 +40,17 @@ public class FrameClient extends javax.swing.JFrame {
     private String card = "cardAdmettre";
     private int nbr;
     private final SimpleDateFormat formateur = new SimpleDateFormat("dd/MM/yyyy");
+    private Connection con;
 
     /** Creates new form FrameClient */
-    public FrameClient() {
+    public FrameClient() throws SQLException {
         initComponents();
+        
+        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+        String user = "DEV";
+        String password = "SIH-mmlh2022";
+
+        this.con = DriverManager.getConnection(url, user, password);                
     }
 
     /** This method is called from within the constructor to
@@ -71,6 +83,10 @@ public class FrameClient extends javax.swing.JFrame {
         comboBoxSexe = new javax.swing.JComboBox();
         comboBoxClass = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        jLabel8 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         panelAction = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButtonConnexion = new javax.swing.JButton();
@@ -146,20 +162,21 @@ public class FrameClient extends javax.swing.JFrame {
         labelFin5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
-        //setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelCard.setLayout(new java.awt.CardLayout());
 
-        panelMessage.setBackground(new java.awt.Color(204, 204, 255));
+        panelMessage.setBackground(new java.awt.Color(241, 244, 244));
         panelMessage.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(152, 208, 223));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton1.setBackground(new java.awt.Color(204, 204, 255));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Admettre");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,14 +189,14 @@ public class FrameClient extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(259, Short.MAX_VALUE)
+                .addContainerGap(247, Short.MAX_VALUE)
                 .add(jButton1)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton1)
                 .addContainerGap())
         );
@@ -213,7 +230,7 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelMessage.add(jLabel1, gridBagConstraints);
 
-        panelPatient.setBackground(new java.awt.Color(255, 255, 255));
+        panelPatient.setBackground(new java.awt.Color(152, 208, 223));
         panelPatient.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelPatient.setForeground(new java.awt.Color(255, 255, 255));
         panelPatient.setLayout(new java.awt.GridBagLayout());
@@ -335,6 +352,7 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel15, gridBagConstraints);
+        panelPatient.add(filler2, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -343,6 +361,23 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelMessage.add(panelPatient, gridBagConstraints);
+
+        jLabel8.setText("jLabel8");
+        panelMessage.add(jLabel8, new java.awt.GridBagConstraints());
+
+        org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 0, Short.MAX_VALUE)
+        );
+
+        panelMessage.add(jPanel3, new java.awt.GridBagConstraints());
+        panelMessage.add(filler3, new java.awt.GridBagConstraints());
 
         panelCard.add(panelMessage, "cardPat");
 
@@ -360,7 +395,7 @@ public class FrameClient extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(273, Short.MAX_VALUE)
+                .addContainerGap(280, Short.MAX_VALUE)
                 .add(jButtonConnexion)
                 .addContainerGap())
         );
@@ -976,8 +1011,8 @@ public class FrameClient extends javax.swing.JFrame {
         getContentPane().add(panelCard, gridBagConstraints);
 
         jLabel7.setBackground(new java.awt.Color(0, 204, 204));
-        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel7.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Accueil CHU");
 
@@ -994,7 +1029,7 @@ public class FrameClient extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 30, Short.MAX_VALUE)
+            .add(0, 28, Short.MAX_VALUE)
             .add(jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(jPanel6Layout.createSequentialGroup()
                     .add(0, 0, Short.MAX_VALUE)
@@ -1005,24 +1040,10 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         getContentPane().add(jPanel6, gridBagConstraints);
+        getContentPane().add(filler1, new java.awt.GridBagConstraints());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (this.champsPatOk()) {
-
-            this.creePatient();
-
-            this.setValPatient();
-
-            //changer de panel
-            java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
-            c.show(this.panelCard, "cardAction");
-            c = (CardLayout) this.panelSousAction.getLayout();
-            c.show(this.panelSousAction, card);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void comboBoxSexeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSexeActionPerformed
         int i = this.comboBoxSexe.getSelectedIndex();
@@ -1186,6 +1207,21 @@ public class FrameClient extends javax.swing.JFrame {
         c.show(this.panelCard, "cardConnexion");
 }//GEN-LAST:event_jButtonConnexionActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (this.champsPatOk()) {
+
+            this.creePatient();
+
+            this.setValPatient();
+
+            //changer de panel
+            java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
+            c.show(this.panelCard, "cardAction");
+            c = (CardLayout) this.panelSousAction.getLayout();
+            c.show(this.panelSousAction, card);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void fieldPrenomPatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldPrenomPatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldPrenomPatActionPerformed
@@ -1309,6 +1345,7 @@ public class FrameClient extends javax.swing.JFrame {
                 }
 
                 this.patient = new Patient(id, surname, classe);
+                
             }
         } catch (NumberFormatException e) {
             System.out.println("Erreur d'identification patient : " + e.getMessage());
@@ -1316,10 +1353,79 @@ public class FrameClient extends javax.swing.JFrame {
     }
 
     private void setValPatient() {
-        //Prénom de famille
-        this.patient.setFirstName(this.fieldPrenomPat.getText());
+        
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+
+        String requete = "SELECT adresse FROM patient "
+                + "WHERE IPP = '" + this.patient.getID() + "'";
+        
+        System.out.println(requete);
+        Statement stm = null;
+        
+        String adresse = "";
+        String numeroFiche = "";
+        
+        try {
+            stm = con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            rs = stm.executeQuery(requete);
+            while(rs.next()){
+                adresse = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String requete2 = "SELECT numeroFiche FROM fichesDM "
+                + "WHERE IPPatient = '" + this.patient.getID() + "'";
 
 
+        System.out.println(requete2);
+        Statement stm2 = null;
+        try {
+            stm2 = con.createStatement();
+        } catch (SQLException ex2) {
+            Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+        try {
+            rs2 = stm2.executeQuery(requete2);
+            while(rs2.next()){
+                numeroFiche = rs2.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            rs2.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            stm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            stm2.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Prénom
+        this.patient.setFirstName(this.fieldPrenomPat.getText() + "/" + adresse + "/" + numeroFiche);
+
+        System.out.println(this.patient.getFirstName());
+        
         //Date de naissance
         Date dateBirth = null;
         String s = this.fieldDateNaissance.getText();
@@ -1507,7 +1613,11 @@ public class FrameClient extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FrameClient().setVisible(true);
+                try {
+                    new FrameClient().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -1529,6 +1639,9 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JTextField fieldPrenomPat;
     private javax.swing.JTextField fieldPrenomRole;
     private javax.swing.JTextField fieldTelPat1;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonConnexion;
@@ -1553,6 +1666,7 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelBatiment;
     private javax.swing.JLabel jLabelBatiment1;
@@ -1572,6 +1686,7 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelType1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

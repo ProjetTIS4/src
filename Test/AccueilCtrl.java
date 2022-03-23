@@ -29,6 +29,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
@@ -290,11 +292,40 @@ public class AccueilCtrl implements Runnable {
 
                         a.getPanelMessage().setVisible(false);
                         if (p.getPoste().equals(Poste.SecretaireAdministrative)) {
+                            int nbDMA = 0;
+                            try {
+                                String req = "SELECT COUNT(*) FROM DMA WHERE IPPatient='" + s + "'";
+                                System.out.println(req);
+                                ResultSet res = stm.executeQuery(req);
+                                if (res.next()) {
+                                    nbDMA = res.getInt("COUNT(*)");
+                                }
+
+                                if (nbDMA == 0) {
+                                    a.getPanelDMA().add(a.getPanelNouveauDMA());
+                                    a.getPanelNouveauDMA().setVisible(true);
+                                    a.gettDMA().setVisible(false);
+                                    a.getPanelListeDMA().setVisible(false);
+                                    a.getPanelDetailDMA().setVisible(false);
+                                    System.out.println(nbDMA);
+
+                                } else {
+                                    a.getPanelDMA().add(a.gettDMA());
+                                    a.getPanelNouveauDMA().setVisible(false);
+                                     a.gettDMA().setVisible(true);
+                                     a.getPanelListeDMA().setVisible(true);
+                                    a.getPanelDetailDMA().setVisible(true);
+                                }
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
 
                             a.getTp().add("DMA", a.getDMA());
                         } else if (p.getPoste().equals(Poste.SecretaireMedicale)) {
                             a.getTp().add("DM", a.getDM());
                         } else if (p.getPoste().equals(Poste.PHService)) {
+                            a.getPanelDMA().add(a.gettDMA());
+
                             try {
                                 String req = "SELECT IPP FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "' AND IPP='" + s + "'";
                                 System.out.println(req);
@@ -415,7 +446,7 @@ public class AccueilCtrl implements Runnable {
                         try {
 
 // REMPLIR LE TABLEAU DES DMAs    
-                            String query = "SELECT COUNT(*) FROM DM WHERE IPPatient=" + s;
+                            String query = "SELECT COUNT(*) FROM DMA WHERE IPPatient=" + s;
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
 
@@ -562,7 +593,7 @@ public class AccueilCtrl implements Runnable {
                         try {
                             String query = "";
                             // REMPLIR LE TABLEAU DES ACTES DMs   
-                            if (p.getPoste().equals(Poste.SecretaireMedicale)) {
+                            if (p.getPoste().equals(Poste.SecretaireAdministrative)) {
                                 query = "SELECT COUNT(*) FROM fichesDMA WHERE IPPatient=" + s + " AND numeroSejour=" + sej;
                             } else {
                                 query = "SELECT COUNT(*) FROM fichesDMA WHERE IPPatient=" + s + " AND numeroSejour=" + sej + " AND PHreferent= '" + p.getLogin() + "'";
@@ -582,7 +613,7 @@ public class AccueilCtrl implements Runnable {
                             dataActeDMA = new String[taille][3];
 
                             String columnsActeDMA[] = {"Numéro de fiche", "PH référent", "lettre sortie"};
-                            if (p.getPoste().equals(Poste.SecretaireMedicale)) {
+                            if (p.getPoste().equals(Poste.SecretaireAdministrative)) {
                                 query = "SELECT * FROM fichesDMA WHERE IPPatient=" + s + " AND numeroSejour=" + sej;
                             } else {
                                 query = "SELECT * FROM fichesDMA WHERE IPPatient=" + s + " AND numeroSejour=" + sej + " AND PHreferent= '" + p.getLogin() + "'";
@@ -633,8 +664,12 @@ public class AccueilCtrl implements Runnable {
             a.getButtonRadio().addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent me) {
 
-                    // FrameClient client = new FrameClient();
-                    new FrameClient().setVisible(true);
+                    try {
+                        // FrameClient client = new FrameClient();
+                        new FrameClient().setVisible(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AccueilCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             });
@@ -648,7 +683,7 @@ public class AccueilCtrl implements Runnable {
             });
 
             //Listener sur le bouton "+" pour ajouter un DMA
-            a.getAjoutDMA().addMouseListener(new MouseAdapter() {
+            a.getButtonNouveauDMA().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
@@ -838,7 +873,7 @@ public class AccueilCtrl implements Runnable {
                             String dataDMAF[][] = new String[taille][2];
                             //           String columns[] = {"observations", "prescription", "operations", "resultats"};
 
-                            query = "SELECT * FROM fichesDMA WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
                             res = stm.executeQuery(query);
                             int i = 0;
                             while (res.next()) {
@@ -1366,22 +1401,24 @@ public class AccueilCtrl implements Runnable {
         return b;
     }
 
- 
     public String affichageLoc(String s) {
-        if (s.equals("")){
-        return s;}
-        else{
-        String l = s.substring(1, 5);
+        if (s.equals("")) {
+            return s;
+        } else {
+            String l = s.substring(1, 5);
 
-        return (l);}
+            return (l);
+        }
     }
 
     public String affichageSpe(String s) {
-         if (s.equals("")){
-        return s;}
-        else{ String l = s.substring(5);
+        if (s.equals("")) {
+            return s;
+        } else {
+            String l = s.substring(5);
 
-        return (l);}
+            return (l);
+        }
     }
 
 }
