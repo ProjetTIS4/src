@@ -20,7 +20,13 @@ public class Date {
     private int minutes;
     private LocalDate dateDuJour;
 
-
+public Date (LocalDate date){
+        this.jour=date.getDayOfMonth();
+        this.mois=date.getMonthValue();
+        this.annee=date.getYear();
+        this.heure=0;
+        this.minutes=0;
+    }
     public Date(int jour, int mois, int annee, int heure, int minutes) {
         this.jour = jour;
         this.mois = mois;
@@ -52,7 +58,7 @@ public Date (String date) {
     }
 
     public String toString() {
-        return jour + "/" + mois + "/" + annee + " a " + heure + ":" + minutes;
+        return jour + "/" + mois + "/" + annee;
     }
 
     public int getAnnee() {
@@ -91,6 +97,8 @@ public Date (String date) {
         annee = "" + annee.charAt(2) + annee.charAt(3);
         return annee;
     }
+    
+    
 
 
     public String moisToString() {

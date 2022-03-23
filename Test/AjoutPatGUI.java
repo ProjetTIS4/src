@@ -106,7 +106,7 @@ public class AjoutPatGUI {
     private ImageIcon validerImgIcon;
 
     public AjoutPatGUI() {
-        ajouterPat = new JFrame("Ajouter un acte");
+        ajouterPat = new JFrame("Créer un nouveau patient");
         ajouterPat.setMinimumSize(new Dimension(500, 700));
 //        ajouterActe.setPreferredSize(new Dimension(300, 100));
 
