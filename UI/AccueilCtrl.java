@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Test;
+package UI;
 
+import HL7.FrameClient;
+import HL7.ServeurTest;
 import NF.DM;
 import NF.DMA;
 import NF.Date;
@@ -861,67 +863,7 @@ public class AccueilCtrl implements Runnable {
 
                         }
 
-                        try {
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
-                            Statement stm = con.createStatement();
-                            ResultSet res = stm.executeQuery(query);
-
-                            int taille = 0;
-
-                            if (res.next()) {
-                                taille = res.getInt("COUNT(*)");
-                            }
-
-                            String dataDMF[][] = new String[taille][5];
-                            //           String columns[] = {"observations", "prescription", "operations", "resultats"};
-
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
-                            res = stm.executeQuery(query);
-                            int i = 0;
-                            while (res.next()) {
-
-                                String obs2 = res.getString("observations");
-                                String pres2 = res.getString("prescriptions");
-                                String op2 = res.getString("operations");
-                                String resul2 = res.getString("resultats");
-                                String lettre = res.getString("lettreDeSortie");
-
-                                dataDMF[i][0] = obs2;
-                                dataDMF[i][1] = pres2;
-                                dataDMF[i][2] = op2;
-                                dataDMF[i][3] = resul2;
-                                dataDMF[i][4] = lettre;
-
-                                i++;
-                            }
-
-                            String observations = dataDMF[0][0];
-                            String prescriptions = dataDMF[0][1];
-                            String operations = dataDMF[0][2];
-                            String resultats = dataDMF[0][3];
-                            String lettre = dataDMF[0][4];
-
-                            fiche = new FichesDM(patient, observations, prescriptions, operations, resultats, lettre);
-                            fiche.setObservations(dataDMF[0][0]);
-                            fiche.setPrescriptions(dataDMF[0][1]);
-                            fiche.setOperations(dataDMF[0][2]);
-                            fiche.setResultats(dataDMF[0][3]);
-                            fiche.setLettreDeSortie(dataDMF[0][4]);
-
-                            a.getObservations2().setText(fiche.getObservations());
-                            a.getPrescription2().setText(fiche.getPrescriptions());
-                            a.getOperationInfo().setText(fiche.getOperations());
-                            a.getResultatInfo().setText(fiche.getResultats());
-                            a.getLettreSortie().setText(fiche.getLettreDeSortie());
-
-                            a.getPanelDetail().add(a.getDetailsDM());
-                            a.getDetailsDM().setVisible(true);
-                            a.getAccueil().validate();
-                            a.getAccueil().repaint();
-
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
+                       MAJDetailDM();
 
                     }
                 }
@@ -1355,7 +1297,7 @@ public class AccueilCtrl implements Runnable {
 
                     try {
                         // FrameClient client = new FrameClient();
-                        new ServeurTest().setVisible(true);
+                        new ServeurTest(acc).setVisible(true);
                     } catch (SQLException ex) {
                         Logger.getLogger(AccueilCtrl.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -1730,5 +1672,73 @@ public class AccueilCtrl implements Runnable {
         }
 
     }
+    
+    
+    public void MAJDetailDM(){ try {
+        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+            String user = "DEV";
+            String password = "SIH-mmlh2022";
+
+            Connection con = DriverManager.getConnection(url, user, password);
+                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
+                            Statement stm = con.createStatement();
+                            ResultSet res = stm.executeQuery(query);
+
+                            int taille = 0;
+
+                            if (res.next()) {
+                                taille = res.getInt("COUNT(*)");
+                            }
+
+                            String dataDMF[][] = new String[taille][5];
+                            //           String columns[] = {"observations", "prescription", "operations", "resultats"};
+
+                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
+                            res = stm.executeQuery(query);
+                            int i = 0;
+                            while (res.next()) {
+
+                                String obs2 = res.getString("observations");
+                                String pres2 = res.getString("prescriptions");
+                                String op2 = res.getString("operations");
+                                String resul2 = res.getString("resultats");
+                                String lettre = res.getString("lettreDeSortie");
+
+                                dataDMF[i][0] = obs2;
+                                dataDMF[i][1] = pres2;
+                                dataDMF[i][2] = op2;
+                                dataDMF[i][3] = resul2;
+                                dataDMF[i][4] = lettre;
+
+                                i++;
+                            }
+
+                            String observations = dataDMF[0][0];
+                            String prescriptions = dataDMF[0][1];
+                            String operations = dataDMF[0][2];
+                            String resultats = dataDMF[0][3];
+                            String lettre = dataDMF[0][4];
+
+                            fiche = new FichesDM(patient, observations, prescriptions, operations, resultats, lettre);
+                            fiche.setObservations(dataDMF[0][0]);
+                            fiche.setPrescriptions(dataDMF[0][1]);
+                            fiche.setOperations(dataDMF[0][2]);
+                            fiche.setResultats(dataDMF[0][3]);
+                            fiche.setLettreDeSortie(dataDMF[0][4]);
+
+                            a.getObservations2().setText(fiche.getObservations());
+                            a.getPrescription2().setText(fiche.getPrescriptions());
+                            a.getOperationInfo().setText(fiche.getOperations());
+                            a.getResultatInfo().setText(fiche.getResultats());
+                            a.getLettreSortie().setText(fiche.getLettreDeSortie());
+
+                            a.getPanelDetail().add(a.getDetailsDM());
+                            a.getDetailsDM().setVisible(true);
+                            a.getAccueil().validate();
+                            a.getAccueil().repaint();
+
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }}
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Test;
+package HL7;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import library.interfaces.Patient;
 import library.interfaces.ServeurHL7;
 import library.structure.groupe.messages.Message;
+import UI.AccueilCtrl;
 
 /**
  *
@@ -27,15 +28,16 @@ public class ServeurTest extends javax.swing.JFrame {
     private Message message;
     private ServeurHL7 c;
     private Connection con;
+    private static AccueilCtrl ac;
 
     /**
      * Creates new form ServeurTest
      */
-    public ServeurTest() throws SQLException {
+    public ServeurTest(AccueilCtrl ac) throws SQLException {
         initComponents();
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
+this.ac =ac;
         String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
         String user = "DEV";
         String password = "SIH-mmlh2022";
@@ -289,6 +291,8 @@ public class ServeurTest extends javax.swing.JFrame {
                 + " AND numeroFiche = '" + numFiche + "'";
 
         System.out.println(requete);
+        
+        ac.MAJDetailDM();
         Statement stm = null;
         
         try {
@@ -345,7 +349,7 @@ public class ServeurTest extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new ServeurTest().setVisible(true);
+                    new ServeurTest(ac).setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -1,4 +1,4 @@
-package Test;
+package HL7;
 
 /*
  * To change this template, choose Tools | Templates
@@ -1611,10 +1611,10 @@ public class FrameClient extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+   /* public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
+           public void run() {
                 try {
                     new FrameClient().setVisible(true);
                 } catch (SQLException ex) {
@@ -1622,7 +1622,7 @@ public class FrameClient extends javax.swing.JFrame {
                 }
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox comboBoxADT;

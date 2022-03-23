@@ -1,9 +1,8 @@
-package Test;
+package UI;
 
 import NF.Date;
 import NF.Patient;
 import NF.Patient.Sexe;
-import Test.AccueilGUI;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

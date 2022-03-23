@@ -11,16 +11,22 @@ import javax.swing.SwingUtilities;
  *
  * @author lenal
  */
-public class TestConnexion {
+public class Test {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-      SwingUtilities.invokeLater( new Connexion());
-       //  SwingUtilities.invokeLater( new FichePatient(0,0));
-       //SwingUtilities.invokeLater( new FichePatientSecretaire("189059940100742",0));
-         
-    }
-    
+     SwingUtilities.invokeLater( new ConnexionCtrl());
+      //SwingUtilities.invokeLater( new AccueilPH());
+    //SwingUtilities.invokeLater( new ActeCtrl());
+      
+
+
+  }
+
 }
+
+
+   
+ 

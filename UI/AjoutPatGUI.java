@@ -1,4 +1,4 @@
-package Test;
+package UI;
 
 
 import java.awt.BorderLayout;
