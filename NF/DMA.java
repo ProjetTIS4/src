@@ -33,6 +33,7 @@ public class DMA {
         this.debut= new Date(date);
 
         this.fin = null;
+        this.compteur=compteur;
         compteur(compteur);
     }
     public DMA(Patient patient) {
@@ -126,7 +127,7 @@ public class DMA {
     }
 
     public static int getCompteur() {
-        return compteur;
+        return DMA.compteur;
     }
 
     public static void setCompteur(int compteur) {

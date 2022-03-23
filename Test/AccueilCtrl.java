@@ -130,8 +130,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                   // query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
-                     query = "SELECT COUNT(DISTINCT IPP) FROM patient";
+                    // query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient";
                     a.getAjoutPat().setVisible(false);
                     break;
 
@@ -172,8 +172,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                //    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
-  query = "SELECT * FROM patient ";
+                    //    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+                    query = "SELECT * FROM patient ";
                     break;
 
             }
@@ -453,9 +453,6 @@ public class AccueilCtrl implements Runnable {
                             ex.printStackTrace();
                         }
 
-
-
-
                         ////Pour le DMA////  
                         MAJTblDMA();
 
@@ -697,7 +694,7 @@ public class AccueilCtrl implements Runnable {
                         stm.executeUpdate(requete);
 
                         requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + " ' WHERE IPP='" + patient.getIPP() + "' ";
-
+                        System.out.println("Requête Update new DMA : " + requete);
                         // requete = "UPDATE patient WHERE IPP='" + patient.getIPP() +"' SET compteurDMA ='" + dma.getCompteur() + "' ";
                         System.out.println(requete);
                         stm.executeUpdate(requete);
@@ -710,7 +707,6 @@ public class AccueilCtrl implements Runnable {
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
-
 
                 }
             });
@@ -730,7 +726,7 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
                     int compt = 0;
                     try {
-                        String requete = "SELECT compteurDMA FROM patient";
+                        String requete = "SELECT compteurDMA FROM patient WHERE IPP='"+s+"'";
                         System.out.println(requete);
                         Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(requete);
@@ -750,7 +746,7 @@ public class AccueilCtrl implements Runnable {
                                 + ""
                                 + "')";
 
-                        System.out.println(requete);
+                        System.out.println("Requête nouveau DMA : " + requete);
                         stm = con.createStatement();
                         stm.executeUpdate(requete);
 
@@ -762,17 +758,16 @@ public class AccueilCtrl implements Runnable {
                                 + "','"
                                 + dma.getDebut().toString()
                                 + "','"
-                                + ""
                                 + "')";
 
-                        System.out.println(requete);
+                        System.out.println("Requête nouveau DM : " + requete);
                         stm = con.createStatement();
                         stm.executeUpdate(requete);
 
-                        requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + " ' WHERE IPP='" + patient.getIPP() + "' ";
+                        requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + "' WHERE IPP='" + patient.getIPP() + "' ";
                         //                      requete = "UPDATE patient WHERE IPP='" + patient.getIPP() +"' SET compteurDMA ='" + dma.getCompteur() + "' ";
                         stm.executeUpdate(requete);
-
+                        System.out.println("Requête Update : " + requete);
                         a.getPanelNouveauDMA().setVisible(false);
                         a.gettDMA().setVisible(true);
                         MAJTblDMA();
@@ -1349,17 +1344,16 @@ public class AccueilCtrl implements Runnable {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
-
                     SwingUtilities.invokeLater(new ModifierLocalisationCtrl(s, a, acc, loc));
 
                 }
             });
-            
+
             a.getButtonResultatRadio().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
-                 try {
+                    try {
                         // FrameClient client = new FrameClient();
                         new ServeurTest().setVisible(true);
                     } catch (SQLException ex) {
@@ -1368,7 +1362,6 @@ public class AccueilCtrl implements Runnable {
                 }
 
             });
-            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1638,7 +1631,7 @@ public class AccueilCtrl implements Runnable {
 
                 case SecretaireMedicale:
                     //query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
-                     query = "SELECT COUNT(DISTINCT IPP) FROM patient";
+                    query = "SELECT COUNT(DISTINCT IPP) FROM patient";
                     a.getAjoutPat().setVisible(false);
                     break;
 
@@ -1679,8 +1672,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                  //  query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
-  query = "SELECT * FROM patient ";
+                    //  query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+                    query = "SELECT * FROM patient ";
                     break;
 
             }
