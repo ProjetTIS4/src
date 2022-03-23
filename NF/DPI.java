@@ -39,7 +39,7 @@ public class DPI {
     
     public void addDMA(Personnel ph, Date date){
 
-            dma.add(new DMA(patient, date));
+            dma.add(new DMA(patient));
         }
         
     

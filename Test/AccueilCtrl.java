@@ -5,6 +5,8 @@
  */
 package Test;
 
+import NF.DM;
+import NF.DMA;
 import NF.Date;
 import NF.FichesDM;
 import NF.Hash;
@@ -63,9 +65,7 @@ public class AccueilCtrl implements Runnable {
     private String dataDMA[][];
 
     private LocalDate dateDuJour;
-
     private String loc;
-
 
     private DefaultTableModel model;
 
@@ -124,6 +124,8 @@ public class AccueilCtrl implements Runnable {
                 case SecretaireAdministrative:
                     query = "SELECT COUNT(DISTINCT IPP) FROM patient";
                     a.getAjoutPat().setVisible(true);
+                    a.getButtonNouveauDMA().setVisible(true);
+                    a.getAjoutActeDMA().setVisible(true);
                     break;
 
                 case SecretaireMedicale:
@@ -207,7 +209,6 @@ public class AccueilCtrl implements Runnable {
                     dataTable[i][5] = affichageLoc(localisation);
                     dataTable[i][6] = affichageSpe(localisation);
                     data[i][8] = medGen;
-                    
 
                     i++;
                 }
@@ -268,7 +269,6 @@ public class AccueilCtrl implements Runnable {
                         a.getTableauActeDm().setModel(new DefaultTableModel());
                         a.getAjoutActe().setVisible(false);
                         a.getTableauActeDMA().setModel(new DefaultTableModel());
-                        a.getAjoutActeDMA().setVisible(false);
 
                         int ligne = a.getTableau().getSelectedRow();
                         Object cellule = a.getTableau().getValueAt(ligne, 0);
@@ -451,56 +451,8 @@ public class AccueilCtrl implements Runnable {
                             ex.printStackTrace();
                         }
 
-                        ////Pour le DMA////                       
-                        try {
-
-// REMPLIR LE TABLEAU DES DMAs    
-                            String query = "SELECT COUNT(*) FROM DMA WHERE IPPatient=" + s;
-                            Statement stm = con.createStatement();
-                            ResultSet res = stm.executeQuery(query);
-
-                            taille = 0;
-
-                            if (res.next()) {
-                                taille = res.getInt("COUNT(*)");
-                            }
-
-                            dataDMA = new String[taille][3];
-                            String columnsDMA[] = {"Date d'entrée", "Date de sortie", "Numéro de séjour"};
-
-                            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
-
-                            res = stm.executeQuery(query);
-                            int i = 0;
-                            while (res.next()) {
-
-                                String dated = res.getString("dateEntree");
-                                String sejour = res.getString("numeroSejour");
-                                String datef = res.getString("dateSortie");
-
-                                dataDMA[i][0] = dated;
-                                dataDMA[i][1] = datef;
-                                dataDMA[i][2] = sejour;
-
-                                i++;
-                            }
-
-                            a.getPrescriptionDMA().setText("");
-                            a.getLettreSortieDMA().setText("");
-                            a.getDetailsDMA().setVisible(false);
-
-                            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
-
-                                @Override
-                                public boolean isCellEditable(int row, int column) {
-                                    //Only the third column
-                                    return false;
-                                }
-                            });
-
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
+                        ////Pour le DMA////  
+                        MAJTblDMA();
                     }
                 }
             }
@@ -596,7 +548,6 @@ public class AccueilCtrl implements Runnable {
                     if (me.getClickCount() == 1) {
                         int ligne = a.getTableauDMA().getSelectedRow();
                         System.out.println(ligne);
-                        a.getAjoutActeDMA().setVisible(true);
                         sej = dataDMA[ligne][2];
 
                         try {
@@ -694,33 +645,66 @@ public class AccueilCtrl implements Runnable {
             //Listener sur le bouton "+" pour ajouter un DMA
 //            ajout DMA
             a.getButtonNouveauDMA().addMouseListener(new MouseAdapter() {
-            
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                try {
-                    
-                    String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
-                    String user = "DEV";
-                    String password = "SIH-mmlh2022";
 
-                    Connection con = DriverManager.getConnection(url, user, password);
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    int compt = 0;
+                    try {
+                        String requete = "SELECT compteurDMA FROM patient";
+                        System.out.println(requete);
+                        Statement stm = con.createStatement();
+                        ResultSet res = stm.executeQuery(requete);
 
-                    String requete = "INSERT INTO fichesDM (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
-                            + ipp
-                            + "','"
-                            + s
-                            + "','"
-                            + dateDuJour
-                            + "','')";
+                        if (res.next()) {
+                            compt = res.getInt("compteurDMA");
 
-                    System.out.println(requete);
-                    Statement stm = con.createStatement();
-                    stm.executeUpdate(requete);
+                        }
+                        DMA dma = new DMA(patient, compt);
+                        requete = "INSERT INTO DMA (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
+                                + patient.getIPP()
+                                + "','"
+                                + dma.getNumeroSejour()
+                                + "','"
+                                + dma.getDebut().toString()
+                                + "','"
+                                + dma.getFin()
+                                + "')";
 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+                        System.out.println(requete);
+                        stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        DM dm = new DM(patient, dma.getDebut());
+                        requete = "INSERT INTO DM (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
+                                + patient.getIPP()
+                                + "','"
+                                + dma.getNumeroSejour()
+                                + "','"
+                                + dma.getDebut().toString()
+                                + "','"
+                                + dma.getFin()
+                                + "')";
+
+                        System.out.println(requete);
+                        stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + " ' WHERE IPP='" + patient.getIPP() + "' ";
+
+                        // requete = "UPDATE patient WHERE IPP='" + patient.getIPP() +"' SET compteurDMA ='" + dma.getCompteur() + "' ";
+                        System.out.println(requete);
+                        stm.executeUpdate(requete);
+
+                        a.getPanelNouveauDMA().setVisible(false);
+                        a.gettDMA().setVisible(true);
+                        MAJTblDMA();
+                        a.getAccueil().validate();
+                        a.getAccueil().repaint();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
                 }
-            }
             });
 
             //Listener sur le bouton "+" pour ajouter un Patient
@@ -729,6 +713,66 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
 
                     SwingUtilities.invokeLater(new AjoutPatCtrl(a));
+                }
+            });
+
+            //Listener sur le bouton "+" pour ajouter un DMA
+            a.getAjoutActeDMA().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    int compt = 0;
+                    try {
+                        String requete = "SELECT compteurDMA FROM patient";
+                        System.out.println(requete);
+                        Statement stm = con.createStatement();
+                        ResultSet res = stm.executeQuery(requete);
+
+                        if (res.next()) {
+                            compt = res.getInt("compteurDMA");
+
+                        }
+                        DMA dma = new DMA(patient, compt);
+                        requete = "INSERT INTO DMA (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
+                                + patient.getIPP()
+                                + "','"
+                                + dma.getNumeroSejour()
+                                + "','"
+                                + dma.getDebut().toString()
+                                + "','"
+                                + ""
+                                + "')";
+
+                        System.out.println(requete);
+                        stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        DM dm = new DM(patient, dma.getDebut());
+                        requete = "INSERT INTO DM (IPPatient, numeroSejour, dateEntree, dateSortie) VALUES ('"
+                                + patient.getIPP()
+                                + "','"
+                                + dma.getNumeroSejour()
+                                + "','"
+                                + dma.getDebut().toString()
+                                + "','"
+                                + ""
+                                + "')";
+
+                        System.out.println(requete);
+                        stm = con.createStatement();
+                        stm.executeUpdate(requete);
+
+                        requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + " ' WHERE IPP='" + patient.getIPP() + "' ";
+                        //                      requete = "UPDATE patient WHERE IPP='" + patient.getIPP() +"' SET compteurDMA ='" + dma.getCompteur() + "' ";
+                        stm.executeUpdate(requete);
+
+                        a.getPanelNouveauDMA().setVisible(false);
+                        a.gettDMA().setVisible(true);
+                        MAJTblDMA();
+                        a.getAccueil().validate();
+                        a.getAccueil().repaint();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             });
 
@@ -1292,10 +1336,10 @@ public class AccueilCtrl implements Runnable {
                     }
                 }
             });
-             a.getModifLoc().addMouseListener(new MouseAdapter() {
+            a.getModifLoc().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent me) {
-                    
+
                     SwingUtilities.invokeLater(new ModifierLocalisationCtrl(s, a, loc));
                 }
             });
@@ -1303,8 +1347,6 @@ public class AccueilCtrl implements Runnable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        
 
     }
 //    
@@ -1412,6 +1454,64 @@ public class AccueilCtrl implements Runnable {
                 }
             }
 
+        }
+    }
+
+    public void MAJTblDMA() {
+        try {
+
+// REMPLIR LE TABLEAU DES DMAs    
+            String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+            String user = "DEV";
+            String password = "SIH-mmlh2022";
+
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            String query = "SELECT COUNT(*) FROM DMA WHERE IPPatient=" + s;
+            Statement stm = con.createStatement();
+            ResultSet res = stm.executeQuery(query);
+
+            taille = 0;
+
+            if (res.next()) {
+                taille = res.getInt("COUNT(*)");
+            }
+
+            dataDMA = new String[taille][3];
+            String columnsDMA[] = {"Date d'entrée", "Date de sortie", "Numéro de séjour"};
+
+            query = "SELECT * FROM DMA WHERE IPPatient=" + s;
+
+            res = stm.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
+
+                String dated = res.getString("dateEntree");
+                String sejour = res.getString("numeroSejour");
+                String datef = res.getString("dateSortie");
+
+                dataDMA[i][0] = dated;
+                dataDMA[i][1] = datef;
+                dataDMA[i][2] = sejour;
+
+                i++;
+            }
+
+            a.getPrescriptionDMA().setText("");
+            a.getLettreSortieDMA().setText("");
+            a.getDetailsDMA().setVisible(false);
+
+            a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
+
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    //Only the third column
+                    return false;
+                }
+            });
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 

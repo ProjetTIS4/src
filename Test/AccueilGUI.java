@@ -743,7 +743,7 @@ public class AccueilGUI {
         ajoutActeDMA = new JButton(plusDMA);
         ajoutActeDMA.setContentAreaFilled(false);
         ajoutActeDMA.setBorderPainted(true);
-        ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel acte");
+        ajoutActeDMA.setToolTipText("Cliquez ici pour ajouter un nouvel DMA");
         ajoutActeDMA.setVisible(false);
 
         tableauActeDMA = new JTable();
@@ -943,7 +943,7 @@ public class AccueilGUI {
         panelInfoPatientDMA.add(panelTestDMA);
         //panelDMA.add(tDMA);
         panelPlusDMA.add(ajoutActeDMA, BorderLayout.EAST);
-        panelListeDMA.add(panelPlusDMA, BorderLayout.NORTH);
+        panelDMA.add(panelPlusDMA, BorderLayout.NORTH);
         panelListeDMA.add(tActeDMA);
 
         panelDMAHaut.add(panelInfoPatientDMA);
