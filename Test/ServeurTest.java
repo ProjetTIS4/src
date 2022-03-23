@@ -5,6 +5,13 @@
  */
 package Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import library.interfaces.Patient;
 import library.interfaces.ServeurHL7;
 import library.structure.groupe.messages.Message;
@@ -16,13 +23,22 @@ import library.structure.groupe.messages.Message;
 public class ServeurTest extends javax.swing.JFrame {
 
     private Patient patient;
+    private Patient numFiche;
     private Message message;
     private ServeurHL7 c;
+    private Connection con;
+
     /**
      * Creates new form ServeurTest
      */
-    public ServeurTest() {
+    public ServeurTest() throws SQLException {
         initComponents();
+
+        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+        String user = "DEV";
+        String password = "SIH-mmlh2022";
+
+        this.con = DriverManager.getConnection(url, user, password);
     }
 
     /**
@@ -47,8 +63,6 @@ public class ServeurTest extends javax.swing.JFrame {
         ID = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         nom = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        prénom = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,20 +105,20 @@ public class ServeurTest extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(115, 115, 115)
+                .addGap(121, 121, 121)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(fieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(152, 208, 224));
@@ -121,9 +135,6 @@ public class ServeurTest extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Nom");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Prénom");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -131,20 +142,14 @@ public class ServeurTest extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(6, 6, 6)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ID, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                            .addComponent(nom)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(prénom, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel2)
+                        .addGap(6, 6, 6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(ID, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                    .addComponent(nom))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -158,10 +163,6 @@ public class ServeurTest extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prénom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -169,31 +170,30 @@ public class ServeurTest extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(41, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Titre, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(Titre, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
+                        .addGap(125, 125, 125)
                         .addComponent(Co)
-                        .addGap(43, 43, 43)
+                        .addGap(53, 53, 53)
                         .addComponent(deco)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(22, 22, 22)
                 .addComponent(Titre)
-                .addGap(31, 31, 31)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -201,7 +201,7 @@ public class ServeurTest extends javax.swing.JFrame {
                     .addComponent(deco))
                 .addGap(20, 20, 20)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -247,21 +247,59 @@ public class ServeurTest extends javax.swing.JFrame {
         c.connection(port);
         c.ecoute();
         String messageHL7 = c.protocole();
-        
+
         System.out.println("Reçu :" + messageHL7);
+
+        final String SEPARATEUR = "-";
+
+        System.out.println("Done");
         this.patient = c.getPatient();
         this.message = c.getMessage();
-        this.ID.setText(Integer.toString(c.getPatient().getID()));
+
+        
         this.nom.setText(c.getPatient().getFamillyName());
-        this.prénom.setText(c.getPatient().getFirstName());
-       
+        
+ 
+        String mots[] = c.getPatient().getFirstName().split("//");
+ 
+        String IP = mots[0];
+        String CR = mots[1];
+        
+        String num[] = c.getPatient().getFirstName().split("/");
+        
+        System.out.println("num[] : " + num);
+        
+        String IPP = num[0];
+        String numFiche = num[1];
+        
+        System.out.println(" numFiche : " + numFiche + " IPP : " + IPP + " CR : " + CR);
+        System.out.println(c.getPatient().getFirstName());
+        
+        this.ID.setText(IPP);
+        
+        CR = CR.replaceAll("!", "\n");
+        CR = CR.replaceAll("'", "''");
 
+        String requete = "UPDATE fichesDM "
+                + "SET resultats ='" + CR + "'"
+                + " WHERE IPPatient = '" + IPP + "'"
+                + " AND numeroFiche = '" + numFiche + "'";
+
+        System.out.println(requete);
+        Statement stm = null;
         
-        
+        try {
+            stm = con.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            stm.executeUpdate(requete);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
 
-        
-        
     }//GEN-LAST:event_CoActionPerformed
 
     private void decoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decoActionPerformed
@@ -298,11 +336,16 @@ public class ServeurTest extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ServeurTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ServeurTest().setVisible(true);
+                try {
+                    new ServeurTest().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServeurTest.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -316,12 +359,10 @@ public class ServeurTest extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField nom;
-    private javax.swing.JTextField prénom;
     // End of variables declaration//GEN-END:variables
 }

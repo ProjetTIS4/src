@@ -32,6 +32,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
@@ -60,7 +61,11 @@ public class AccueilCtrl implements Runnable {
     private int ligne;
     private String dataDM[][];
     private String dataDMA[][];
+
     private LocalDate dateDuJour;
+
+    private String loc;
+
 
     private DefaultTableModel model;
 
@@ -202,6 +207,7 @@ public class AccueilCtrl implements Runnable {
                     dataTable[i][5] = affichageLoc(localisation);
                     dataTable[i][6] = affichageSpe(localisation);
                     data[i][8] = medGen;
+                    
 
                     i++;
                 }
@@ -291,6 +297,7 @@ public class AccueilCtrl implements Runnable {
                             patient.setMedGen(data[k][8]);
 
                         }
+                        loc = data[k][7];
 
                         a.getPanelMessage().setVisible(false);
                         if (p.getPoste().equals(Poste.SecretaireAdministrative)) {
@@ -685,7 +692,7 @@ public class AccueilCtrl implements Runnable {
             });
 
             //Listener sur le bouton "+" pour ajouter un DMA
-            ajout DMA
+//            ajout DMA
             a.getButtonNouveauDMA().addMouseListener(new MouseAdapter() {
             
             @Override
@@ -1285,10 +1292,19 @@ public class AccueilCtrl implements Runnable {
                     }
                 }
             });
+             a.getModifLoc().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+                    
+                    SwingUtilities.invokeLater(new ModifierLocalisationCtrl(s, a, loc));
+                }
+            });
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        
+        
 
     }
 //    
