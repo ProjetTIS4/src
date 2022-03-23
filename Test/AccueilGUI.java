@@ -96,6 +96,8 @@ public class AccueilGUI {
     private JPanel panelSortie;
     private JPanel sortieHaut;
     private JPanel prescriptionHaut;
+    private JPanel modificationLoc;
+    private JPanel modificationLoc2;
     //
 //Côté DMA   
     private JPanel panelDMAHaut; //Création du Panel du haut de la partie DMA
@@ -171,6 +173,10 @@ public class AccueilGUI {
     private JLabel dateInfo;
     private JLabel adresse;
     private JLabel adresseInfo;
+      private Image imgLoc;
+    private Image newimgLoc;
+     private ImageIcon iconeLoc;
+    private JButton modifLoc;
 
     // Tableau des  DM
     private Border LoweredBevelBorderDM;
@@ -330,6 +336,8 @@ public class AccueilGUI {
 
         ///
         panelInfoPatient = new JPanel(); //Création du Panel contenant les informations du Patient
+        modificationLoc = new JPanel(new BorderLayout());
+        modificationLoc2 = new JPanel(new BorderLayout());
         //
         patientNom = new JPanel();
         pPrenom = new JPanel();
@@ -439,6 +447,15 @@ public class AccueilGUI {
                 TitledBorder.LEFT, TitledBorder.TOP
         );
 
+         iconeLoc = new ImageIcon("src/Annexes/modification.png");
+
+        imgLoc = iconeLoc.getImage(); // Convertissemnt pour pouvoir redimensionner
+        newimgLoc = imgLoc.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
+        iconeLoc = new ImageIcon(newimgLoc); // On reconvertit
+        modifLoc=new JButton(iconeLoc);     
+        
+        
+        
         panelInfoPatient.setBorder(titleInfo);
 
         iconeH = new ImageIcon("src/Annexes/homme.png");
@@ -797,7 +814,7 @@ public class AccueilGUI {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(00, 0, 0, 0);
+        gbc.insets = new Insets(0, 0, 0, 0);
         gbc.anchor = GridBagConstraints.CENTER;
 
         panelTest.add(image2, gbc);
@@ -839,6 +856,10 @@ public class AccueilGUI {
 
         panelPlus.add(ajoutActe, BorderLayout.EAST);
         panelListe.add(panelPlus, BorderLayout.NORTH);
+        
+        modificationLoc.add(modifLoc, BorderLayout.NORTH);
+       // modificationLoc2.add(modificationLoc, BorderLayout.WEST);
+        panelInfoPatient.add(modificationLoc,BorderLayout.WEST);
 
         panelDMHaut.add(panelInfoPatient);
         panelDMHaut.add(panelDM);
@@ -2642,6 +2663,14 @@ public class AccueilGUI {
 
     public void setButtonNouveauDMA(JButton buttonNouveauDMA) {
         this.buttonNouveauDMA = buttonNouveauDMA;
+    }
+
+    public JButton getModifLoc() {
+        return modifLoc;
+    }
+
+    public void setModifLoc(JButton modifLoc) {
+        this.modifLoc = modifLoc;
     }
 
 }
