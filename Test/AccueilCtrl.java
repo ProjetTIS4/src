@@ -444,6 +444,7 @@ public class AccueilCtrl implements Runnable {
 
                             a.getPrescriptionDMA().setText("");
                             a.getLettreSortieDMA().setText("");
+                            a.getDetailsDMA().setVisible(false);
 
                             a.getTableauDMA().setModel(new DefaultTableModel(dataDMA, columnsDMA) {
 
