@@ -137,8 +137,8 @@ panelpatient= new JPanel(new FlowLayout());
         nomM2 = new JTextField("    Nom marital    ");
         nomM2.setForeground(Color.gray);
 
-        prenom = new JLabel("PrÃ©nom : ");
-        prenom2 = new JTextField("   PrÃ©nom    ");
+        prenom = new JLabel("Prénom : ");
+        prenom2 = new JTextField("   Prénom    ");
         prenom2.setForeground(Color.gray);
         
         adresse = new JLabel("Adresse : ");
@@ -169,8 +169,8 @@ panelpatient= new JPanel(new FlowLayout());
         loc2 = new JTextField("    Localisation     ");
         loc2.setForeground(Color.gray);
         
-        medGen = new JLabel("Medecin gÃ©nÃ©raliste : ");
-        medGen2 = new JTextField("    MÃ©decin gÃ©nÃ©raliste    ");
+        medGen = new JLabel("Médecin généraliste : ");
+        medGen2 = new JTextField("    Médecin généraliste    ");
         medGen2.setForeground(Color.gray);
 
         validerImgIcon = new ImageIcon("src/Annexes/valider.png");

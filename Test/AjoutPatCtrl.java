@@ -1,6 +1,8 @@
 package Test;
 
-
+import NF.Date;
+import NF.Patient;
+import NF.Patient.Sexe;
 import Test.AccueilGUI;
 import java.awt.Color;
 import java.awt.event.KeyAdapter;
@@ -13,45 +15,52 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author manon
  */
-
-    public class AjoutPatCtrl implements Runnable {
+public class AjoutPatCtrl implements Runnable {
 
     AjoutPatGUI a;
-    String ipp;
+    //String ipp;
     AccueilGUI ac;
     int compt;
+    Patient p;
 
     public AjoutPatCtrl(AccueilGUI ac) {
-        this.ipp="test";
-//        compt++;
-//        if (compt < 10) {
-//            this.ipp = ac.getDate().toString() + "0000" + compt; //Compteur au format YYMMxxxxx (xxxx est un compteur)
-//        }
-//        if (10 <= compt && compt < 100) {
-//            this.ipp = ac.getDate().toString() + "000" + compt; //Compteur au format YYMMxxxxx (xxxx est un compteur)
-//        }
-//        if (100 <= compt && compt < 1000) {
-//            this.ipp = ac.getDate().toString() + "00" + compt; //Compteur au format YYMMxxxxx (xxxx est un compteur)
-//        }
-//        if (1000 <= compt && compt < 10000) {
-//            this.ipp = ac.getDate().toString() + "0" + compt; //Compteur au format YYMMxxxxx (xxxx est un compteur)
-//        }
-//        if (compt >= 10000) {
-//            this.ipp = ac.getDate().toString() + compt; //Compteur au format YYMMxxxxx (xxxx est un compteur)
-//        }
+        
+         try {
+
+                    String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+                    String user = "DEV";
+                    String password = "SIH-mmlh2022";
+
+                    Connection con = DriverManager.getConnection(url, user, password);
+
+                  String requete = "SELECT compteurIPP FROM compteur";
+                    System.out.println(requete);
+                    Statement stm = con.createStatement();
+                    ResultSet res = stm.executeQuery(requete);
+
+                    if (res.next()) {
+                        this.compt=res.getInt("compteurIPP");
+   
+                    }
+                    
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
         a = new AjoutPatGUI();
-//        this.ipp = ac.getDate().toString() + compt;
+
         this.ac = ac;
     }
 
@@ -79,78 +88,46 @@ import javax.swing.UIManager;
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getNom2().setText("");
+                a.getNom2().setForeground(Color.black);
             }
         });
-        
-        a.getNom2().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getNom2().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
-        
+
+
         //////////////////////// Panel Nom ////////////////////////
         a.getNomM2().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getNomM2().setText("");
+                a.getNomM2().setForeground(Color.black);
             }
         });
-        
-        a.getNomM2().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getNomM2().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
-        
+
+
         //////////////////////// Panel Prenom ////////////////////////
         a.getPrenom2().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getPrenom2().setText("");
+                a.getPrenom2().setForeground(Color.black);
             }
         });
-        
-        a.getPrenom().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getPrenom().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
+
         //////////////////////// Panel Adresse ////////////////////////
         a.getAdresse2().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getAdresse2().setText("");
+                a.getAdresse2().setForeground(Color.black);
             }
         });
-        
-        a.getAdresse2().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getAdresse2().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
+
+
         //////////////////////// Panel Date de naissance ////////////////////////
-        
         a.getJourN().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getJourN().setText("");
-                a.getJourN().setSize(28,28);
+                a.getJourN().setSize(28, 28);
                 a.getJourN().setForeground(Color.black);
             }
         });
@@ -170,7 +147,7 @@ import javax.swing.UIManager;
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getMoisN().setText("");
-                 a.getMoisN().setSize(28,28);
+                a.getMoisN().setSize(28, 28);
                 a.getMoisN().setForeground(Color.black);
             }
         });
@@ -189,7 +166,7 @@ import javax.swing.UIManager;
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getAnneeN().setText("");
-                 a.getAnneeN().setSize(50,28);
+                a.getAnneeN().setSize(50, 28);
                 a.getAnneeN().setForeground(Color.black);
             }
         });
@@ -203,57 +180,34 @@ import javax.swing.UIManager;
                 }
             }
         });
- //////////////////////// Panel Adresse de naissance ////////////////////////
- a.getAdresseN2().addMouseListener(new MouseAdapter() {
+        //////////////////////// Panel Adresse de naissance ////////////////////////
+        a.getAdresseN2().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getAdresseN2().setText("");
+                a.getAdresseN2().setForeground(Color.black);
             }
         });
- 
- a.getAdresseN2().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getAdresseN2().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
-  //////////////////////// Panel Localisation ////////////////////////
-  a.getLoc2().addMouseListener(new MouseAdapter() {
+
+        //////////////////////// Panel Localisation ////////////////////////
+        a.getLoc2().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getLoc2().setText("");
+                a.getLoc2().setForeground(Color.black);
             }
         });
-  
-  a.getLoc2().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getLoc2().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
-   //////////////////////// Panel medecin generaliste ////////////////////////
-   a.getMedGen2().addMouseListener(new MouseAdapter() {
+
+        //////////////////////// Panel medecin generaliste ////////////////////////
+        a.getMedGen2().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 a.getMedGen2().setText("");
+                a.getMedGen2().setForeground(Color.black);
             }
         });
-   
-   a.getMedGen2().addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (a.getMedGen2().getText().length() >= 2) // limit to 3 characters
-                {
-                    e.consume();
-                }
-            }
-        });
+
+
         //////////////////////// Bouton valider  ////////////////////////
         a.getValider().addMouseListener(new MouseAdapter() {
             @Override
@@ -266,16 +220,20 @@ import javax.swing.UIManager;
 
                     Connection con = DriverManager.getConnection(url, user, password);
 
+                    Date d = new Date(a.getJourN().getText() + "/" + a.getMoisN().getText() + "/" + a.getAnneeN().getText());
+                    p= new Patient(a.getNom2().getText(),  a.getPrenom2().getText(), Sexe.FEMME, a.getAdresse2().getText(), d, compt);
+                    p.setSexe( a.getChoix().getSelectedItem().toString());
+                    
                     String requete = "INSERT INTO patient (ipp, nom_marital, nom_usuel, prenom, DDN, LDN, sexe, adresse, localisation, medGen) VALUES ('"
-                            + ipp
+                            + p.getIPP()
                             + "','"
                             + a.getNomM2().getText()
                             + "','"
-                            + a.getNom2().getText() 
+                            + a.getNom2().getText()
                             + "','"
                             + a.getPrenom2().getText()
                             + "','"
-                            + a.getAnneeN().getText() + a.getMoisN().getText() + a.getJourN().getText()
+                            + a.getJourN().getText() + "/" + a.getMoisN().getText() + "/" + a.getAnneeN().getText()
                             + "','"
                             + a.getAdresseN2().getText()
                             + "','"
@@ -287,14 +245,16 @@ import javax.swing.UIManager;
                             + "','"
                             + a.getMedGen2().getText()
                             + "')";
-                    
-                     System.out.println(requete);
+
+                    System.out.println(requete);
                     Statement stm = con.createStatement();
                     stm.executeUpdate(requete);
-                    
-                    a.getAjouterPat().dispose();
 
-                    String query = "SELECT COUNT(*) FROM patient WHERE IPPatient=" + ipp;
+                    a.getAjouterPat().dispose();
+                     requete = "UPDATE compteur SET compteurIPP ='"+p.getCompteur() +" '";
+                   stm.executeUpdate(requete);
+
+                    String query = "SELECT COUNT(*) FROM patient";
                     ResultSet res = stm.executeQuery(query);
 
                     int taille = 0;
@@ -303,26 +263,49 @@ import javax.swing.UIManager;
                         taille = res.getInt("COUNT(*)");
                     }
 
-                    String dataDMA[][] = new String[taille][8];
-                    String columns[] = {"Date d'entrÃ©e", "Date de sortie"};
-//            res2.close();
+                    String dataPatient[][] = new String[taille][7];
+                    String columnsPatient[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre", "Service de localisation"};
 
-                    query = "SELECT * FROM fichesDMA WHERE IPPatient=" + ipp;
+//            res2.close();
+                    query = "SELECT * FROM patient ";
                     res = stm.executeQuery(query);
                     int i = 0;
                     while (res.next()) {
+                        String IPP = res.getString("IPP");
+                        String nom_marital = res.getString("nom_marital");
+                        String nom_usuel = res.getString("nom_usuel");
+                        String prenom = res.getString("prenom");
+                        String dateNaissance = res.getString("DDN");
+                        String sexe = res.getString("sexe");
+                        String adresse = res.getString("adresse");
+                        String localisation = res.getString("localisation");
+                        String medGen = res.getString("medGen");
 
-                        String dated = res.getString("dateEntree");
+                        if (contains(dataPatient, IPP, 0)) {
 
-                        String datef = res.getString("dateSortie");;
+                            continue;
+                        } else {
 
-                        dataDMA[i][0] = dated;
-                        dataDMA[i][1]= datef;
+                            dataPatient[i][0] = IPP;
+                            dataPatient[i][1] = nom_marital;
+                            dataPatient[i][2] = prenom;
+                            dataPatient[i][3] = dateNaissance;
+                            dataPatient[i][4] = sexe;
+                            dataPatient[i][5] = affichageLoc(localisation);
+                            dataPatient[i][6] = affichageSpe(localisation);
 
-                        i++;
+                            i++;
+                        }
                     }
-                    
-                    
+                      ac.getTableau().setModel(new DefaultTableModel(dataPatient, columnsPatient) {
+
+                                @Override
+                                public boolean isCellEditable(int row, int column) {
+                                    //Only the third column
+                                    return false;
+                                }
+                            });
+
                     ac.getAccueil().repaint();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -332,5 +315,40 @@ import javax.swing.UIManager;
         });
 
     }
-}
+    
+        public boolean contains(String[][] t, String s, int j) {
+        boolean b = false;
+        int size = t.length;
+        String ipp = s;
 
+        System.out.println(s);
+        for (int i = 0; i < size; i++) {
+            String a = t[i][j];
+            b = ipp.equals(a);
+            if (b) {
+                return b;
+            }
+            System.out.println(a);
+            System.out.println(b);
+        }
+
+        return b;
+    }
+
+    public String affichageLoc(String s) {
+        if (s.equals("")){
+        return s;}
+        else{
+        String l = s.substring(1, 5);
+
+        return (l);}
+    }
+
+    public String affichageSpe(String s) {
+         if (s.equals("")){
+        return s;}
+        else{ String l = s.substring(5);
+
+        return (l);}
+    }
+}

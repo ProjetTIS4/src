@@ -37,7 +37,19 @@ public class Date {
         this.heure = 0;
         this.minutes = 0;
     }
+public Date (String date) {
 
+        int jour = Integer.parseInt("" + date.charAt(0) + date.charAt(1));
+        int mois = Integer.parseInt("" + date.charAt(3) + date.charAt(4));
+        int annee = Integer.parseInt("" + date.charAt(6) + date.charAt(7) + date.charAt(8) + date.charAt(9));
+
+      this.jour=jour;
+      this.mois=mois;
+      this.annee=annee;
+       this.heure = 0;
+        this.minutes = 0;
+        
+    }
 
     public String toString() {
         return jour + "/" + mois + "/" + annee + " a " + heure + ":" + minutes;
@@ -108,4 +120,6 @@ public class Date {
         //ici on a forcement annee ===d.annee mois == d.mois  jour ==d.jour et heure == d.heure
         return minutes - d.minutes;
     }
+    
+        
 }

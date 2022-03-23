@@ -186,7 +186,7 @@ public class ActeCtrl implements Runnable {
                             + h.expect(a.getResultat2().getText())
                             + "','')";
 
-                    //   StringEscapeUtils.escapeJava
+                   
                     System.out.println(requete);
                     Statement stm = con.createStatement();
                     stm.executeUpdate(requete);

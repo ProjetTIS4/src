@@ -1366,16 +1366,22 @@ public class AccueilCtrl implements Runnable {
         return b;
     }
 
+ 
     public String affichageLoc(String s) {
+        if (s.equals("")){
+        return s;}
+        else{
         String l = s.substring(1, 5);
 
-        return (l);
+        return (l);}
     }
 
     public String affichageSpe(String s) {
-        String l = s.substring(5);
+         if (s.equals("")){
+        return s;}
+        else{ String l = s.substring(5);
 
-        return (l);
+        return (l);}
     }
 
 }

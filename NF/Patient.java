@@ -50,7 +50,9 @@ public class Patient extends Personne {
         this.annee = "" + entreeService.getYear();
         this.annee = "" + annee.charAt(2) + annee.charAt(3);
 
+        this.compteur=compteur;
         compteur(compteur);
+        
     }
 
     public Patient(String nom, String prenom, Sexe sexe, String adresse, Date dateNaissance, String medGen) {
@@ -180,6 +182,14 @@ public class Patient extends Personne {
 
     public void setIPP(String IPP) {
         this.IPP = IPP;
+    }
+
+    public static int getCompteur() {
+        return Patient.compteur;
+    }
+
+    public static void setCompteur(int compteur) {
+        Patient.compteur = compteur;
     }
 
 }
