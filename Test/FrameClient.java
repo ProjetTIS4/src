@@ -46,6 +46,8 @@ public class FrameClient extends javax.swing.JFrame {
     public FrameClient() throws SQLException {
         initComponents();
         
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
         String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
         String user = "DEV";
         String password = "SIH-mmlh2022";
@@ -164,7 +166,7 @@ public class FrameClient extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 255));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 

@@ -127,7 +127,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                   // query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                     query = "SELECT COUNT(DISTINCT IPP) FROM patient";
                     a.getAjoutPat().setVisible(false);
                     break;
 
@@ -168,8 +169,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
-
+                //    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+  query = "SELECT * FROM patient ";
                     break;
 
             }
@@ -1305,6 +1306,21 @@ public class AccueilCtrl implements Runnable {
                     SwingUtilities.invokeLater(new ModifierLocalisationCtrl(s, a, acc, loc));
                 }
             });
+            
+            a.getButtonResultatRadio().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent me) {
+
+                 try {
+                        // FrameClient client = new FrameClient();
+                        new ServeurTest().setVisible(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AccueilCtrl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            });
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -1515,7 +1531,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                    query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                    //query = "SELECT COUNT(DISTINCT IPP) FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient";
+                     query = "SELECT COUNT(DISTINCT IPP) FROM patient";
                     a.getAjoutPat().setVisible(false);
                     break;
 
@@ -1556,8 +1573,8 @@ public class AccueilCtrl implements Runnable {
                     break;
 
                 case SecretaireMedicale:
-                    query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
-
+                  //  query = "SELECT * FROM patient JOIN (SELECT * FROM fichesDM JOIN PHS ON(PHreferent=ID) WHERE PHS.service=\"" + p.getNomService() + "\" )AS J  ON IPP=IPPatient ";
+  query = "SELECT * FROM patient ";
                     break;
 
             }

@@ -96,6 +96,7 @@ public class AccueilGUI {
     private JPanel panelSortie;
     private JPanel sortieHaut;
     private JPanel prescriptionHaut;
+    private JPanel resultatHaut;
     private JPanel modificationLoc;
     private JPanel modificationLoc2;
     //
@@ -173,9 +174,9 @@ public class AccueilGUI {
     private JLabel dateInfo;
     private JLabel adresse;
     private JLabel adresseInfo;
-      private Image imgLoc;
+    private Image imgLoc;
     private Image newimgLoc;
-     private ImageIcon iconeLoc;
+    private ImageIcon iconeLoc;
     private JButton modifLoc;
 
     // Tableau des  DM
@@ -226,6 +227,8 @@ public class AccueilGUI {
     private Image saveImRes;
     private Image saveImFinRes;
     private JButton buttonSaveRes;
+    private JLabel resultatRadio;
+    private JButton buttonResultatRadio;
     private JTextArea resultatInfo;
     private Border LoweredBevelBorderRes;
     private TitledBorder titleRes;
@@ -312,6 +315,7 @@ public class AccueilGUI {
         panelMessage = new JPanel(new GridBagLayout());
         panelRecherche = new JPanel(new BorderLayout());
         panelRechercheDroit = new JPanel(new GridLayout(1, 2));
+        resultatHaut = new JPanel(new FlowLayout());
 
 //// Panel gauche
         barreRecherche = new JTextField("Tapez votre recherche ici...");
@@ -447,15 +451,13 @@ public class AccueilGUI {
                 TitledBorder.LEFT, TitledBorder.TOP
         );
 
-         iconeLoc = new ImageIcon("src/Annexes/modification.png");
+        iconeLoc = new ImageIcon("src/Annexes/modification.png");
 
         imgLoc = iconeLoc.getImage(); // Convertissemnt pour pouvoir redimensionner
         newimgLoc = imgLoc.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
         iconeLoc = new ImageIcon(newimgLoc); // On reconvertit
-        modifLoc=new JButton(iconeLoc);     
-        
-        
-        
+        modifLoc = new JButton(iconeLoc);
+
         panelInfoPatient.setBorder(titleInfo);
 
         iconeH = new ImageIcon("src/Annexes/homme.png");
@@ -617,6 +619,8 @@ public class AccueilGUI {
         ficheOperation.setBorder(titleOp);
 
 //Résultats
+        resultatRadio = new JLabel("Cliquez ici pour recevoir les résultats d'une radiographie : ");
+        buttonResultatRadio = new JButton("+");
         saveRes = new ImageIcon("src/Annexes/save.png");
         saveImRes = saveRes.getImage(); // Convertissemnt pour pouvoir redimensionner
         saveImFinRes = saveImRes.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH); // On choisit la taille de l'image
@@ -812,8 +816,6 @@ public class AccueilGUI {
         gbc.anchor = GridBagConstraints.CENTER;
         panelMessage.add(messageArrive, gbc); //A revoir le gbc n'est peut-être plus nécessaire. 
 
-
-        
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 0, 0);
@@ -858,11 +860,9 @@ public class AccueilGUI {
 
         panelPlus.add(ajoutActe, BorderLayout.EAST);
         panelListe.add(panelPlus, BorderLayout.NORTH);
-        
-      
+
         //modificationLoc2.add(modificationLoc, BorderLayout.WEST);
         //panelInfoPatient.add(modificationLoc2,BorderLayout.WEST);
-
         panelDMHaut.add(panelInfoPatient);
         panelDMHaut.add(panelDM);
         panelDMHaut.setPreferredSize(new Dimension(200, 300));
@@ -888,6 +888,9 @@ public class AccueilGUI {
         detailsDM.add("Opérations", ficheOperation);
 
         panelSaveRes.add(buttonSaveRes, BorderLayout.EAST);
+        resultatHaut.add(resultatRadio);
+        resultatHaut.add(buttonResultatRadio);
+        ficheResultat.add(resultatHaut, BorderLayout.NORTH);
         ficheResultat.add(result, BorderLayout.CENTER);
         ficheResultat.add(panelSaveRes, BorderLayout.SOUTH);
         detailsDM.add("Résultats", ficheResultat);
@@ -935,12 +938,9 @@ public class AccueilGUI {
         patientAdresseDMA.add(adresseInfoDMA);
         gbc.gridy = 5;
         panelTestDMA.add(patientAdresseDMA, gbc);
-        
+
         panelNouveauDMA.add(nouveauDMA);
         panelNouveauDMA.add(buttonNouveauDMA);
-        
-        
-        
 
         panelInfoPatientDMA.add(panelTestDMA);
         //panelDMA.add(tDMA);
@@ -1003,6 +1003,7 @@ public class AccueilGUI {
         panelRechercheDroit.setOpaque(false);
         sortieHaut.setOpaque(false);
         prescriptionHaut.setOpaque(false);
+        resultatHaut.setOpaque(false);
         nouveauDMA.setOpaque(false);
 
         ///////////////////// On ajoute la couleur aux éléments ///////////////////// 
@@ -2673,6 +2674,14 @@ public class AccueilGUI {
 
     public void setModifLoc(JButton modifLoc) {
         this.modifLoc = modifLoc;
+    }
+
+    public JButton getButtonResultatRadio() {
+        return buttonResultatRadio;
+    }
+
+    public void setButtonResultatRadio(JButton buttonResultatRadio) {
+        this.buttonResultatRadio = buttonResultatRadio;
     }
 
 }

@@ -33,6 +33,8 @@ public class ServeurTest extends javax.swing.JFrame {
      */
     public ServeurTest() throws SQLException {
         initComponents();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
         String user = "DEV";
@@ -91,6 +93,7 @@ public class ServeurTest extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(152, 208, 223));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(225, 248, 255)));
 
+        fieldPort.setText("4444");
         fieldPort.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldPortActionPerformed(evt);
