@@ -247,6 +247,7 @@ public class AccueilGUI {
     private Image newimgFDMA;
 
     //Informations du patient
+    private Border LoweredBevelBorderPatientDMA;
     private JLabel nomDMA;
     private JLabel nom2DMA;
     private JLabel prenomDMA;
@@ -259,12 +260,16 @@ public class AccueilGUI {
     private JLabel adresseInfoDMA;
 
     // Tableau des DMAs
+      private Border LoweredBevelBorderListeDMA;
+      private Border LoweredBevelBorderDetailDMA;
+    private TitledBorder titleListeActeDMA;
     private TitledBorder titleListeDMA;
     private JTable tableauDMA;
 
     // Tableau des Actes du DMA
-    private Border LoweredBevelBorderListeDMA;
-    private TitledBorder titleListeActeDMA;
+    private Border LoweredBevelBorderDMA;
+     private Border LoweredBevelBorderListeActeDMA;
+
     private JTable tableauActeDMA;
     private JButton ajoutActeDMA;
     private ImageIcon plusDMA;
@@ -411,6 +416,7 @@ public class AccueilGUI {
         choix.addItem("Prénom");
 
         ///////////////// Panel liste de patients /////////////////
+        
         titre3 = BorderFactory.createTitledBorder("Liste des patients");
         panPatients.setBorder(titre3);
         tableau = new JTable();
@@ -476,7 +482,7 @@ public class AccueilGUI {
 
         //Création du Panel contenant la liste des DMs du patient 
         LoweredBevelBorderDM = BorderFactory.createLoweredBevelBorder();
-        titleDM = BorderFactory.createTitledBorder(LoweredBevelBorderDM, "Dossier médicaux",
+        titleDM = BorderFactory.createTitledBorder(LoweredBevelBorderDM, "Dossier médical",
                 TitledBorder.LEFT, TitledBorder.TOP
         );
         panelDM.setBorder(titleDM);
@@ -638,8 +644,11 @@ public class AccueilGUI {
 
 ///////////////// Panel DMA /////////////////
         //Création du Panel contenant les informations du Patient
-        titleInfoDMA = BorderFactory.createTitledBorder("informations du patient");
-        panelInfoPatientDMA.setBorder(titleInfoDMA);
+        LoweredBevelBorderPatientDMA = BorderFactory.createLoweredBevelBorder();
+        titleInfoDMA = BorderFactory.createTitledBorder(LoweredBevelBorderPatientDMA, "informations du patient",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+               panelInfoPatientDMA.setBorder(titleInfoDMA);
 
 //Image
         iconeH = new ImageIcon("src/Annexes/homme.png");
@@ -682,10 +691,22 @@ public class AccueilGUI {
         adresseDMA.setFont(new Font("Cambria", Font.PLAIN, 18));
         adresseInfoDMA = new JLabel();
         patientAdresseDMA.setLayout(new BoxLayout(patientAdresseDMA, BoxLayout.X_AXIS));
+        
+         //Création du Panel contenant la liste des DMs du patient 
+        LoweredBevelBorderDMA = BorderFactory.createLoweredBevelBorder();
+        titleListeDMA = BorderFactory.createTitledBorder(LoweredBevelBorderDMA, "Dossier médical administratif",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+        panelDMA.setBorder(titleListeDMA);
+
 
 //Création du Panel contenant la liste des DMAs du patient 
-        titleListeDMA = BorderFactory.createTitledBorder("Liste des DMAs");
-        panelListeDMA.setBorder(titleListeDMA);
+LoweredBevelBorderListeActeDMA = BorderFactory.createLoweredBevelBorder();
+       titleListeActeDMA = BorderFactory.createTitledBorder(LoweredBevelBorderListeActeDMA, "Liste des actes",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+        
+        panelListeDMA.setBorder(titleListeActeDMA);
 
         tableauDMA = new JTable();
         tDMA = new JScrollPane(tableauDMA);
@@ -707,7 +728,11 @@ public class AccueilGUI {
         tActeDMA.setOpaque(true);
 
 //Création du Panel avec les détails du DMA sur lequel on a cliqué
-        titleDetailDMA = BorderFactory.createTitledBorder("Détails de ce DMA");
+ LoweredBevelBorderDetailDMA = BorderFactory.createLoweredBevelBorder();
+        titleDetailDMA = BorderFactory.createTitledBorder(LoweredBevelBorderDetailDMA , "Détails de cet acte",
+                TitledBorder.LEFT, TitledBorder.TOP
+        );
+       
         panelDetailDMA.setBorder(titleDetailDMA);
 
 //Nature des Résultats
