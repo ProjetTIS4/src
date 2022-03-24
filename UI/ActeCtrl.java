@@ -43,6 +43,12 @@ public class ActeCtrl implements Runnable {
         
     }
     
+    /**
+     * Affiche une fenêtre de création d'acte médical lorsque l'on clique sur le
+     * bouton "+" de la partie Liste des actes Rempli cette fiche d'acte avec
+     * les informations entrées : date, heure et validation grâce au bouton
+     * valider
+     */
     @Override
     public void run() {
         choix();

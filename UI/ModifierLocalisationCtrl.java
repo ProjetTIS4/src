@@ -34,6 +34,13 @@ public class ModifierLocalisationCtrl implements Runnable {
 
     private String loc;
 
+    /**
+     *
+     * @param ipp
+     * @param ac
+     * @param acc
+     * @param loc
+     */
     public ModifierLocalisationCtrl(String ipp, AccueilGUI ac, AccueilCtrl acc, String loc) {
         a = new ModifierLocalisationGUI();
         this.ipp = ipp;
@@ -43,6 +50,9 @@ public class ModifierLocalisationCtrl implements Runnable {
 
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
         try {

@@ -107,6 +107,9 @@ public class AjoutPatGUI {
     private JButton valider;
     private ImageIcon validerImgIcon;
 
+    /**
+     *
+     */
     public AjoutPatGUI() {
         ajouterPat = new JFrame("Créer un nouveau patient");
         Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
@@ -302,338 +305,674 @@ panelpatient= new JPanel(new FlowLayout());
         
     }
 
+    /**
+     *
+     * @return
+     */
     public JFrame getAjouterPat() {
         return ajouterPat;
     }
 
+    /**
+     *
+     * @param ajouterPat
+     */
     public void setAjouterPat(JFrame ajouterPat) {
         this.ajouterPat = ajouterPat;
     }
 
+    /**
+     *
+     * @return
+     */
     public TitledBorder getTitle2() {
         return title2;
     }
 
+    /**
+     *
+     * @param title2
+     */
     public void setTitle2(TitledBorder title2) {
         this.title2 = title2;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getGbc() {
         return gbc;
     }
 
+    /**
+     *
+     * @param gbc
+     */
     public void setGbc(GridBagConstraints gbc) {
         this.gbc = gbc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelNom() {
         return panelNom;
     }
 
+    /**
+     *
+     * @param panelNom
+     */
     public void setPanelNom(JPanel panelNom) {
         this.panelNom = panelNom;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelPrenom() {
         return panelPrenom;
     }
 
+    /**
+     *
+     * @param panelPrenom
+     */
     public void setPanelPrenom(JPanel panelPrenom) {
         this.panelPrenom = panelPrenom;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelSexe() {
         return panelSexe;
     }
 
+    /**
+     *
+     * @param panelSexe
+     */
     public void setPanelSexe(JPanel panelSexe) {
         this.panelSexe = panelSexe;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelAdresse() {
         return panelAdresse;
     }
 
+    /**
+     *
+     * @param panelAdresse
+     */
     public void setPanelAdresse(JPanel panelAdresse) {
         this.panelAdresse = panelAdresse;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelDateN() {
         return panelDateN;
     }
 
+    /**
+     *
+     * @param panelDateN
+     */
     public void setPanelDateN(JPanel panelDateN) {
         this.panelDateN = panelDateN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel2() {
         return jPanel2;
     }
 
+    /**
+     *
+     * @param jPanel2
+     */
     public void setjPanel2(JPanel jPanel2) {
         this.jPanel2 = jPanel2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel3() {
         return jPanel3;
     }
 
+    /**
+     *
+     * @param jPanel3
+     */
     public void setjPanel3(JPanel jPanel3) {
         this.jPanel3 = jPanel3;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel4() {
         return jPanel4;
     }
 
+    /**
+     *
+     * @param jPanel4
+     */
     public void setjPanel4(JPanel jPanel4) {
         this.jPanel4 = jPanel4;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPatient() {
         return patient;
     }
 
+    /**
+     *
+     * @param patient
+     */
     public void setPatient(JLabel patient) {
         this.patient = patient;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelpatient() {
         return panelpatient;
     }
 
+    /**
+     *
+     * @param panelpatient
+     */
     public void setPanelpatient(JPanel panelpatient) {
         this.panelpatient = panelpatient;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelNomM() {
         return panelNomM;
     }
 
+    /**
+     *
+     * @param panelNomM
+     */
     public void setPanelNomM(JPanel panelNomM) {
         this.panelNomM = panelNomM;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelAdresseN() {
         return panelAdresseN;
     }
 
+    /**
+     *
+     * @param panelAdresseN
+     */
     public void setPanelAdresseN(JPanel panelAdresseN) {
         this.panelAdresseN = panelAdresseN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelLoc() {
         return panelLoc;
     }
 
+    /**
+     *
+     * @param panelLoc
+     */
     public void setPanelLoc(JPanel panelLoc) {
         this.panelLoc = panelLoc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelMedGen() {
         return panelMedGen;
     }
 
+    /**
+     *
+     * @param panelMedGen
+     */
     public void setPanelMedGen(JPanel panelMedGen) {
         this.panelMedGen = panelMedGen;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(JLabel nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getNom2() {
         return nom2;
     }
 
+    /**
+     *
+     * @param nom2
+     */
     public void setNom2(JTextField nom2) {
         this.nom2 = nom2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getNomM() {
         return nomM;
     }
 
+    /**
+     *
+     * @param nomM
+     */
     public void setNomM(JLabel nomM) {
         this.nomM = nomM;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getNomM2() {
         return nomM2;
     }
 
+    /**
+     *
+     * @param nomM2
+     */
     public void setNomM2(JTextField nomM2) {
         this.nomM2 = nomM2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPrenom() {
         return prenom;
     }
 
+    /**
+     *
+     * @param prenom
+     */
     public void setPrenom(JLabel prenom) {
         this.prenom = prenom;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getPrenom2() {
         return prenom2;
     }
 
+    /**
+     *
+     * @param prenom2
+     */
     public void setPrenom2(JTextField prenom2) {
         this.prenom2 = prenom2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSexe() {
         return sexe;
     }
 
+    /**
+     *
+     * @param sexe
+     */
     public void setSexe(JLabel sexe) {
         this.sexe = sexe;
     }
 
+    /**
+     *
+     * @return
+     */
     public JComboBox getChoix() {
         return choix;
     }
 
+    /**
+     *
+     * @param choix
+     */
     public void setChoix(JComboBox choix) {
         this.choix = choix;
     }
 
+    /**
+     *
+     * @return
+     */
     public Vector<String> getS() {
         return S;
     }
 
+    /**
+     *
+     * @param S
+     */
     public void setS(Vector<String> S) {
         this.S = S;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getAdresse() {
         return adresse;
     }
 
+    /**
+     *
+     * @param adresse
+     */
     public void setAdresse(JLabel adresse) {
         this.adresse = adresse;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getAdresse2() {
         return adresse2;
     }
 
+    /**
+     *
+     * @param adresse2
+     */
     public void setAdresse2(JTextField adresse2) {
         this.adresse2 = adresse2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getDateN() {
         return dateN;
     }
 
+    /**
+     *
+     * @param dateN
+     */
     public void setDateN(JLabel dateN) {
         this.dateN = dateN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getJourN() {
         return jourN;
     }
 
+    /**
+     *
+     * @param jourN
+     */
     public void setJourN(JTextField jourN) {
         this.jourN = jourN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSlashN() {
         return slashN;
     }
 
+    /**
+     *
+     * @param slashN
+     */
     public void setSlashN(JLabel slashN) {
         this.slashN = slashN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getMoisN() {
         return moisN;
     }
 
+    /**
+     *
+     * @param moisN
+     */
     public void setMoisN(JTextField moisN) {
         this.moisN = moisN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSlashN2() {
         return slashN2;
     }
 
+    /**
+     *
+     * @param slashN2
+     */
     public void setSlashN2(JLabel slashN2) {
         this.slashN2 = slashN2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getAnneeN() {
         return anneeN;
     }
 
+    /**
+     *
+     * @param anneeN
+     */
     public void setAnneeN(JTextField anneeN) {
         this.anneeN = anneeN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getAdresseN() {
         return adresseN;
     }
 
+    /**
+     *
+     * @param adresseN
+     */
     public void setAdresseN(JLabel adresseN) {
         this.adresseN = adresseN;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getAdresseN2() {
         return adresseN2;
     }
 
+    /**
+     *
+     * @param adresseN2
+     */
     public void setAdresseN2(JTextField adresseN2) {
         this.adresseN2 = adresseN2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getLoc() {
         return loc;
     }
 
+    /**
+     *
+     * @param loc
+     */
     public void setLoc(JLabel loc) {
         this.loc = loc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getLoc2() {
         return loc2;
     }
 
+    /**
+     *
+     * @param loc2
+     */
     public void setLoc2(JTextField loc2) {
         this.loc2 = loc2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getMedGen() {
         return medGen;
     }
 
+    /**
+     *
+     * @param medGen
+     */
     public void setMedGen(JLabel medGen) {
         this.medGen = medGen;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getMedGen2() {
         return medGen2;
     }
 
+    /**
+     *
+     * @param medGen2
+     */
     public void setMedGen2(JTextField medGen2) {
         this.medGen2 = medGen2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getValider() {
         return valider;
     }
 
+    /**
+     *
+     * @param valider
+     */
     public void setValider(JButton valider) {
         this.valider = valider;
     }
 
+    /**
+     *
+     * @return
+     */
     public ImageIcon getValiderImgIcon() {
         return validerImgIcon;
     }
 
+    /**
+     *
+     * @param validerImgIcon
+     */
     public void setValiderImgIcon(ImageIcon validerImgIcon) {
         this.validerImgIcon = validerImgIcon;
     }

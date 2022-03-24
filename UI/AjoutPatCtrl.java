@@ -33,9 +33,13 @@ public class AjoutPatCtrl implements Runnable {
     int compt;
     Patient p;
 
+    /**
+     *
+     * @param ac
+     */
     public AjoutPatCtrl(AccueilGUI ac, AccueilCtrl acc) {
-
-        try {
+        
+         try {
 
             String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
             String user = "DEV";
@@ -63,6 +67,9 @@ public class AjoutPatCtrl implements Runnable {
         this.acc = acc;
     }
 
+    /**
+     *
+     */
     @Override
     public void run() {
 
@@ -321,7 +328,14 @@ public class AjoutPatCtrl implements Runnable {
         });
 
     }
-
+    
+    /**
+     *
+     * @param t
+     * @param s
+     * @param j
+     * @return
+     */
     public boolean contains(String[][] t, String s, int j) {
         boolean b = false;
         int size = t.length;
@@ -339,6 +353,11 @@ public class AjoutPatCtrl implements Runnable {
         return b;
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public String affichageLoc(String s) {
         if (s.equals("")) {
             return s;
@@ -349,6 +368,11 @@ public class AjoutPatCtrl implements Runnable {
         }
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public String affichageSpe(String s) {
         if (s.equals("")) {
             return s;

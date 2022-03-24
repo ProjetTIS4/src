@@ -38,12 +38,18 @@ public class ConnexionCtrl implements Runnable {
     ConnexionGUI c;
     String valeurBouton;
 
+    /**
+     *
+     */
     public ConnexionCtrl() {
         initLookAndFeel(); // Appelle la fonction qui choisit le Look and Feel Nimbus 
         c = new ConnexionGUI();
 
     }
 
+    /**
+     *
+     */
     public void run() {
 
         //////////////////////// Fenêtre ////////////////////////
@@ -160,6 +166,9 @@ public class ConnexionCtrl implements Runnable {
 
     }
 
+    /**
+     *
+     */
     public void connexion() {
 
         try {

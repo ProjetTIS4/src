@@ -67,6 +67,9 @@ public class ConnexionGUI {
 
     private GridBagConstraints gbc;
 
+    /**
+     *
+     */
     public ConnexionGUI() {
         connexion = new JFrame("Connexion");//Création de la fenêtre de connexion
         Image icone2 = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
@@ -209,210 +212,418 @@ public class ConnexionGUI {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public JFrame getConnexion() {
         return connexion;
     }
 
+    /**
+     *
+     * @param connexion
+     */
     public void setConnexion(JFrame connexion) {
         this.connexion = connexion;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel() {
         return jPanel;
     }
 
+    /**
+     *
+     * @param jPanel
+     */
     public void setjPanel(JPanel jPanel) {
         this.jPanel = jPanel;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel2() {
         return jPanel2;
     }
 
+    /**
+     *
+     * @param jPanel2
+     */
     public void setjPanel2(JPanel jPanel2) {
         this.jPanel2 = jPanel2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel3() {
         return jPanel3;
     }
 
+    /**
+     *
+     * @param jPanel3
+     */
     public void setjPanel3(JPanel jPanel3) {
         this.jPanel3 = jPanel3;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getTextUtilisateur() {
         return textUtilisateur;
     }
 
+    /**
+     *
+     * @param textUtilisateur
+     */
     public void setTextUtilisateur(JTextField textUtilisateur) {
         this.textUtilisateur = textUtilisateur;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPasswordField getjPasswordField1() {
         return jPasswordField1;
     }
 
+    /**
+     *
+     * @param jPasswordField1
+     */
     public void setjPasswordField1(JPasswordField jPasswordField1) {
         this.jPasswordField1 = jPasswordField1;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getErreur() {
         return erreur;
     }
 
+    /**
+     *
+     * @param erreur
+     */
     public void setErreur(JLabel erreur) {
         this.erreur = erreur;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getValider() {
         return Valider;
     }
 
+    /**
+     *
+     * @param Valider
+     */
     public void setValider(JButton Valider) {
         this.Valider = Valider;
     }
 
+    /**
+     *
+     * @return
+     */
     public ImageIcon getIcone() {
         return icone;
     }
 
+    /**
+     *
+     * @param icone
+     */
     public void setIcone(ImageIcon icone) {
         this.icone = icone;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getImage() {
         return image;
     }
 
+    /**
+     *
+     * @param image
+     */
     public void setImage(JLabel image) {
         this.image = image;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getConnexionTexte() {
         return connexionTexte;
     }
 
+    /**
+     *
+     * @param connexionTexte
+     */
     public void setConnexionTexte(JLabel connexionTexte) {
         this.connexionTexte = connexionTexte;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getUtilisateur() {
         return utilisateur;
     }
 
+    /**
+     *
+     * @param utilisateur
+     */
     public void setUtilisateur(JLabel utilisateur) {
         this.utilisateur = utilisateur;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getMdp() {
         return mdp;
     }
 
+    /**
+     *
+     * @param mdp
+     */
     public void setMdp(JLabel mdp) {
         this.mdp = mdp;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getGbc() {
         return gbc;
     }
 
+    /**
+     *
+     * @param gbc
+     */
     public void setGbc(GridBagConstraints gbc) {
         this.gbc = gbc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelBoutons() {
         return panelBoutons;
     }
 
+    /**
+     *
+     * @param panelBoutons
+     */
     public void setPanelBoutons(JPanel panelBoutons) {
         this.panelBoutons = panelBoutons;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getPHS() {
         return PHS;
     }
 
+    /**
+     *
+     * @param PHS
+     */
     public void setPHS(JButton PHS) {
         this.PHS = PHS;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getPHA() {
         return PHA;
     }
 
+    /**
+     *
+     * @param PHA
+     */
     public void setPHA(JButton PHA) {
         this.PHA = PHA;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getSA() {
         return SA;
     }
 
+    /**
+     *
+     * @param SA
+     */
     public void setSA(JButton SA) {
         this.SA = SA;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getSM() {
         return SM;
     }
 
+    /**
+     *
+     * @param SM
+     */
     public void setSM(JButton SM) {
         this.SM = SM;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getPHMT() {
         return PHMT;
     }
 
+    /**
+     *
+     * @param PHMT
+     */
     public void setPHMT(JButton PHMT) {
         this.PHMT = PHMT;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getQui() {
         return qui;
     }
 
+    /**
+     *
+     * @param qui
+     */
     public void setQui(JLabel qui) {
         this.qui = qui;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelConnexion() {
         return panelConnexion;
     }
 
+    /**
+     *
+     * @param panelConnexion
+     */
     public void setPanelConnexion(JPanel panelConnexion) {
         this.panelConnexion = panelConnexion;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getConnexionTexte2() {
         return connexionTexte2;
     }
 
+    /**
+     *
+     * @param connexionTexte2
+     */
     public void setConnexionTexte2(JLabel connexionTexte2) {
         this.connexionTexte2 = connexionTexte2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelImage() {
         return panelImage;
     }
 
+    /**
+     *
+     * @param panelImage
+     */
     public void setPanelImage(JPanel panelImage) {
         this.panelImage = panelImage;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelRetour() {
         return panelRetour;
     }
 
+    /**
+     *
+     * @param panelRetour
+     */
     public void setPanelRetour(JPanel panelRetour) {
         this.panelRetour = panelRetour;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getRetour() {
         return retour;
     }
 
+    /**
+     *
+     * @param retour
+     */
     public void setRetour(JButton retour) {
         this.retour = retour;
     }

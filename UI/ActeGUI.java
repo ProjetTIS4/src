@@ -92,6 +92,10 @@ public class ActeGUI {
     private JButton valider;
     private ImageIcon validerImgIcon;
 
+/**
+     *Crée tous les panels, leur label et les boutons contenus dans la fenêtre "Ajouter acte" et les organise dans l'espace
+     */
+
     public ActeGUI() {
         ajouterActe = new JFrame("Ajouter un acte");
         Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
@@ -247,290 +251,578 @@ public class ActeGUI {
 
     }
 
+     /**
+     *
+     * @return
+     */
     public JFrame getAjouterActe() {
         return ajouterActe;
     }
 
+    /**
+     *
+     * @param ajouterActe
+     */
     public void setAjouterActe(JFrame ajouterActe) {
         this.ajouterActe = ajouterActe;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelDate() {
         return panelDate;
     }
 
+    /**
+     *
+     * @param panelDate
+     */
     public void setPanelDate(JPanel panelDate) {
         this.panelDate = panelDate;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelHeure() {
         return panelHeure;
     }
 
+    /**
+     *
+     * @param panelHeure
+     */
     public void setPanelHeure(JPanel panelHeure) {
         this.panelHeure = panelHeure;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelObs() {
         return panelObs;
     }
 
+    /**
+     *
+     * @param panelObs
+     */
     public void setPanelObs(JPanel panelObs) {
         this.panelObs = panelObs;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelPres() {
         return panelPres;
     }
 
+    /**
+     *
+     * @param panelPres
+     */
     public void setPanelPres(JPanel panelPres) {
         this.panelPres = panelPres;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelOp() {
         return panelOp;
     }
 
+    /**
+     *
+     * @param panelOp
+     */
     public void setPanelOp(JPanel panelOp) {
         this.panelOp = panelOp;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelRes() {
         return panelRes;
     }
 
+    /**
+     *
+     * @param panelRes
+     */
     public void setPanelRes(JPanel panelRes) {
         this.panelRes = panelRes;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getDate() {
         return date;
     }
 
+    /**
+     *
+     * @param date
+     */
     public void setDate(JLabel date) {
         this.date = date;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getJour() {
         return jour;
     }
 
+    /**
+     *
+     * @param jour
+     */
     public void setJour(JTextField jour) {
         this.jour = jour;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSlash() {
         return slash;
     }
 
+    /**
+     *
+     * @param slash
+     */
     public void setSlash(JLabel slash) {
         this.slash = slash;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getMois() {
         return mois;
     }
 
+    /**
+     *
+     * @param mois
+     */
     public void setMois(JTextField mois) {
         this.mois = mois;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getSlash2() {
         return slash2;
     }
 
+    /**
+     *
+     * @param slash2
+     */
     public void setSlash2(JLabel slash2) {
         this.slash2 = slash2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getAnnee() {
         return annee;
     }
 
+    /**
+     *
+     * @param annee
+     */
     public void setAnnee(JTextField annee) {
         this.annee = annee;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getHoraire() {
         return horaire;
     }
 
+    /**
+     *
+     * @param horaire
+     */
     public void setHoraire(JLabel horaire) {
         this.horaire = horaire;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getHeure() {
         return heure;
     }
 
+    /**
+     *
+     * @param heure
+     */
     public void setHeure(JTextField heure) {
         this.heure = heure;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPts() {
         return pts;
     }
 
+    /**
+     *
+     * @param pts
+     */
     public void setPts(JLabel pts) {
         this.pts = pts;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getMinute() {
         return minute;
     }
 
+    /**
+     *
+     * @param minute
+     */
     public void setMinute(JTextField minute) {
         this.minute = minute;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getObservations() {
         return observations;
     }
 
+    /**
+     *
+     * @param observations
+     */
     public void setObservations(JLabel observations) {
         this.observations = observations;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextArea getObservations2() {
         return observations2;
     }
 
+    /**
+     *
+     * @param observations2
+     */
     public void setObservations2(JTextArea observations2) {
         this.observations2 = observations2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JScrollPane getObs() {
         return obs;
     }
 
+    /**
+     *
+     * @param obs
+     */
     public void setObs(JScrollPane obs) {
         this.obs = obs;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getPrestations() {
         return prestations;
     }
 
+    /**
+     *
+     * @param prestations
+     */
     public void setPrestations(JLabel prestations) {
         this.prestations = prestations;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextArea getPrestations2() {
         return prestations2;
     }
 
+    /**
+     *
+     * @param prestations2
+     */
     public void setPrestations2(JTextArea prestations2) {
         this.prestations2 = prestations2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JScrollPane getPres() {
         return pres;
     }
 
+    /**
+     *
+     * @param pres
+     */
     public void setPres(JScrollPane pres) {
         this.pres = pres;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getOperations() {
         return operations;
     }
 
+    /**
+     *
+     * @param operations
+     */
     public void setOperations(JLabel operations) {
         this.operations = operations;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextArea getOperations2() {
         return operations2;
     }
 
+    /**
+     *
+     * @param operations2
+     */
     public void setOperations2(JTextArea operations2) {
         this.operations2 = operations2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JScrollPane getOpe() {
         return ope;
     }
 
+    /**
+     *
+     * @param ope
+     */
     public void setOpe(JScrollPane ope) {
         this.ope = ope;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getResultats() {
         return resultats;
     }
 
+    /**
+     *
+     * @param resultats
+     */
     public void setResultats(JLabel resultats) {
         this.resultats = resultats;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextArea getResultat2() {
         return resultat2;
     }
 
+    /**
+     *
+     * @param resultat2
+     */
     public void setResultat2(JTextArea resultat2) {
         this.resultat2 = resultat2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JScrollPane getResu() {
         return resu;
     }
 
+    /**
+     *
+     * @param resu
+     */
     public void setResu(JScrollPane resu) {
         this.resu = resu;
     }
 
+    /**
+     *
+     * @return
+     */
     public TitledBorder getTitle2() {
         return title2;
     }
 
+    /**
+     *
+     * @param title2
+     */
     public void setTitle2(TitledBorder title2) {
         this.title2 = title2;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getGbc() {
         return gbc;
     }
 
+    /**
+     *
+     * @param gbc
+     */
     public void setGbc(GridBagConstraints gbc) {
         this.gbc = gbc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel2() {
         return jPanel2;
     }
 
+    /**
+     *
+     * @param jPanel2
+     */
     public void setjPanel2(JPanel jPanel2) {
         this.jPanel2 = jPanel2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel3() {
         return jPanel3;
     }
 
+    /**
+     *
+     * @param jPanel3
+     */
     public void setjPanel3(JPanel jPanel3) {
         this.jPanel3 = jPanel3;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel4() {
         return jPanel4;
     }
 
+    /**
+     *
+     * @param jPanel4
+     */
     public void setjPanel4(JPanel jPanel4) {
         this.jPanel4 = jPanel4;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getValider() {
         return valider;
     }
 
+    /**
+     *
+     * @param valider
+     */
     public void setValider(JButton valider) {
         this.valider = valider;
     }
 
+    /**
+     *
+     * @return
+     */
     public ImageIcon getValiderImgIcon() {
         return validerImgIcon;
     }
 
+    /**
+     *
+     * @param validerImgIcon
+     */
     public void setValiderImgIcon(ImageIcon validerImgIcon) {
         this.validerImgIcon = validerImgIcon;
     }

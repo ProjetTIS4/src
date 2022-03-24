@@ -54,6 +54,9 @@ public class ModifierLocalisationGUI {
     private JButton valider;
     private ImageIcon validerImgIcon;
 
+    /**
+     *
+     */
     public ModifierLocalisationGUI() {
         modifierLoc = new JFrame("Modification de la localisation");
         Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
@@ -125,114 +128,226 @@ public class ModifierLocalisationGUI {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public JFrame getModifierLoc() {
         return modifierLoc;
     }
 
+    /**
+     *
+     * @param modifierLoc
+     */
     public void setModifierLoc(JFrame modifierLoc) {
         this.modifierLoc = modifierLoc;
     }
 
+    /**
+     *
+     * @return
+     */
     public TitledBorder getTitle2() {
         return title2;
     }
 
+    /**
+     *
+     * @param title2
+     */
     public void setTitle2(TitledBorder title2) {
         this.title2 = title2;
     }
 
+    /**
+     *
+     * @return
+     */
     public GridBagConstraints getGbc() {
         return gbc;
     }
 
+    /**
+     *
+     * @param gbc
+     */
     public void setGbc(GridBagConstraints gbc) {
         this.gbc = gbc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelAncienneLoc() {
         return panelAncienneLoc;
     }
 
+    /**
+     *
+     * @param panelAncienneLoc
+     */
     public void setPanelAncienneLoc(JPanel panelAncienneLoc) {
         this.panelAncienneLoc = panelAncienneLoc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getPanelNouvelleLoc() {
         return panelNouvelleLoc;
     }
 
+    /**
+     *
+     * @param panelNouvelleLoc
+     */
     public void setPanelNouvelleLoc(JPanel panelNouvelleLoc) {
         this.panelNouvelleLoc = panelNouvelleLoc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel2() {
         return jPanel2;
     }
 
+    /**
+     *
+     * @param jPanel2
+     */
     public void setjPanel2(JPanel jPanel2) {
         this.jPanel2 = jPanel2;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel3() {
         return jPanel3;
     }
 
+    /**
+     *
+     * @param jPanel3
+     */
     public void setjPanel3(JPanel jPanel3) {
         this.jPanel3 = jPanel3;
     }
 
+    /**
+     *
+     * @return
+     */
     public JPanel getjPanel4() {
         return jPanel4;
     }
 
+    /**
+     *
+     * @param jPanel4
+     */
     public void setjPanel4(JPanel jPanel4) {
         this.jPanel4 = jPanel4;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getAncienneLoc() {
         return ancienneLoc;
     }
 
+    /**
+     *
+     * @param ancienneLoc
+     */
     public void setAncienneLoc(JLabel ancienneLoc) {
         this.ancienneLoc = ancienneLoc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getAncienneLocInfo() {
         return ancienneLocInfo;
     }
 
+    /**
+     *
+     * @param ancienneLocInfo
+     */
     public void setAncienneLocInfo(JTextField ancienneLocInfo) {
         this.ancienneLocInfo = ancienneLocInfo;
     }
 
+    /**
+     *
+     * @return
+     */
     public JLabel getNouvelleLoc() {
         return nouvelleLoc;
     }
 
+    /**
+     *
+     * @param nouvelleLoc
+     */
     public void setNouvelleLoc(JLabel nouvelleLoc) {
         this.nouvelleLoc = nouvelleLoc;
     }
 
+    /**
+     *
+     * @return
+     */
     public JTextField getNouvelleLocInfo() {
         return nouvelleLocInfo;
     }
 
+    /**
+     *
+     * @param nouvelleLocInfo
+     */
     public void setNouvelleLocInfo(JTextField nouvelleLocInfo) {
         this.nouvelleLocInfo = nouvelleLocInfo;
     }
 
+    /**
+     *
+     * @return
+     */
     public JButton getValider() {
         return valider;
     }
 
+    /**
+     *
+     * @param valider
+     */
     public void setValider(JButton valider) {
         this.valider = valider;
     }
 
+    /**
+     *
+     * @return
+     */
     public ImageIcon getValiderImgIcon() {
         return validerImgIcon;
     }
 
+    /**
+     *
+     * @param validerImgIcon
+     */
     public void setValiderImgIcon(ImageIcon validerImgIcon) {
         this.validerImgIcon = validerImgIcon;
     }
