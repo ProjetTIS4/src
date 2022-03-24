@@ -58,7 +58,21 @@ public Date (String date) {
     }
 
     public String toString() {
-        return jour + "/" + mois + "/" + annee;
+        
+        if (mois < 10) {
+            if (jour < 10) {
+                return ("0" + jour + "/0" + mois + "/" + annee);
+            } else {
+                return ("" + jour + "/0" + mois + "/" + annee);
+            }
+        } else {
+            if (jour < 10) {
+                return ("0" + jour + "/" + mois + "/" + annee);
+            } else {
+                return ("" + jour + "/" + mois + "/" + annee);
+            }
+        }
+         
     }
 
     public int getAnnee() {

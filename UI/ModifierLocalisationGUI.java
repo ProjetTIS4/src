@@ -11,16 +11,15 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -57,6 +56,8 @@ public class ModifierLocalisationGUI {
 
     public ModifierLocalisationGUI() {
         modifierLoc = new JFrame("Modification de la localisation");
+        Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
+        modifierLoc.setIconImage(icone);
         modifierLoc.setMinimumSize(new Dimension(500, 700));
 //        ajouterActe.setPreferredSize(new Dimension(300, 100));
 

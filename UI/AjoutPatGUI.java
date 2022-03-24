@@ -8,7 +8,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -107,6 +109,8 @@ public class AjoutPatGUI {
 
     public AjoutPatGUI() {
         ajouterPat = new JFrame("Créer un nouveau patient");
+        Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
+        ajouterPat.setIconImage(icone);
         ajouterPat.setMinimumSize(new Dimension(500, 700));
 //        ajouterActe.setPreferredSize(new Dimension(300, 100));
 

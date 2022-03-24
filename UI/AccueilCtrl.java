@@ -36,7 +36,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
@@ -65,6 +64,7 @@ public class AccueilCtrl implements Runnable {
     private int ligne;
     private String dataDM[][];
     private String dataDMA[][];
+    private String data[][];
 
     private LocalDate dateDuJour;
     private String loc;
@@ -147,7 +147,7 @@ public class AccueilCtrl implements Runnable {
                 taille = res.getInt("COUNT(DISTINCT IPP)");
             }
 
-            String data[][] = new String[taille][9];
+            data = new String[taille][9];
             String columns[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre", "Service de localisation"};
 
             dataTable = new String[taille][7];
@@ -308,7 +308,7 @@ public class AccueilCtrl implements Runnable {
                             int nbDMA = 0;
                             try {
                                 String req = "SELECT COUNT(*) FROM DMA WHERE IPPatient='" + s + "'";
-                                System.out.println(req);
+
                                 ResultSet res = stm.executeQuery(req);
                                 if (res.next()) {
                                     nbDMA = res.getInt("COUNT(*)");
@@ -320,7 +320,7 @@ public class AccueilCtrl implements Runnable {
                                     a.gettDMA().setVisible(false);
                                     a.getPanelListeDMA().setVisible(false);
                                     a.getPanelDetailDMA().setVisible(false);
-                                    System.out.println(nbDMA);
+                                    a.getPanelPlusDMA().setVisible(false);
 
                                 } else {
                                     a.getPanelDMA().add(a.gettDMA());
@@ -328,6 +328,7 @@ public class AccueilCtrl implements Runnable {
                                     a.gettDMA().setVisible(true);
                                     a.getPanelListeDMA().setVisible(true);
                                     a.getPanelDetailDMA().setVisible(true);
+                                    a.getPanelPlusDMA().setVisible(true);
                                 }
                             } catch (SQLException ex) {
                                 ex.printStackTrace();
@@ -341,7 +342,7 @@ public class AccueilCtrl implements Runnable {
 
                             try {
                                 String req = "SELECT IPP FROM patient JOIN fichesDM ON IPP=IPPatient WHERE PHreferent='" + p.getLogin() + "' AND IPP='" + s + "'";
-                                System.out.println(req);
+
                                 ResultSet res = stm.executeQuery(req);
                                 while (res.next()) {
                                     String IPP = res.getString("IPP");
@@ -349,11 +350,9 @@ public class AccueilCtrl implements Runnable {
                                     if (IPP != null) {
                                         a.getTp().add("DM", a.getDM());
                                         a.getTp().add("DMA", a.getDMA());
-                                        System.out.println(IPP);
 
                                     } else {
                                         a.getTp().add("DMA", a.getDMA());
-                                        System.out.println("bug");
 
                                     }
                                 }
@@ -468,7 +467,7 @@ public class AccueilCtrl implements Runnable {
 
                     if (me.getClickCount() == 1) {
                         int ligne = a.getTableauDM().getSelectedRow();
-                        System.out.println(ligne);
+
                         a.getAjoutActe().setVisible(true);
                         sej = dataDMHide[ligne][2];
 
@@ -482,8 +481,6 @@ public class AccueilCtrl implements Runnable {
                             }
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
-
-                            System.out.println(s);
 
                             int taille = 0;
 
@@ -552,7 +549,7 @@ public class AccueilCtrl implements Runnable {
 
                     if (me.getClickCount() == 1) {
                         int ligne = a.getTableauDMA().getSelectedRow();
-                        System.out.println(ligne);
+
                         sej = dataDMA[ligne][2];
 
                         try {
@@ -563,11 +560,9 @@ public class AccueilCtrl implements Runnable {
                             } else {
                                 query = "SELECT COUNT(*) FROM fichesDMA WHERE IPPatient=" + s + " AND numeroSejour=" + sej + " AND PHreferent= '" + p.getLogin() + "'";
                             }
-                            System.out.println(query);
+
                             Statement stm = con.createStatement();
                             ResultSet res = stm.executeQuery(query);
-
-                            System.out.println(s);
 
                             int taille = 0;
 
@@ -657,7 +652,7 @@ public class AccueilCtrl implements Runnable {
                     int compt = 0;
                     try {
                         String requete = "SELECT compteurDMA FROM patient";
-                        System.out.println(requete);
+
                         Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(requete);
 
@@ -673,10 +668,9 @@ public class AccueilCtrl implements Runnable {
                                 + "','"
                                 + dma.getDebut().toString()
                                 + "','"
-                                + dma.getFin()
+                                + ""
                                 + "')";
 
-                        System.out.println(requete);
                         stm = con.createStatement();
                         stm.executeUpdate(requete);
 
@@ -688,17 +682,14 @@ public class AccueilCtrl implements Runnable {
                                 + "','"
                                 + dma.getDebut().toString()
                                 + "','"
-                                + dma.getFin()
+                                + ""
                                 + "')";
 
-                        System.out.println(requete);
                         stm = con.createStatement();
                         stm.executeUpdate(requete);
 
                         requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + " ' WHERE IPP='" + patient.getIPP() + "' ";
-                        System.out.println("Requête Update new DMA : " + requete);
-                        // requete = "UPDATE patient WHERE IPP='" + patient.getIPP() +"' SET compteurDMA ='" + dma.getCompteur() + "' ";
-                        System.out.println(requete);
+
                         stm.executeUpdate(requete);
 
                         a.getPanelNouveauDMA().setVisible(false);
@@ -718,7 +709,7 @@ public class AccueilCtrl implements Runnable {
                 @Override
                 public void mouseClicked(MouseEvent me) {
 
-                    SwingUtilities.invokeLater(new AjoutPatCtrl(a));
+                    SwingUtilities.invokeLater(new AjoutPatCtrl(a, acc));
                 }
             });
 
@@ -728,8 +719,8 @@ public class AccueilCtrl implements Runnable {
                 public void mouseClicked(MouseEvent me) {
                     int compt = 0;
                     try {
-                        String requete = "SELECT compteurDMA FROM patient WHERE IPP='"+s+"'";
-                        System.out.println(requete);
+                        String requete = "SELECT compteurDMA FROM patient WHERE IPP='" + s + "'";
+
                         Statement stm = con.createStatement();
                         ResultSet res = stm.executeQuery(requete);
 
@@ -748,7 +739,6 @@ public class AccueilCtrl implements Runnable {
                                 + ""
                                 + "')";
 
-                        System.out.println("Requête nouveau DMA : " + requete);
                         stm = con.createStatement();
                         stm.executeUpdate(requete);
 
@@ -762,16 +752,12 @@ public class AccueilCtrl implements Runnable {
                                 + "','"
                                 + "')";
 
-                        System.out.println("Requête nouveau DM : " + requete);
                         stm = con.createStatement();
                         stm.executeUpdate(requete);
 
                         requete = "UPDATE patient SET compteurDMA ='" + dma.getCompteur() + "' WHERE IPP='" + patient.getIPP() + "' ";
-                        //                      requete = "UPDATE patient WHERE IPP='" + patient.getIPP() +"' SET compteurDMA ='" + dma.getCompteur() + "' ";
                         stm.executeUpdate(requete);
-                        System.out.println("Requête Update : " + requete);
-                        a.getPanelNouveauDMA().setVisible(false);
-                        a.gettDMA().setVisible(true);
+
                         MAJTblDMA();
                         a.getAccueil().validate();
                         a.getAccueil().repaint();
@@ -863,7 +849,7 @@ public class AccueilCtrl implements Runnable {
 
                         }
 
-                       MAJDetailDM();
+                        MAJDetailDM();
 
                     }
                 }
@@ -1046,16 +1032,15 @@ public class AccueilCtrl implements Runnable {
                             if (res == JFileChooser.APPROVE_OPTION) {
                                 File file = choose.getSelectedFile();
                                 choose.getFileView();
-                                System.out.println(file.getAbsolutePath());
+
                                 Scanner obj = new Scanner(file);
 
                                 String lettre = "";
                                 while (obj.hasNextLine()) {
                                     lettre = lettre + obj.nextLine();
-                                    System.out.println(lettre);
 
                                 }
-                                System.out.println(lettre);
+
                                 a.getLettreSortie().setText(lettre);
                                 String requete = "UPDATE fichesDM SET lettreDeSortie ='" + (a.getLettreSortie().getText()) + "' WHERE numeroFiche='" + dataActeDM[ligne][0] + "'";
 
@@ -1094,7 +1079,7 @@ public class AccueilCtrl implements Runnable {
 
                                 requete = "UPDATE DM SET dateSortie ='" + sortie + "' WHERE numeroSejour='" + dataDMHide[ligne][2] + "'";
                                 stm.executeUpdate(requete);
-                                System.out.println(requete);
+
                                 dataDM[ligne][1] = sortie;
                                 String columnsDM[] = {"Date d'entrée", "Date de sortie"};
                                 a.getTableauDM().setModel(new DefaultTableModel(dataDM, columnsDM) {
@@ -1215,7 +1200,7 @@ public class AccueilCtrl implements Runnable {
 
                         requete = "UPDATE DM SET dateSortie ='" + sortie + "' WHERE numeroSejour='" + dataDMHide[ligne][2] + "'";
                         stm.executeUpdate(requete);
-                        System.out.println(requete);
+
                         dataDM[ligne][1] = sortie;
                         String columnsDM[] = {"Date d'entrée", "Date de sortie"};
                         a.getTableauDM().setModel(new DefaultTableModel(dataDM, columnsDM) {
@@ -1484,24 +1469,14 @@ public class AccueilCtrl implements Runnable {
         int size = t.length;
         String ipp = s;
 
-        System.out.println(s);
         for (int i = 0; i < size; i++) {
             String a = t[i][j];
             b = ipp.equals(a);
             if (b) {
                 return b;
             }
-            System.out.println(a);
-            System.out.println(b);
+
         }
-//        int i = 0;
-//        while (b != true || i < size - 1) {
-//            String a = t[i][j];
-//            b = ipp.equals(a);
-//            System.out.println(a);
-//            System.out.println(b);
-//            i++;
-//        }
 
         return b;
     }
@@ -1672,73 +1647,82 @@ public class AccueilCtrl implements Runnable {
         }
 
     }
-    
-    
-    public void MAJDetailDM(){ try {
-        String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+
+    public void MAJDetailDM() {
+        try {
+            String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
             String user = "DEV";
             String password = "SIH-mmlh2022";
 
             Connection con = DriverManager.getConnection(url, user, password);
-                            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
-                            Statement stm = con.createStatement();
-                            ResultSet res = stm.executeQuery(query);
+            String query = "SELECT COUNT(*) FROM fichesDM WHERE IPPatient=" + ipp;
+            Statement stm = con.createStatement();
+            ResultSet res = stm.executeQuery(query);
 
-                            int taille = 0;
+            int taille = 0;
 
-                            if (res.next()) {
-                                taille = res.getInt("COUNT(*)");
-                            }
+            if (res.next()) {
+                taille = res.getInt("COUNT(*)");
+            }
 
-                            String dataDMF[][] = new String[taille][5];
-                            //           String columns[] = {"observations", "prescription", "operations", "resultats"};
+            String dataDMF[][] = new String[taille][5];
+            //           String columns[] = {"observations", "prescription", "operations", "resultats"};
 
-                            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
-                            res = stm.executeQuery(query);
-                            int i = 0;
-                            while (res.next()) {
+            query = "SELECT * FROM fichesDM WHERE IPPatient=" + ipp + " AND numeroFiche=" + s;
+            res = stm.executeQuery(query);
+            int i = 0;
+            while (res.next()) {
 
-                                String obs2 = res.getString("observations");
-                                String pres2 = res.getString("prescriptions");
-                                String op2 = res.getString("operations");
-                                String resul2 = res.getString("resultats");
-                                String lettre = res.getString("lettreDeSortie");
+                String obs2 = res.getString("observations");
+                String pres2 = res.getString("prescriptions");
+                String op2 = res.getString("operations");
+                String resul2 = res.getString("resultats");
+                String lettre = res.getString("lettreDeSortie");
 
-                                dataDMF[i][0] = obs2;
-                                dataDMF[i][1] = pres2;
-                                dataDMF[i][2] = op2;
-                                dataDMF[i][3] = resul2;
-                                dataDMF[i][4] = lettre;
+                dataDMF[i][0] = obs2;
+                dataDMF[i][1] = pres2;
+                dataDMF[i][2] = op2;
+                dataDMF[i][3] = resul2;
+                dataDMF[i][4] = lettre;
 
-                                i++;
-                            }
+                i++;
+            }
 
-                            String observations = dataDMF[0][0];
-                            String prescriptions = dataDMF[0][1];
-                            String operations = dataDMF[0][2];
-                            String resultats = dataDMF[0][3];
-                            String lettre = dataDMF[0][4];
+            String observations = dataDMF[0][0];
+            String prescriptions = dataDMF[0][1];
+            String operations = dataDMF[0][2];
+            String resultats = dataDMF[0][3];
+            String lettre = dataDMF[0][4];
 
-                            fiche = new FichesDM(patient, observations, prescriptions, operations, resultats, lettre);
-                            fiche.setObservations(dataDMF[0][0]);
-                            fiche.setPrescriptions(dataDMF[0][1]);
-                            fiche.setOperations(dataDMF[0][2]);
-                            fiche.setResultats(dataDMF[0][3]);
-                            fiche.setLettreDeSortie(dataDMF[0][4]);
+            fiche = new FichesDM(patient, observations, prescriptions, operations, resultats, lettre);
+            fiche.setObservations(dataDMF[0][0]);
+            fiche.setPrescriptions(dataDMF[0][1]);
+            fiche.setOperations(dataDMF[0][2]);
+            fiche.setResultats(dataDMF[0][3]);
+            fiche.setLettreDeSortie(dataDMF[0][4]);
 
-                            a.getObservations2().setText(fiche.getObservations());
-                            a.getPrescription2().setText(fiche.getPrescriptions());
-                            a.getOperationInfo().setText(fiche.getOperations());
-                            a.getResultatInfo().setText(fiche.getResultats());
-                            a.getLettreSortie().setText(fiche.getLettreDeSortie());
+            a.getObservations2().setText(fiche.getObservations());
+            a.getPrescription2().setText(fiche.getPrescriptions());
+            a.getOperationInfo().setText(fiche.getOperations());
+            a.getResultatInfo().setText(fiche.getResultats());
+            a.getLettreSortie().setText(fiche.getLettreDeSortie());
 
-                            a.getPanelDetail().add(a.getDetailsDM());
-                            a.getDetailsDM().setVisible(true);
-                            a.getAccueil().validate();
-                            a.getAccueil().repaint();
+            a.getPanelDetail().add(a.getDetailsDM());
+            a.getDetailsDM().setVisible(true);
+            a.getAccueil().validate();
+            a.getAccueil().repaint();
 
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }}
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public String[][] getData() {
+        return data;
+    }
+
+    public void setData(String[][] data) {
+        this.data = data;
+    }
 
 }

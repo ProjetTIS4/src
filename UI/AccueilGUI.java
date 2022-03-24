@@ -15,6 +15,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -301,6 +302,8 @@ public class AccueilGUI {
 
     public AccueilGUI() {
         accueil = new JFrame("Accueil");
+        Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
+        accueil.setIconImage(icone);
         panelFin = new JPanel(new BorderLayout());
         panelDroit = new JPanel(new BorderLayout());
         panelGauche = new JPanel(new BorderLayout());

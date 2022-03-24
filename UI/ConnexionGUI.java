@@ -12,7 +12,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -67,6 +69,8 @@ public class ConnexionGUI {
 
     public ConnexionGUI() {
         connexion = new JFrame("Connexion");//Création de la fenêtre de connexion
+        Image icone2 = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
+        connexion.setIconImage(icone2);
 
         jPanel = new JPanel(new GridBagLayout());
         jPanel2 = new JPanel(new GridBagLayout());

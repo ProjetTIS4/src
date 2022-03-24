@@ -7,6 +7,8 @@ package UI;
 
 import NF.Personnel;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,6 +21,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
@@ -47,6 +50,7 @@ public class ConnexionCtrl implements Runnable {
         c.getConnexion().setBounds(450, 190, 720, 460);
         c.getConnexion().setDefaultCloseOperation(EXIT_ON_CLOSE);
         c.getConnexion().setVisible(true);
+ 
 
         c.getPHS().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -183,15 +187,15 @@ public class ConnexionCtrl implements Runnable {
 
             int i = 0;
             while (res.next()) {
-                String id = res.getString("nom");
-                String nom = res.getString("prenom");
-                String age = res.getString("ID");
+                String nom = res.getString("nom");
+                String prenom = res.getString("prenom");
+                String id = res.getString("ID");
                 String mdp = res.getString("mdp");
                 String service = res.getString("service");
                 String poste = res.getString("poste");
-                data[i][0] = id + "";
-                data[i][1] = nom;
-                data[i][2] = age;
+                data[i][0] = nom;
+                data[i][1] = prenom;
+                data[i][2] = id;
                 data[i][3] = mdp;
                 data[i][4] = service;
                 data[i][5] = poste;

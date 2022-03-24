@@ -13,6 +13,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,7 +41,7 @@ public class ActeGUI {
 
     private JPanel panelDate;
     private JPanel panelHeure;
-    private JPanel panelPH ;
+    private JPanel panelPH;
     private JPanel panelObs;
     private JPanel panelPres;
     private JPanel panelOp;
@@ -62,11 +63,10 @@ public class ActeGUI {
     private JTextField heure;
     private JLabel pts;
     private JTextField minute;
-    
+
     ////////////Panel PHRéférent ///////////////
     private JLabel phLabel;
     private JComboBox choixPH;
-    
 
     ////////////Panel Observations ///////////////
     private JLabel observations;
@@ -92,10 +92,11 @@ public class ActeGUI {
     private JButton valider;
     private ImageIcon validerImgIcon;
 
-
     public ActeGUI() {
         ajouterActe = new JFrame("Ajouter un acte");
-        ajouterActe.setMinimumSize(new Dimension(500, 700));
+        Image icone = Toolkit.getDefaultToolkit().getImage("src/Annexes/Hubspital_logo_grand.png");
+        ajouterActe.setIconImage(icone);
+        ajouterActe.setMinimumSize(new Dimension(500, 800));
 //        ajouterActe.setPreferredSize(new Dimension(300, 100));
 
         panelDate = new JPanel(new FlowLayout());
@@ -111,7 +112,7 @@ public class ActeGUI {
 
         date = new JLabel("Date : ");
         jour = new JTextField("JJ");
-        jour.setForeground(Color.gray); 
+        jour.setForeground(Color.gray);
         slash = new JLabel("/");
         mois = new JTextField("MM");
         mois.setForeground(Color.gray);
@@ -123,10 +124,9 @@ public class ActeGUI {
         heure = new JTextField("   ");
         pts = new JLabel(":");
         minute = new JTextField("   ");
-        
+
         phLabel = new JLabel("PH référent : ");
-       choixPH = new JComboBox();
-        
+        choixPH = new JComboBox();
 
         observations = new JLabel("Observations : ");
         observations2 = new JTextArea(5, 20);
@@ -151,14 +151,12 @@ public class ActeGUI {
         resultat2.setLineWrap(true);
         resu = new JScrollPane();
         resu.setViewportView(resultat2);
-        
+
         validerImgIcon = new ImageIcon("src/Annexes/valider.png");
 
-        
         valider = new JButton(validerImgIcon);
         valider.setContentAreaFilled(false);
         valider.setBorderPainted(false);
-     
 
         panelDate.add(date);
         panelDate.add(jour);
@@ -171,7 +169,7 @@ public class ActeGUI {
         panelHeure.add(heure);
         panelHeure.add(pts);
         panelHeure.add(minute);
-        
+
         panelPH.add(phLabel);
         panelPH.add(choixPH);
 
@@ -203,21 +201,25 @@ public class ActeGUI {
 
         gbc.gridy = 2;
         gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelObs, gbc);
+        jPanel2.add(panelPH, gbc);
 
         gbc.gridy = 3;
         gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelPres, gbc);
+        jPanel2.add(panelObs, gbc);
 
         gbc.gridy = 4;
         gbc.insets = new Insets(0, 15, 0, 15);
-        jPanel2.add(panelOp, gbc);
+        jPanel2.add(panelPres, gbc);
 
         gbc.gridy = 5;
         gbc.insets = new Insets(0, 15, 0, 15);
+        jPanel2.add(panelOp, gbc);
+
+        gbc.gridy = 6;
+        gbc.insets = new Insets(0, 15, 0, 15);
         jPanel2.add(panelRes, gbc);
-        
-                gbc.gridy = 6;
+
+        gbc.gridy = 7;
         gbc.insets = new Insets(0, 15, 15, 15);
         gbc.anchor = GridBagConstraints.CENTER;
         jPanel2.add(valider, gbc);
@@ -237,6 +239,7 @@ public class ActeGUI {
 
         panelDate.setOpaque(false);
         panelHeure.setOpaque(false);
+         panelPH.setOpaque(false);
         panelObs.setOpaque(false);
         panelPres.setOpaque(false);
         panelOp.setOpaque(false);
@@ -531,6 +534,21 @@ public class ActeGUI {
     public void setValiderImgIcon(ImageIcon validerImgIcon) {
         this.validerImgIcon = validerImgIcon;
     }
-    
-    
+
+    public JComboBox getChoixPH() {
+        return choixPH;
+    }
+
+    public void setChoixPH(JComboBox choixPH) {
+        this.choixPH = choixPH;
+    }
+
+    public JPanel getPanelPH() {
+        return panelPH;
+    }
+
+    public void setPanelPH(JPanel panelPH) {
+        this.panelPH = panelPH;
+    }
+
 }

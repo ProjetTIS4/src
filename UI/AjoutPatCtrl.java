@@ -28,39 +28,39 @@ import javax.swing.table.DefaultTableModel;
 public class AjoutPatCtrl implements Runnable {
 
     AjoutPatGUI a;
-    //String ipp;
     AccueilGUI ac;
+    AccueilCtrl acc;
     int compt;
     Patient p;
 
-    public AjoutPatCtrl(AccueilGUI ac) {
-        
-         try {
+    public AjoutPatCtrl(AccueilGUI ac, AccueilCtrl acc) {
 
-                    String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
-                    String user = "DEV";
-                    String password = "SIH-mmlh2022";
+        try {
 
-                    Connection con = DriverManager.getConnection(url, user, password);
+            String url = "jdbc:mysql://hugofarcy.ddns.net:3306/SIH?autoReconnect=true&useSSL=false";
+            String user = "DEV";
+            String password = "SIH-mmlh2022";
 
-                  String requete = "SELECT compteurIPP FROM compteur";
-                    System.out.println(requete);
-                    Statement stm = con.createStatement();
-                    ResultSet res = stm.executeQuery(requete);
+            Connection con = DriverManager.getConnection(url, user, password);
 
-                    if (res.next()) {
-                        this.compt=res.getInt("compteurIPP");
-   
-                    }
-                    
+            String requete = "SELECT compteurIPP FROM compteur";
 
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
+            Statement stm = con.createStatement();
+            ResultSet res = stm.executeQuery(requete);
+
+            if (res.next()) {
+                this.compt = res.getInt("compteurIPP");
+
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
         a = new AjoutPatGUI();
 
         this.ac = ac;
+        this.acc = acc;
     }
 
     @Override
@@ -91,7 +91,6 @@ public class AjoutPatCtrl implements Runnable {
             }
         });
 
-
         //////////////////////// Panel Nom ////////////////////////
         a.getNomM2().addMouseListener(new MouseAdapter() {
             @Override
@@ -100,7 +99,6 @@ public class AjoutPatCtrl implements Runnable {
                 a.getNomM2().setForeground(Color.black);
             }
         });
-
 
         //////////////////////// Panel Prenom ////////////////////////
         a.getPrenom2().addMouseListener(new MouseAdapter() {
@@ -119,7 +117,6 @@ public class AjoutPatCtrl implements Runnable {
                 a.getAdresse2().setForeground(Color.black);
             }
         });
-
 
         //////////////////////// Panel Date de naissance ////////////////////////
         a.getJourN().addMouseListener(new MouseAdapter() {
@@ -206,7 +203,6 @@ public class AjoutPatCtrl implements Runnable {
             }
         });
 
-
         //////////////////////// Bouton valider  ////////////////////////
         a.getValider().addMouseListener(new MouseAdapter() {
             @Override
@@ -220,9 +216,9 @@ public class AjoutPatCtrl implements Runnable {
                     Connection con = DriverManager.getConnection(url, user, password);
 
                     Date d = new Date(a.getJourN().getText() + "/" + a.getMoisN().getText() + "/" + a.getAnneeN().getText());
-                    p= new Patient(a.getNom2().getText(),  a.getPrenom2().getText(), Sexe.FEMME, a.getAdresse2().getText(), d, compt);
-                    p.setSexe( a.getChoix().getSelectedItem().toString());
-                    
+                    p = new Patient(a.getNom2().getText(), a.getPrenom2().getText(), Sexe.FEMME, a.getAdresse2().getText(), d, compt);
+                    p.setSexe(a.getChoix().getSelectedItem().toString());
+
                     String requete = "INSERT INTO patient (ipp, nom_marital, nom_usuel, prenom, DDN, LDN, sexe, adresse, localisation, medGen) VALUES ('"
                             + p.getIPP()
                             + "','"
@@ -245,13 +241,12 @@ public class AjoutPatCtrl implements Runnable {
                             + a.getMedGen2().getText()
                             + "')";
 
-                    System.out.println(requete);
                     Statement stm = con.createStatement();
                     stm.executeUpdate(requete);
 
                     a.getAjouterPat().dispose();
-                     requete = "UPDATE compteur SET compteurIPP ='"+p.getCompteur() +" '";
-                   stm.executeUpdate(requete);
+                    requete = "UPDATE compteur SET compteurIPP ='" + p.getCompteur() + " '";
+                    stm.executeUpdate(requete);
 
                     String query = "SELECT COUNT(*) FROM patient";
                     ResultSet res = stm.executeQuery(query);
@@ -263,6 +258,7 @@ public class AjoutPatCtrl implements Runnable {
                     }
 
                     String dataPatient[][] = new String[taille][7];
+                    String data[][] = new String[taille][9];
                     String columnsPatient[] = {"IPP", "Nom", "Prénom", "Date de Naissance", "Sexe", "Chambre", "Service de localisation"};
 
 //            res2.close();
@@ -293,17 +289,28 @@ public class AjoutPatCtrl implements Runnable {
                             dataPatient[i][5] = affichageLoc(localisation);
                             dataPatient[i][6] = affichageSpe(localisation);
 
+                            data[i][0] = IPP;
+                            data[i][1] = nom_marital;
+                            data[i][2] = nom_usuel;
+                            data[i][3] = prenom;
+                            data[i][4] = dateNaissance;
+                            data[i][5] = sexe;
+                            data[i][6] = adresse;
+                            data[i][7] = localisation;
+                            data[i][8] = medGen;
+
                             i++;
                         }
                     }
-                      ac.getTableau().setModel(new DefaultTableModel(dataPatient, columnsPatient) {
+                    acc.setData(data);
+                    ac.getTableau().setModel(new DefaultTableModel(dataPatient, columnsPatient) {
 
-                                @Override
-                                public boolean isCellEditable(int row, int column) {
-                                    //Only the third column
-                                    return false;
-                                }
-                            });
+                        @Override
+                        public boolean isCellEditable(int row, int column) {
+                            //Only the third column
+                            return false;
+                        }
+                    });
 
                     ac.getAccueil().repaint();
                 } catch (SQLException ex) {
@@ -314,40 +321,41 @@ public class AjoutPatCtrl implements Runnable {
         });
 
     }
-    
-        public boolean contains(String[][] t, String s, int j) {
+
+    public boolean contains(String[][] t, String s, int j) {
         boolean b = false;
         int size = t.length;
         String ipp = s;
 
-        System.out.println(s);
         for (int i = 0; i < size; i++) {
             String a = t[i][j];
             b = ipp.equals(a);
             if (b) {
                 return b;
             }
-            System.out.println(a);
-            System.out.println(b);
+
         }
 
         return b;
     }
 
     public String affichageLoc(String s) {
-        if (s.equals("")){
-        return s;}
-        else{
-        String l = s.substring(1, 5);
+        if (s.equals("")) {
+            return s;
+        } else {
+            String l = s.substring(1, 5);
 
-        return (l);}
+            return (l);
+        }
     }
 
     public String affichageSpe(String s) {
-         if (s.equals("")){
-        return s;}
-        else{ String l = s.substring(5);
+        if (s.equals("")) {
+            return s;
+        } else {
+            String l = s.substring(5);
 
-        return (l);}
+            return (l);
+        }
     }
 }

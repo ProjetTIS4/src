@@ -90,7 +90,7 @@ public class ModifierLocalisationCtrl implements Runnable {
 
                      String requete = "UPDATE patient SET localisation ='" + a.getNouvelleLocInfo().getText() + "' WHERE IPP='" + ipp+"'";
  
-                        System.out.println(requete);
+        
                         Statement stm = con.createStatement();
                         stm.executeUpdate(requete);
 
