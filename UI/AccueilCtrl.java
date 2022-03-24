@@ -457,9 +457,22 @@ public class AccueilCtrl implements Runnable {
                         ////Pour le DMA////  
                         MAJTblDMA();
 
+                    }else if (me.getClickCount() == 2) {
+                        if (p.getPoste() == Personnel.Poste.SecretaireMedicale) {
+                            if (a.getTableau().getSelectedColumn() == 5 || a.getTableau().getSelectedColumn() == 6) {
+
+                                int ligne = a.getTableau().getSelectedRow();
+                                ipp = dataTable[ligne][0];
+                                loc = data[ligne][7];
+
+                                SwingUtilities.invokeLater(new ModifierLocalisationCtrl(ipp, a, acc, loc));
+
+                            }
+                        }
                     }
-                }
-            }
+                
+                
+            }}
             );
             a.getTableauDM().addMouseListener(new MouseAdapter() {
 
